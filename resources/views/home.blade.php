@@ -6,7 +6,7 @@
 
     {{-- LIVE SCORE CARD START --}}
     <div class="bg-[#F3F3F3] dark:bg-[#171717]">
-        <div class="pt-29 lg:pt-35 2xl:container 2xl:mx-auto mx-6 pb-7.5 ">
+        <div class="pt-29 lg:pt-35 2xl:container 2xl:mx-auto mx-6 md:mx-8 lg:mx-10 pb-7.5 ">
             <div class="swiper live-score-swiper overflow-hidden">
                 <div class="swiper-wrapper">
                     @for ($i = 0; $i < 15; $i++)
@@ -42,11 +42,11 @@
     {{-- TRENDING SECTION START --}}
     <section class="2xl:container 2xl:mx-auto mt-4 md:mt-6 lg:mt-8.5 mb-6 lg:mb-7.5 2xl:flex">
         <div class="2xl:border-r 2xl:border-r-[#DEDEDE] dark:border-r-[#DEDEDE] 2xl:pr-5 2xl:mr-5 2xl:w-7/10">
-            <section class="mx-6 lg:mx-10 2xl:container 2xl:mx-auto">
+            <section class="mx-6 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto">
                 <x-trending-news />
             </section>
             {{-- EDITOR CHOICES START --}}
-            <section class="mt-6 lg:mt-7.5 md:mx-6 lg:mx-10 2xl:container 2xl:mx-auto">
+            <section class="mt-6 lg:mt-7.5 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto">
                 <x-editor-choices />
             </section>
             {{-- EDITOR CHOICES END --}}
@@ -66,7 +66,7 @@
         <div class="2xl:w-3/10">
             {{-- POPULAR AND RECENT NEWS RANKING SECTION START --}}
             <div
-                class="md:flex lg:flex-col md:gap-x-2.5 md:items-stretch md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto mb-7 md:mb-0 lg:mb-7 2xl:mb-6">
+                class="md:flex lg:flex-col md:gap-x-2.5 md:items-stretch md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto mb-7 md:mb-6 lg:mb-7 2xl:mb-6">
                 <section class="mx-6 md:mx-0 mb-7 md:mb-0 lg:mb-7 md:w-1/2 lg:w-full md:flex md:flex-col md:items-stretch">
                     <x-popular-recent-news />
                 </section>

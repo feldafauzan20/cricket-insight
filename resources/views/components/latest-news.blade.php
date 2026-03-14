@@ -1,4 +1,4 @@
-<div class="px-6 lg:px-10 2xl:px-0 2xl:container 2xl:mx-auto pt-6 pb-4 md:pb-6 lg:pb-11 2xl:pb-6 md:pt-12.5">
+<div class="px-6 md:px-7.5 lg:px-10 2xl:px-0 2xl:container 2xl:mx-auto pt-6 pb-4 md:pb-6 lg:pb-11 2xl:pb-6 md:pt-12.5">
     <div class="md:flex items-center justify-between">
         <div>
             <h1 class="font-semibold text-2xl md:text-[22px] text-[#121212] dark:text-white">Latest News Around Cricket
