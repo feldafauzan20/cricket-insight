@@ -7,7 +7,17 @@
 
     <title>@yield('title', config('app.name', 'Cricket Insight'))</title>
 
-    <!-- Fonts -->
+    {{-- Prevent FOUC (Flash of Unstyled Content) --}}
+    <script>
+        // Jalankan SEBELUM page render
+        (function() {
+            if (localStorage.getItem('darkMode') === 'true' ||
+                (!localStorage.getItem('darkMode') &&
+                    window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
 
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -15,7 +25,7 @@
     @stack('styles')
 </head>
 
-<body class="bg-[#F3F3F3] font-poppins">
+<body class="font-poppins dark:bg-[#121212]">
 
     <header>
         @include('components.navbar')
