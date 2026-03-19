@@ -40,8 +40,8 @@
     </section>
 
     {{-- TRENDING SECTION START --}}
-    <section class="2xl:container 2xl:mx-auto mt-4 md:mt-6 lg:mt-8.5 mb-6 lg:mb-7.5 2xl:flex">
-        <div class="2xl:border-r 2xl:border-r-[#DEDEDE] dark:border-r-[#DEDEDE] 2xl:pr-5 2xl:mr-5 2xl:w-7/10">
+    <x-layout.two-column-layout>
+        <x-slot name="main">
             <section class="mx-6 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto">
                 <x-trending-news />
             </section>
@@ -62,8 +62,8 @@
                 <x-commentaries />
             </section>
             {{-- COMMENTARIES SECTION END --}}
-        </div>
-        <div class="2xl:w-3/10">
+        </x-slot>
+        <x-slot name="sidebar">
             {{-- POPULAR AND RECENT NEWS RANKING SECTION START --}}
             <div
                 class="md:flex lg:flex-col md:gap-x-2.5 md:items-stretch md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto mb-7 md:mb-6 lg:mb-7 2xl:mb-6">
@@ -88,8 +88,8 @@
                 <x-ads />
             </section>
             {{-- ADS SECTION END --}}
-        </div>
-    </section>
+        </x-slot>
+    </x-layout.two-column-layout>
     {{-- TRENDING SECTION END --}}
 
     {{-- NEWS FLASH SECTION START --}}

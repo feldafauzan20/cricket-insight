@@ -24,7 +24,63 @@
 /* Dark mode variant - gunakan .dark class di HTML/body */
 @variant dark (&:is(.dark *));
 
-/* (font-faces yang sudah ada...) */
+/* font face for poppins */
+/* regular font */
+@font-face {
+    font-family: "Poppins";
+    src: url("../fonts/Poppins-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+/* medium font */
+@font-face {
+    font-family: "Poppins";
+    src: url("../fonts/Poppins-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+/* semibold font */
+@font-face {
+    font-family: "Poppins";
+    src: url("../fonts/Poppins-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* font face for playfair display */
+/* medium font */
+@font-face {
+    font-family: "Playfair Display";
+    src: url("../fonts/PlayfairDisplay-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* bold font */
+@font-face {
+    font-family: "Playfair Display";
+    src: url("../fonts/PlayfairDisplay-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* font face for granjon */
+/* italic font */
+@font-face {
+    font-family: "Granjon";
+    src: url("../fonts/Granjon-Italic.woff2") format("woff2");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Custom breakpoints */
+@custom-media --xs (width >= 430px);
 
 @theme {
     /* Theme configuration yang sudah ada... */
@@ -34,5 +90,9 @@
     --font-playfair-display:
         "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman",
         serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+    --font-granjon-italic:
+        "Granjon", ui-serif, Georgia, Cambria, "Times New Roman", serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
 }
