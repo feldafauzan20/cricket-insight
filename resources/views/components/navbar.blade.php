@@ -22,7 +22,7 @@
                             class="hover:text-[#EC0226] transition {{ request()->is('/') ? 'text-[#EC0226]' : '' }}">Home</a>
                     </li>
                     <li><a href="/news"
-                            class="hover:text-[#EC0226] transition {{ request()->is('news') ? 'text-[#EC0226]' : '' }}">News</a>
+                            class="hover:text-[#EC0226] transition {{ request()->is('news*') ? 'text-[#EC0226]' : '' }}">News</a>
                     </li>
                     <li><a href="/interview"
                             class="hover:text-[#EC0226] transition {{ request()->is('interview') ? 'text-[#EC0226]' : '' }}">Interview</a>
@@ -115,7 +115,7 @@
                     class="hover:text-[#EC0226] dark:hover:text-red-400 transition {{ request()->is('/') ? 'text-[#EC0226] dark:text-red-400' : '' }}">Home</a>
             </li>
             <li><a href="/news"
-                    class="hover:text-[#EC0226] dark:hover:text-red-400 transition {{ request()->is('news') ? 'text-[#EC0226] dark:text-red-400' : '' }}">News</a>
+                    class="hover:text-[#EC0226] dark:hover:text-red-400 transition {{ request()->is('news*') ? 'text-[#EC0226] dark:text-red-400' : '' }}">News</a>
             </li>
             <li><a href="/interview"
                     class="hover:text-[#EC0226] dark:hover:text-red-400 transition {{ request()->is('interview') ? 'text-[#EC0226] dark:text-red-400' : '' }}">Interview</a>

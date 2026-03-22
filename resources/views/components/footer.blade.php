@@ -25,7 +25,7 @@
                                 class="hover:text-red-500 transition {{ request()->is('/') ? 'text-red-500' : '' }}">Home</a>
                         </li>
                         <li><a href="/news"
-                                class="hover:text-red-500 transition {{ request()->is('news') ? 'text-red-500' : '' }}">News</a>
+                                class="hover:text-red-500 transition {{ request()->is('news*') ? 'text-red-500' : '' }}">News</a>
                         </li>
                         <li><a href="/interview"
                                 class="hover:text-red-500 transition {{ request()->is('interview') ? 'text-red-500' : '' }}">Interview</a>
