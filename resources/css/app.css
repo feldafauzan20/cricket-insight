@@ -50,6 +50,15 @@
     font-display: swap;
 }
 
+/* italic font */
+@font-face {
+    font-family: "Poppins";
+    src: url("../fonts/Poppins-Italic.woff2") format("woff2");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
 /* font face for playfair display */
 /* medium font */
 @font-face {
