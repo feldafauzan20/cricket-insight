@@ -1,5 +1,5 @@
 @props([
-    'image' => '/images/dummy/trending-card/dummy-trending-card-1.jpg',
+    'image' => '/images/dummy/trending-card/dummy-trending-card-1.webp',
     'title' => 'PCI has made history by successfully hosting the inaugural cricket tournament in the region',
     'author' => 'FARHAN DUDI',
     'timeRead' => '1',
@@ -33,8 +33,8 @@
             <div class="w-57 lg:h-fit flex justify-between items-center">
                 <div class="flex items-center text-white gap-x-2.5">
                     <div class="w-9 h-9 rounded-full overflow-hidden">
-                        <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.jpg') }}" alt="Profile Picture"
-                            class="w-full h-full object-cover">
+                        <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}"
+                            alt="Profile Picture" class="w-full h-full object-cover">
                     </div>
                     <p class="font-semibold text-[10px]"><span class="font-normal">By </span>{{ $author }}</p>
                 </div>

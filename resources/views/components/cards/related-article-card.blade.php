@@ -1,5 +1,5 @@
 <div class="relative h-61.75 md:h-85.25 rounded-md overflow-hidden">
-    <img src="{{ asset('images/dummy/latest-news-card/dummy-latest-news-card.jpg') }}" alt="Hero Image" width="1920"
+    <img src="{{ asset('images/dummy/latest-news-card/dummy-latest-news-card.webp') }}" alt="Hero Image" width="1920"
         height="1080" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
 
     <!-- Overlay gradient -->

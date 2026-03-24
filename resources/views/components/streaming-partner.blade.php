@@ -15,31 +15,31 @@
         <!-- Logo 1 -->
         <div
             class="flex justify-center md:justify-start md:col-start-1 md:col-start lg:col-start-1 lg:col-span-2 2xl:col-start-1 2xl:col-span-1 2xl:justify-center md:col-end-4">
-            <img src="{{ asset('images/dummy/streaming-partner/dummy-streaming-partner.png') }}"
+            <img src="{{ asset('images/dummy/streaming-partner/dummy-streaming-partner.webp') }}"
                 alt="dummy streaming partner" class="w-53.75 md:w-71.25 h-auto object-contain">
         </div>
         <!-- Logo 2 -->
         <div
             class="flex justify-center md:justify-end md:col-start-4 md:col-end-7 lg:col-start-3 lg:col-span-2 2xl:col-start-2 2xl:col-span-1 2xl:justify-center">
-            <img src="{{ asset('images/dummy/streaming-partner/dummy-streaming-partner.png') }}"
+            <img src="{{ asset('images/dummy/streaming-partner/dummy-streaming-partner.webp') }}"
                 alt="dummy streaming partner" class="w-53.75 md:w-71.25 h-auto object-contain">
         </div>
         <!-- Logo 3 -->
         <div
             class="flex justify-center md:col-start-2 md:col-end-4 lg:col-start-5 lg:col-span-2 2xl:col-start-3 2xl:col-span-1">
-            <img src="{{ asset('images/dummy/streaming-partner/dummy-streaming-partner.png') }}"
+            <img src="{{ asset('images/dummy/streaming-partner/dummy-streaming-partner.webp') }}"
                 alt="dummy streaming partner" class="w-53.75 md:w-71.25 h-auto object-contain">
         </div>
         <!-- Logo 4 -->
         <div
             class="flex justify-center md:col-start-4 md:col-end-6 lg:row-start-2 lg:col-start-2 lg:col-end-4 lg:col-span-2 lg:justify-end 2xl:row-start-1 2xl:col-start-4 2xl:col-span-1 2xl:justify-center">
-            <img src="{{ asset('images/dummy/streaming-partner/dummy-streaming-partner.png') }}"
+            <img src="{{ asset('images/dummy/streaming-partner/dummy-streaming-partner.webp') }}"
                 alt="dummy streaming partner" class="w-53.75 md:w-71.25 h-auto object-contain">
         </div>
         <!-- Logo 5 -->
         <div
             class="flex justify-center col-span-2 md:col-start-3 md:col-end-5 lg:row-start-2 lg:col-start-4 lg:col-end-6 lg:justify-start 2xl:row-start-1 2xl:col-start-5 2xl:col-span-1 2xl:justify-center">
-            <img src="{{ asset('images/dummy/streaming-partner/dummy-streaming-partner.png') }}"
+            <img src="{{ asset('images/dummy/streaming-partner/dummy-streaming-partner.webp') }}"
                 alt="dummy streaming partner" class="w-53.75 md:w-71.25 h-auto object-contain">
         </div>
     </div>

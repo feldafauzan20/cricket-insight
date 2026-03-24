@@ -1,7 +1,7 @@
 <div
     class="flex gap-x-4 px-6 not-first:pt-2 lg:not-first:pt-5 md:px-0 md:mx-1.5 lg:mx-5 border-b border-b-[#C7C7C7] last:border-b-0 not-last:pb-2 lg:not-last:pb-5.5">
     <div class="w-29 h-18 lg:w-66.25 lg:h-41 2xl:w-29 2xl:h-18 overflow-hidden rounded-[3px]">
-        <img src="{{ asset('images/dummy/popular-recent-news/dummy-popular-recent-news.jpg') }}"
+        <img src="{{ asset('images/dummy/popular-recent-news/dummy-popular-recent-news.webp') }}"
             alt=" Popular and Recent News Image" class="w-full h-full object-cover" loading="lazy">
     </div>
     <div class="flex flex-col w-full">

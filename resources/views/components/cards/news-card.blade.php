@@ -1,6 +1,6 @@
 <div class="md:flex md:gap-x-7.5 border-b border-[#EFEFEF] dark:border-[#DEDEDE] pb-7.5">
     <div class="h-47.5 sm:w-69.25 lg:w-92.75 2xl:w-158 md:h-auto 2xl:h-49 rounded-[5px] overflow-hidden mb-3.75 md:mb-0">
-        <img src="{{ asset('images/dummy/news-card/dummy-news-card.jpg') }}" class="w-full h-full object-cover"
+        <img src="{{ asset('images/dummy/news-card/dummy-news-card.webp') }}" class="w-full h-full object-cover"
             alt="News Thumbnail">
     </div>
     <div class="2xl:w-full">
@@ -23,7 +23,7 @@
         <div class="flex justify-between items-center 2xl:max-h-full">
             <div class="flex items-center text-[#121212] dark:text-white gap-x-2.5">
                 <div class="w-9 h-9 rounded-full overflow-hidden">
-                    <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.jpg') }}" alt="Profile Picture"
+                    <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}" alt="Profile Picture"
                         class="w-full h-full object-cover">
                 </div>
                 <p class="font-medium text-[10px]">BY FARHAN DUDI</p>

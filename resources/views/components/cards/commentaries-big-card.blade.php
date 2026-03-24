@@ -1,6 +1,6 @@
 <div>
     <div class="w-full h-35.5 lg:h-60 2xl:h-74 rounded-[3px] overflow-hidden mb-4 md:mb-5">
-        <img src="{{ asset('images/dummy/commentaries/dummy-commentaries-1.jpg') }}" alt="Commentaries Image"
+        <img src="{{ asset('images/dummy/commentaries/dummy-commentaries-1.webp') }}" alt="Commentaries Image"
             loading="lazy" class="w-full h-full object-cover">
     </div>
     <div>
@@ -12,7 +12,7 @@
         <div class="w-57 md:w-67.25 lg:h-fit flex justify-between items-center mb-7 2xl:mb-0">
             <div class="flex items-center text-[#121212] dark:text-white gap-x-2.5">
                 <div class="w-9 h-9 rounded-full overflow-hidden">
-                    <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.jpg') }}" alt="Profile Picture"
+                    <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}" alt="Profile Picture"
                         class="w-full h-full object-cover">
                 </div>
                 <p class="font-semibold text-[10px] md:text-sm"><span class="font-normal">By </span>Farhan Dudi</p>

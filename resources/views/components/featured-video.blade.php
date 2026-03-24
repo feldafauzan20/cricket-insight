@@ -2,7 +2,7 @@
     // Dummy data for featured videos
     $featuredVideos = [
         [
-            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.jpg',
+            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.webp',
             'category' => 'Matches',
             'title' => 'Garuda Gentlemen, triumphed over the Dispora India team',
             'author' => 'FARHAN DUDI',
@@ -10,7 +10,7 @@
             'views' => '1.2K',
         ],
         [
-            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.jpg',
+            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.webp',
             'category' => 'Tournament',
             'title' => 'Indonesia Cricket League Season 2 kicks off with spectacular opening',
             'author' => 'SARAH JOHNSON',
@@ -18,7 +18,7 @@
             'views' => '2.5K',
         ],
         [
-            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.jpg',
+            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.webp',
             'category' => 'Player Focus',
             'title' => 'Rising star makes debut with century against Malaysia',
             'author' => 'DAVID CHEN',
@@ -26,7 +26,7 @@
             'views' => '3.1K',
         ],
         [
-            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.jpg',
+            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.webp',
             'category' => 'Analysis',
             'title' => 'Breaking down the winning strategy from last weekend match',
             'author' => 'MIKE ANDERSON',
@@ -34,7 +34,7 @@
             'views' => '1.8K',
         ],
         [
-            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.jpg',
+            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.webp',
             'category' => 'Highlights',
             'title' => 'Top 10 catches of the month that left everyone stunned',
             'author' => 'EMMA WILSON',
@@ -42,7 +42,7 @@
             'views' => '4.2K',
         ],
         [
-            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.jpg',
+            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.webp',
             'category' => 'Interview',
             'title' => 'Exclusive conversation with national team captain about future plans',
             'author' => 'JOHN SMITH',
@@ -50,7 +50,7 @@
             'views' => '2.9K',
         ],
         [
-            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.jpg',
+            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.webp',
             'category' => 'Training',
             'title' => 'Behind the scenes at Jakarta Cricket Academy intensive program',
             'author' => 'LISA BROWN',
@@ -58,7 +58,7 @@
             'views' => '1.5K',
         ],
         [
-            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.jpg',
+            'image' => 'images/dummy/commentaries/dummy-commentaries-small-card.webp',
             'category' => 'News',
             'title' => 'New cricket stadium construction begins in Bali this month',
             'author' => 'ALEX KUMAR',
@@ -72,7 +72,7 @@
     {{-- Header Section --}}
     <div class="relative w-full 2xl:w-107.25 2xl:h-131.25 2xl:shrink-0 2xl:flex 2xl:items-center 2xl:justify-center ">
         {{-- Background image with img tag --}}
-        <img src="{{ asset('images/dummy/featured-video/dummy-bg-featured-video.png') }}" alt="Featured Video Background"
+        <img src="{{ asset('images/dummy/featured-video/dummy-bg-featured-video.webp') }}" alt="Featured Video Background"
             class="absolute w-full h-full object-cover opacity-10 z-20" />
 
         {{-- Blue Background --}}
@@ -110,7 +110,7 @@
                         <div class="relative px-7.5 py-10 flex flex-col justify-between h-full">
                             <div class="flex items-center text-white gap-x-2.5">
                                 <div class="w-9 h-9 rounded-full overflow-hidden">
-                                    <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.jpg') }}"
+                                    <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}"
                                         alt="Profile Picture" class="w-full h-full object-cover">
                                 </div>
                                 <p class="font-semibold text-[10px] md:text-sm">BY {{ $video['author'] }}</p>

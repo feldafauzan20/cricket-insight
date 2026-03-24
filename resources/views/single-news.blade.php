@@ -67,8 +67,8 @@
                     {{-- AUTHOR, DATE, TIME READ, AND VIEW NEWS --}}
                     <div class="flex items-center gap-x-2.5 md:gap-x-3 mb-7.5">
                         <div class="w-9 md:w-11.25 h-9 md:h-11.25 rounded-full overflow-hidden">
-                            <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.jpg') }}" alt="Profile Picture"
-                                class="w-full h-full object-cover">
+                            <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}"
+                                alt="Profile Picture" class="w-full h-full object-cover">
                         </div>
                         <div>
                             <p class="font-medium text-[13px] mb-0.5 text-[#48494A] dark:text-white">Farhan Dudi</p>
@@ -89,7 +89,7 @@
                     {{-- NEWS BODY --}}
                     <div>
                         <div class="rounded-[5px] md:rounded-[10px] overflow-hidden h-58.5 md:h-109 lg:h-137 mb-7.5">
-                            <img src="{{ asset('images/dummy/hero-home/bg-hero-home.jpg') }}" alt="Dummy News Image"
+                            <img src="{{ asset('images/dummy/hero-home/bg-hero-home.webp') }}" alt="Dummy News Image"
                                 class="w-full h-full object-cover">
                         </div>
                         <div class="flex flex-col gap-y-6.25 mb-7.5 md:max-w-145.5 lg:max-w-193.25 md:mx-auto">
@@ -111,7 +111,7 @@
                         </div>
                         <div class="mb-7.5">
                             <div class="rounded-[5px] md:rounded-[15px] overflow-hidden h-54.5 md:h-98.25 lg:h-136.75 mb-2">
-                                <img src="{{ asset('images/dummy/hero-home/bg-hero-home.jpg') }}" alt="Dummy News Image"
+                                <img src="{{ asset('images/dummy/hero-home/bg-hero-home.webp') }}" alt="Dummy News Image"
                                     class="w-full h-full object-cover">
                             </div>
                             {{-- IMAGE CAPTION --}}
@@ -146,8 +146,8 @@
                             <div class="mb-11 md:mb-7.5">
                                 <div
                                     class="rounded-[5px] md:rounded-[15px] overflow-hidden h-54.5 md:h-81.5 lg:h-114.75 mb-2">
-                                    <img src="{{ asset('images/dummy/hero-home/bg-hero-home.jpg') }}" alt="Dummy News Image"
-                                        class="w-full h-full object-cover">
+                                    <img src="{{ asset('images/dummy/hero-home/bg-hero-home.webp') }}"
+                                        alt="Dummy News Image" class="w-full h-full object-cover">
                                 </div>
                                 {{-- IMAGE CAPTION --}}
                                 <p class="text-[#555] italic text-[13px] leading-[163%] text-center">Lorem ipsum dolor sit

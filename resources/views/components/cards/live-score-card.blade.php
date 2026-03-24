@@ -2,7 +2,7 @@
     <p class="text-[#48494A] dark:text-white text-[8.5px] mb-3">RESULT • 2nd ODI • Rajkot</p>
     <div class="flex justify-between mb-2">
         <div class="flex gap-x-2">
-            <img src="{{ asset('images/dummy/live-score-card/dummy-logo-live-score-1.png') }}" alt="dummy team logo"
+            <img src="{{ asset('images/dummy/live-score-card/dummy-logo-live-score-1.webp') }}" alt="dummy team logo"
                 class="h-5">
             <h1 class="font-medium text-[#A2A6A9] text-sm">PCI</h1>
         </div>
@@ -10,7 +10,7 @@
     </div>
     <div class="flex justify-between mb-3">
         <div class="flex gap-x-2">
-            <img src="{{ asset('images/dummy/live-score-card/dummy-logo-live-score-2.png') }}" alt="dummy team logo"
+            <img src="{{ asset('images/dummy/live-score-card/dummy-logo-live-score-2.webp') }}" alt="dummy team logo"
                 class="h-5">
             <h1 class="font-medium text-[#48494A] dark:text-white text-sm">LGO</h1>
         </div>

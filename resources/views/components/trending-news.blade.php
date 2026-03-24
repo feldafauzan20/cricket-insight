@@ -13,7 +13,7 @@
         {{-- Trending 1 - Big card --}}
         <div class="mb-2.5 2xl:mb-0 2xl:w-1/2">
             <x-cards.trending-card height="h-100.25 md:h-[435px] lg:h-[691px] 2xl:h-[593px]"
-                image="/images/dummy/trending-card/dummy-trending-card-1.jpg"
+                image="/images/dummy/trending-card/dummy-trending-card-1.webp"
                 title="PCI has made history by successfully hosting the inaugural cricket tournament in the region"
                 author="FARHAN DUDI" timeRead="1" date="19 JAN 2026" trendingNumber="1" fontSize="text-[32px]" />
         </div>
@@ -22,11 +22,11 @@
         <div
             class="flex flex-col md:flex-row 2xl:flex-col gap-y-2.5 md:gap-y-0 md:gap-x-2.5 2xl:gap-y-2.5 2xl:gap-x-0 2xl:w-1/2">
             <x-cards.trending-card height="h-[300px] 2xl:h-[290px]"
-                image="/images/dummy/trending-card/dummy-trending-card-2.jpg"
+                image="/images/dummy/trending-card/dummy-trending-card-2.webp"
                 title="Another trending news title goes here" author="FELDA FAUZAN" timeRead="2" date="20 JAN 2026"
                 trendingNumber="2" fontSize="text-[18px]" />
             <x-cards.trending-card height="h-[300px] 2xl:h-[290px]"
-                image="/images/dummy/trending-card/dummy-trending-card-3.jpg"
+                image="/images/dummy/trending-card/dummy-trending-card-3.webp"
                 title="Yet another trending news title goes here" author="Fatur Ariel" timeRead="4" date="08 JAN 2026"
                 trendingNumber="3" fontSize="text-[18px]" />
         </div>

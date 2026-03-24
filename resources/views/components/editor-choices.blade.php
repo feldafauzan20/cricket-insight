@@ -1,11 +1,11 @@
 <section class="lg:flex lg:items-stretch 2xl:container 2xl:mx-auto">
     <div class="hidden md:block h-54.5 lg:h-auto lg:w-97.25 2xl:w-2/5 overflow-hidden">
-        <img src="{{ asset('images/dummy/editor-choices/dummy-bg-hero-editor-choices.jpg') }}"
+        <img src="{{ asset('images/dummy/editor-choices/dummy-bg-hero-editor-choices.webp') }}"
             alt=" Editor's Choices Hero Image" class="w-full h-full object-cover">
     </div>
     <div class="relative overflow-hidden 2xl:w-3/5">
         {{-- Background Image --}}
-        <img src="{{ asset('images/dummy/dummy-editor-choices.png') }}" alt="Editor's Choices Background"
+        <img src="{{ asset('images/dummy/dummy-editor-choices.webp') }}" alt="Editor's Choices Background"
             class="absolute inset-0 w-full h-full object-cover opacity-40 z-20">
 
         {{-- Gradient Overlay --}}
@@ -27,8 +27,8 @@
             <div class="w-57 md:w-63.25 lg:h-fit flex justify-between items-center mb-7">
                 <div class="flex items-center text-white gap-x-2.5">
                     <div class="w-9 h-9 rounded-full overflow-hidden">
-                        <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.jpg') }}" alt="Profile Picture"
-                            class="w-full h-full object-cover">
+                        <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}"
+                            alt="Profile Picture" class="w-full h-full object-cover">
                     </div>
                     <p class="font-semibold text-[10px]"><span class="font-normal">By </span>Farhan Dudi</p>
                 </div>
