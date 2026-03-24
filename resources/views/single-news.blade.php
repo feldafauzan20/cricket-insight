@@ -4,204 +4,244 @@
 
 @section('content')
 
-    {{-- BREADCRUMB AND CATEGORY SECTION START  --}}
-    <section class="pt-30 mx-6 md:mx-8 lg:mx-10 2xl:container 2xl:mx-auto mb-3.25">
+    <section class="2xl:pt-30">
+        <x-layout.two-column-layout paddingRight="2xl:pr-0" marginRight="2xl:mr-9" borderRight="2xl:border-none">
+            <x-slot name="main">
+                {{-- BREADCRUMB AND CATEGORY SECTION START  --}}
+                <section
+                    class="pt-30 md:pt-34 lg:pt-38 2xl:pt-0 mx-6 md:mx-8 lg:mx-10 2xl:container 2xl:mx-auto mb-3.25 md:mb-3.75">
 
-        {{-- BREADCRUMB --}}
-        <div class="mb-3.75">
-            <x-bread-crumb :items="[
-                ['title' => 'Home', 'url' => '/'],
-                ['title' => 'News', 'url' => '/news'],
-                ['title' => 'Global', 'url' => '/news/global'],
-                [
-                    'title' => Str::words(
-                        'Garuda Gentlemen, triumphed over the Dispora India team in a thrilling encounter at the Cricket World Cup 2024',
-                        2,
-                        '...',
-                    ),
-                ],
-            ]" />
-        </div>
-
-        {{-- CATEGORY --}}
-        <div class="flex flex-wrap items-center gap-2.5">
-            <x-cards.category.category-card :dotColor="'#EC0226'" :categoryName="'Match Results'" />
-            <x-cards.category.category-card :dotColor="'#007DFC'" :categoryName="'Leagues'" />
-        </div>
-    </section>
-    {{-- BREADCRUMB AND CATEGORY SECTION END  --}}
-
-    {{-- NEWS CONTENT SECTION START --}}
-    <section class="mx-6 md:mx-8 lg:mx-10 2xl:container 2xl:mx-auto">
-
-        {{-- TITLE NEWS --}}
-        <h1 class="text-[#121212] font-medium text-[22px]">
-            {{ Str::words(
-                'Garuda Gentlemen, triumphed over the Dispora India team in a thrilling encounter at the Cricket World Cup 2024',
-                8,
-                '...',
-            ) }}
-        </h1>
-
-        {{-- SEPARATOR LINE --}}
-        <div class="flex mt-2.5 mb-3.75">
-            <div class="w-58 h-px bg-[#EC0226]"></div>
-            <div class="w-full h-px bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>
-        </div>
-
-        {{-- INTRODUCTION PARAGRAPH --}}
-        <p class="text-[#121212] dark:text-[#EEEEEE] text-[15px] mb-3.75">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.
-        </p>
-
-        {{-- AUTHOR, DATE, TIME READ, AND VIEW NEWS --}}
-        <div class="flex items-center gap-x-2.5 mb-7.5">
-            <div class="w-9 h-9 rounded-full overflow-hidden">
-                <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.jpg') }}" alt="Profile Picture"
-                    class="w-full h-full object-cover">
-            </div>
-            <div>
-                <p class="font-medium text-[13px] mb-0.5 text-[#48494A]">Farhan Dudi</p>
-                <div class="flex items-center gap-x-3">
-                    <div class="flex items-center gap-x-2.25">
-                        <p class="text-[13px] text-[#48494A]">April 16, 2025</p>
-                        <p class="text-[13px] text-[#48494A]">/</p>
-                        <p class="text-[13px] text-[#48494A]">4 Min Read</p>
+                    {{-- BREADCRUMB --}}
+                    <div class="mb-3.75">
+                        <x-bread-crumb :items="[
+                            ['title' => 'Home', 'url' => '/'],
+                            ['title' => 'News', 'url' => '/news'],
+                            ['title' => 'Global', 'url' => '/news/global'],
+                            [
+                                'title' => Str::words(
+                                    'Garuda Gentlemen, triumphed over the Dispora India team in a thrilling encounter at the Cricket World Cup 2024',
+                                    2,
+                                    '...',
+                                ),
+                            ],
+                        ]" />
                     </div>
-                    <div class="flex items-center gap-x-1">
-                        <x-bi-eye class="w-3.5 h-3.5 text-[#48494A]" />
-                        <span class="text-[13px] text-[#48494A]">10</span>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        {{-- NEWS BODY --}}
-        <div>
-            <div class="rounded-[5px] overflow-hidden h-58.5 mb-7.5">
-                <img src="{{ asset('images/dummy/hero-home/bg-hero-home.jpg') }}" alt="Dummy News Image"
-                    class="w-full h-full object-cover">
-            </div>
-            <div class="flex flex-col gap-y-6.25 mb-7.5">
-                @for ($i = 0; $i < 5; $i++)
-                    <div>
-                        <p class="text-[#121212] dark:text-[#EEEEEE] text-[15px] leading-[163%]">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                            voluptate velit esse cillum dolore eu fugiat nulla
-                            pariatur.
-                        </p>
-                    </div>
-                @endfor
-            </div>
-            <div class="mb-7.5">
-                <div class="rounded-[5px] overflow-hidden h-54.5 mb-2">
-                    <img src="{{ asset('images/dummy/hero-home/bg-hero-home.jpg') }}" alt="Dummy News Image"
-                        class="w-full h-full object-cover">
-                </div>
-                {{-- IMAGE CAPTION --}}
-                <p class="text-[#555] italic text-[13px] leading-[163%] text-center">Lorem ipsum dolor sit amet
-                    consectetur adipiscing elit. Ex sapien vitae pellentesque sem placerat in id.</p>
-            </div>
-            <div class="flex flex-col gap-y-6.25 mb-4.25">
-                @for ($i = 0; $i < 5; $i++)
-                    <div>
-                        <p class="text-[#121212] dark:text-[#EEEEEE] text-[15px] leading-[163%]">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                            voluptate velit esse cillum dolore eu fugiat nulla
-                            pariatur.
-                        </p>
-                    </div>
-                @endfor
-            </div>
-
-            {{-- ANOTHER ONE NEWS RELATED --}}
-            <div>
-                <p class="text-[#121212] font-medium text-[15px] leading-[163%] mb-6.25">Don't Miss: <a href=""
-                        class="text-[#EC0226] underline underline-offset-8">{{ Str::words('Garuda Gentlemen, triumphed over the Dispora India team in a thrilling encounter at the Cricket World Cup 2024', 8, '...') }}</a>
-                </p>
-                <div class="mb-11">
-                    <div class="rounded-[5px] overflow-hidden h-54.5 mb-2">
-                        <img src="{{ asset('images/dummy/hero-home/bg-hero-home.jpg') }}" alt="Dummy News Image"
-                            class="w-full h-full object-cover">
-                    </div>
-                    {{-- IMAGE CAPTION --}}
-                    <p class="text-[#555] italic text-[13px] leading-[163%] text-center">Lorem ipsum dolor sit amet
-                        consectetur adipiscing elit. Ex sapien vitae pellentesque sem placerat in id.</p>
-                </div>
-                <p class="text-[#121212] dark:text-[#EEEEEE] text-[15px] leading-[163%] mb-7.5">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                    voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur.
-                </p>
-                <div class="flex items-center gap-x-2.5 mb-12.5">
-                    <p class="text-[#121212] text-[15px] font-medium leading-[163%]">Tags: </p>
+                    {{-- CATEGORY --}}
                     <div class="flex flex-wrap items-center gap-2.5">
-                        <x-cards.category.category-card :dotColor="'#EC0226'" :categoryName="'Cricket Champions'" />
-                        <x-cards.category.category-card :dotColor="'#007DFC'" :categoryName="'Interviews'" />
+                        <x-cards.category.category-card :dotColor="'#EC0226'" :categoryName="'Match Results'" />
+                        <x-cards.category.category-card :dotColor="'#007DFC'" :categoryName="'Leagues'" />
                     </div>
-                </div>
+                </section>
+                {{-- BREADCRUMB AND CATEGORY SECTION END  --}}
 
-                {{-- SHARE THIS ARTICLE --}}
-                <div>
-                    {{-- SHARE ARTICLE TITLE --}}
-                    <p class="text-[#121212] font-medium text-[16px] leading-[163%] mb-2.5 text-center">Share Article</p>
+                {{-- NEWS CONTENT SECTION START --}}
+                <section class="mx-6 md:mx-8 lg:mx-10 2xl:container 2xl:mx-auto mb-7.5">
 
-                    {{-- SOCIAL MEDIA ICONS --}}
-                    <div class="flex gap-x-3.5 mb-6 justify-center">
-                        <div
-                            class="bg-white p-3.25 shadow-md rounded-[5px] cursor-pointer hover:shadow-lg transition-shadow">
-                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}"
-                                target="_blank" rel="noopener noreferrer">
-                                <x-bi-facebook class="w-3.75 h-3.75 text-[#1877F2]" />
-                            </a>
-                        </div>
-                        <div
-                            class="bg-white p-3.25 shadow-md rounded-[5px] cursor-pointer hover:shadow-lg transition-shadow">
-                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}" target="_blank"
-                                rel="noopener noreferrer">
-                                <x-bi-twitter-x class="w-3.75 h-3.75 text-[#000000]" />
-                            </a>
-                        </div>
-                        <div
-                            class="bg-white p-3.25 shadow-md rounded-[5px] cursor-pointer hover:shadow-lg transition-shadow">
-                            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-                                <x-bi-instagram class="w-3.75 h-3.75 text-[#E4405F]" />
-                            </a>
-                        </div>
-                        <div
-                            class="bg-white p-3.25 shadow-md rounded-[5px] cursor-pointer hover:shadow-lg transition-shadow">
-                            <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
-                                <x-bi-youtube class="w-3.75 h-3.75 text-[#FF0000]" />
-                            </a>
-                        </div>
+                    {{-- TITLE NEWS --}}
+                    <h1 class="text-[#121212] dark:text-white font-medium text-[22px]">
+                        {{ Str::words(
+                            'Garuda Gentlemen, triumphed over the Dispora India team in a thrilling encounter at the Cricket World Cup 2024',
+                            8,
+                            '...',
+                        ) }}
+                    </h1>
+
+                    {{-- SEPARATOR LINE --}}
+                    <div class="flex mt-2.5 mb-3.75">
+                        <div class="w-58 h-px bg-[#EC0226]"></div>
+                        <div class="w-full h-px bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>
                     </div>
 
-                    {{-- SHARE LINK URL --}}
-                    <div class="flex items-center gap-x-2.5 bg-[#F5F5F5] border border-[#E0E0E0] rounded-[5px] p-3">
-                        <input type="text" id="shareUrl" value="{{ url()->current() }}" readonly
-                            class="flex-1 bg-transparent text-[#48494A] text-[13px] outline-none cursor-default">
-                        <button onclick="copyToClipboard()"
-                            class="shrink-0 p-1.5 hover:bg-[#EEEEEE] rounded transition-colors">
-                            <x-bi-clipboard class="w-4 h-4 text-[#EC0226]" />
-                        </button>
-                    </div>
-                </div>
+                    {{-- INTRODUCTION PARAGRAPH --}}
+                    <p class="text-[#121212] dark:text-white text-[15px] mb-3.75">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et
+                        dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+                        ea
+                        commodo
+                        consequat.
+                    </p>
 
-            </div>
-        </div>
+                    {{-- AUTHOR, DATE, TIME READ, AND VIEW NEWS --}}
+                    <div class="flex items-center gap-x-2.5 md:gap-x-3 mb-7.5">
+                        <div class="w-9 md:w-11.25 h-9 md:h-11.25 rounded-full overflow-hidden">
+                            <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.jpg') }}" alt="Profile Picture"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <p class="font-medium text-[13px] mb-0.5 text-[#48494A] dark:text-white">Farhan Dudi</p>
+                            <div class="flex items-center gap-x-3">
+                                <div class="flex items-center gap-x-2.25">
+                                    <p class="text-[13px] text-[#48494A] dark:text-white">April 16, 2025</p>
+                                    <p class="text-[13px] text-[#48494A] dark:text-white">/</p>
+                                    <p class="text-[13px] text-[#48494A] dark:text-white">4 Min Read</p>
+                                </div>
+                                <div class="flex items-center gap-x-1">
+                                    <x-bi-eye class="w-3.5 h-3.5 text-[#48494A] dark:text-white" />
+                                    <span class="text-[13px] text-[#48494A] dark:text-white">10</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- NEWS BODY --}}
+                    <div>
+                        <div class="rounded-[5px] md:rounded-[10px] overflow-hidden h-58.5 md:h-109 lg:h-137 mb-7.5">
+                            <img src="{{ asset('images/dummy/hero-home/bg-hero-home.jpg') }}" alt="Dummy News Image"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex flex-col gap-y-6.25 mb-7.5 md:max-w-145.5 lg:max-w-193.25 md:mx-auto">
+                            @for ($i = 0; $i < 5; $i++)
+                                <div>
+                                    <p class="text-[#121212] dark:text-[#EEEEEE] text-[15px] leading-[163%]">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                        incididunt ut
+                                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                        ullamco
+                                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                        reprehenderit
+                                        in
+                                        voluptate velit esse cillum dolore eu fugiat nulla
+                                        pariatur.
+                                    </p>
+                                </div>
+                            @endfor
+                        </div>
+                        <div class="mb-7.5">
+                            <div class="rounded-[5px] md:rounded-[15px] overflow-hidden h-54.5 md:h-98.25 lg:h-136.75 mb-2">
+                                <img src="{{ asset('images/dummy/hero-home/bg-hero-home.jpg') }}" alt="Dummy News Image"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            {{-- IMAGE CAPTION --}}
+                            <p class="text-[#555] italic text-[13px] leading-[163%] text-center">Lorem ipsum dolor sit amet
+                                consectetur adipiscing elit. Ex sapien vitae pellentesque sem placerat in id.</p>
+                        </div>
+                        <div
+                            class="flex flex-col gap-y-6.25 mb-4.25 md:mb-12 lg:mb-7.5 md:max-w-145.5 lg:max-w-193.25 md:mx-auto">
+                            @for ($i = 0; $i < 5; $i++)
+                                <div>
+                                    <p class="text-[#121212] dark:text-[#EEEEEE] text-[15px] leading-[163%]">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                        incididunt ut
+                                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                        ullamco
+                                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                        reprehenderit
+                                        in
+                                        voluptate velit esse cillum dolore eu fugiat nulla
+                                        pariatur.
+                                    </p>
+                                </div>
+                            @endfor
+                        </div>
+
+                        {{-- ANOTHER ONE NEWS RELATED --}}
+                        <div class="md:max-w-145.5 lg:max-w-193.25 md:mx-auto">
+                            <p class="text-[#121212] dark:text-white font-medium text-[15px] leading-[163%] mb-6.25">Don't
+                                Miss: <a href=""
+                                    class="text-[#EC0226] underline underline-offset-8">{{ Str::words('Garuda Gentlemen, triumphed over the Dispora India team in a thrilling encounter at the Cricket World Cup 2024', 8, '...') }}</a>
+                            </p>
+                            <div class="mb-11 md:mb-7.5">
+                                <div
+                                    class="rounded-[5px] md:rounded-[15px] overflow-hidden h-54.5 md:h-81.5 lg:h-114.75 mb-2">
+                                    <img src="{{ asset('images/dummy/hero-home/bg-hero-home.jpg') }}" alt="Dummy News Image"
+                                        class="w-full h-full object-cover">
+                                </div>
+                                {{-- IMAGE CAPTION --}}
+                                <p class="text-[#555] italic text-[13px] leading-[163%] text-center">Lorem ipsum dolor sit
+                                    amet
+                                    consectetur adipiscing elit. Ex sapien vitae pellentesque sem placerat in id.</p>
+                            </div>
+                            <p class="text-[#121212] dark:text-[#EEEEEE] text-[15px] leading-[163%] mb-7.5">
+                                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
+                                pellentesque
+                                sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
+                                urna
+                                tempor.
+                                Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada
+                                lacinia
+                                integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora
+                                torquent
+                                per
+                                conubia nostra inceptos himenaeos.
+                            </p>
+                            <div class="flex flex-wrap items-center gap-2.5 mb-12.5">
+                                <p class="text-[#121212] dark:text-white text-[15px] font-medium leading-[163%]">Tags: </p>
+                                <div class="flex flex-wrap items-center gap-2.5">
+                                    <x-cards.category.category-card :dotColor="'#EC0226'" :categoryName="'Cricket Champions'" />
+                                    <x-cards.category.category-card :dotColor="'#007DFC'" :categoryName="'Interviews'" />
+                                </div>
+                            </div>
+
+                            {{-- SHARE THIS ARTICLE --}}
+                            <div>
+                                {{-- SHARE ARTICLE TITLE --}}
+                                <p
+                                    class="text-[#121212] dark:text-white font-medium text-[16px] leading-[163%] mb-2.5 text-center">
+                                    Share
+                                    Article</p>
+
+                                {{-- SOCIAL MEDIA ICONS --}}
+                                <div class="flex gap-x-3.5 mb-6 justify-center">
+                                    <div
+                                        class="bg-white dark:bg-[#353434] p-3.25 shadow-md rounded-[5px] cursor-pointer hover:shadow-lg transition-shadow">
+                                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <x-bi-facebook class="w-3.75 h-3.75 text-[#1977F2]" />
+                                        </a>
+                                    </div>
+                                    <div
+                                        class="bg-white dark:bg-[#353434] p-3.25 shadow-md rounded-[5px] cursor-pointer hover:shadow-lg transition-shadow">
+                                        <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <x-bi-twitter-x class="w-3.75 h-3.75 text-[#000000] dark:text-white" />
+                                        </a>
+                                    </div>
+                                    <div
+                                        class="bg-white dark:bg-[#353434] p-3.25 shadow-md rounded-[5px] cursor-pointer hover:shadow-lg transition-shadow">
+                                        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                                            <x-bi-instagram class="w-3.75 h-3.75 text-[#E4405F]" />
+                                        </a>
+                                    </div>
+                                    <div
+                                        class="bg-white dark:bg-[#353434] p-3.25 shadow-md rounded-[5px] cursor-pointer hover:shadow-lg transition-shadow">
+                                        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+                                            <x-bi-youtube class="w-3.75 h-3.75 text-[#FF0000] " />
+                                        </a>
+                                    </div>
+                                </div>
+
+                                {{-- SHARE LINK URL --}}
+                                <div
+                                    class="flex items-center gap-x-2.5 bg-[#F7F7F7] dark:bg-[#353434] py-2 px-2.5 md:max-w-125 md:mx-auto">
+                                    <input type="text" id="shareUrl" value="{{ url()->current() }}" readonly
+                                        class="flex-1 bg-transparent text-[#75788D] dark:text-[#75788D] text-[16px] leading-[163%] outline-none cursor-default">
+                                    <button onclick="copyToClipboard()"
+                                        class="shrink-0 p-1.5 hover:bg-[#EEEEEE] dark:hover:bg-[#4B4B4B] rounded transition-colors">
+                                        <x-bi-clipboard class="w-4 h-4 text-[#EC0226] dark:text-white" />
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+                {{-- NEWS CONTENT SECTION END --}}
+            </x-slot>
+            <x-slot name="sidebar">
+                {{-- POPULAR & RECENT NEWS SECTION START --}}
+                <section class="mx-6 md:mx-8 2xl:mx-0 mb-7 md:mb-0 lg:mb-7">
+                    <x-popular-recent-news />
+                </section>
+                {{-- POPULAR & RECENT NEWS SECTION END --}}
+            </x-slot>
+        </x-layout.two-column-layout>
     </section>
-    {{-- NEWS CONTENT SECTION END --}}
 
     {{-- RELATED ARTICLES SECTION START --}}
-    <section class="dark:bg-[#171717]">
+    <section class="dark:bg-[#121212]">
         <x-related-articles />
     </section>
     {{-- RELATED ARTICLES SECTION END --}}
