@@ -18,13 +18,14 @@
             </x-slot:icon>
         </x-cards.social-media-card>
 
-        <x-cards.social-media-card name="Youtube" url="https://youtube.com" bg-color="bg-[#FF0000]">
+        <x-cards.social-media-card name="Youtube" url="https://youtube.com/@cricketindonesia8372"
+            bg-color="bg-[#FF0000]">
             <x-slot:icon>
                 <x-bi-youtube class="w-5 h-5 text-white" />
             </x-slot:icon>
         </x-cards.social-media-card>
 
-        <x-cards.social-media-card name="Instagram" url="https://instagram.com"
+        <x-cards.social-media-card name="Instagram" url="https://instagram.com/cricket_ina"
             bg-color="bg-linear-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCAF45]">
             <x-slot:icon>
                 <x-bi-instagram class="w-5 h-5 text-white" />

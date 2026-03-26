@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,3 +14,5 @@ Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/single-news', function () {
     return view('single-news');
 });
+
+Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
