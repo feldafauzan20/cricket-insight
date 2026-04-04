@@ -15,4 +15,8 @@ Route::get('/single-news', function () {
     return view('single-news');
 });
 
-Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
+Route::get('/archive', [GalleryController::class, 'index'])->name('gallery.index');
+
+Route::get('/interview', function () {
+    return view('interview');
+});

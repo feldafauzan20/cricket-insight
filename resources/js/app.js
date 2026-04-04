@@ -43,6 +43,7 @@ Alpine.start();
 
 import Swiper from "swiper";
 import { FreeMode, Navigation, Autoplay, Pagination } from "swiper/modules";
+import { initInterviewVideosSwiper } from "./interview-videos";
 
 document.addEventListener("DOMContentLoaded", () => {
     new Swiper(".live-score-swiper", {
@@ -63,6 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
         grabCursor: true,
     });
 
+    // Interview Videos Swiper
+    initInterviewVideosSwiper();
+
     // Featured Video Carousel
     new Swiper(".featured-video-swiper", {
         modules: [Navigation],
@@ -80,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             768: {
                 slidesPerView: 2,
-                centeredSlides: true,
+                centeredSlides: false,
             },
             1536: {
                 slidesPerView: "auto",
