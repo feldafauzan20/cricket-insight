@@ -123,4 +123,19 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Cricket API Configuration
+    |--------------------------------------------------------------------------
+    |
+    | These configuration options are used for connecting to the Cricket API
+    | to fetch live scores, match details, and other cricket-related data.
+    |
+    */
+
+    'cricket_api_url' => env('CRICKET_API_URL', 'https://core-prod-origin.cricclubs.com'),
+    'cricket_club_id' => env('CRICKET_CLUB_ID', '18330'),
+    'x_consumer_key' => env('X_CONSUMER_KEY'),
+    'x_api_key' => env('X_API_KEY'),
+
 ];

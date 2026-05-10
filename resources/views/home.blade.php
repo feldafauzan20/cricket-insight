@@ -6,16 +6,29 @@
 
     {{-- LIVE SCORE CARD START --}}
     <div class="bg-[#F3F3F3] dark:bg-[#171717]">
-        <div class="pt-29 lg:pt-35 2xl:container 2xl:mx-auto mx-6 md:mx-8 lg:mx-10 pb-7.5 ">
-            <div class="swiper live-score-swiper overflow-hidden">
-                <div class="swiper-wrapper">
-                    @for ($i = 0; $i < 15; $i++)
-                        <div class="swiper-slide w-auto!">
-                            <x-cards.live-score-card />
-                        </div>
-                    @endfor
+        <div class="pt-29 lg:pt-35 pb-7.5 mx-6 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
+            @if (isset($hasError) && $hasError)
+                <div class="mb-4 rounded-md border border-red-300 bg-white p-4 dark:border-red-500 dark:bg-[#353434]">
+                    <p class="text-sm text-red-500">{{ $error ?? 'Failed to load live scores' }}</p>
                 </div>
-            </div>
+            @endif
+
+            @if (!empty($matches))
+                <div class="swiper live-score-swiper overflow-hidden">
+                    <div class="swiper-wrapper">
+                        @foreach ($matches as $match)
+                            <div class="swiper-slide w-76!">
+                                <x-cards.live-score-card :match="$match" />
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @else
+                <div
+                    class="rounded-md border border-[#F5F5F5] bg-white p-8 text-center dark:border-[#515050] dark:bg-[#353434]">
+                    <p class="text-sm text-[#A2A6A9]">No live matches available at the moment</p>
+                </div>
+            @endif
         </div>
     </div>
     {{-- LIVE SCORE CARD END --}}
@@ -30,35 +43,35 @@
     </section>
     {{-- LATEST NEWS SECTION END --}}
 
-    <section class="hidden 2xl:block 2xl:container 2xl:mx-auto 2xl:pt-6">
-        <h1 class="font-semibold text-[24px] md:text-[22px] 2xl:text-4xl text-[#121212] dark:text-[#EEEEEE] ">Trending</h1>
-        <p class="text-[13px] font-semibold text-[#666] dark:text-[#B2B2B2] mb-4">Don't miss daily news</p>
-        <div class="flex my-4 md:my-0 md:mt-4 md:mb-8">
+    <section class="hidden 2xl:container 2xl:mx-auto 2xl:block 2xl:pt-6">
+        <h1 class="text-[24px] font-semibold text-[#121212] md:text-[22px] 2xl:text-4xl dark:text-[#EEEEEE]">Trending</h1>
+        <p class="mb-4 text-[13px] font-semibold text-[#666] dark:text-[#B2B2B2]">Don't miss daily news</p>
+        <div class="my-4 flex md:my-0 md:mb-8 md:mt-4">
             <div class="w-48.5 2xl:w-88.5 h-px bg-[#EC0226]"></div>
-            <div class="w-full h-px bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>
+            <div class="h-px w-full bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>
         </div>
     </section>
 
     {{-- TRENDING SECTION START --}}
     <x-layout.two-column-layout>
         <x-slot name="main">
-            <section class="mx-6 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto">
+            <section class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto">
                 <x-trending-news />
             </section>
             {{-- EDITOR CHOICES START --}}
-            <section class="mt-6 lg:mt-7.5 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto">
+            <section class="lg:mt-7.5 md:mx-7.5 mt-6 2xl:container lg:mx-10 2xl:mx-auto">
                 <x-editor-choices />
             </section>
             {{-- EDITOR CHOICES END --}}
             {{-- ADS SECTION START --}}
             <section
-                class="mt-6 lg:mt-7.5 mx-6 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto mb-7 md:mb-6 lg:mb-7.5 2xl:mb-6">
+                class="lg:mt-7.5 md:mx-7.5 lg:mb-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 2xl:mx-auto 2xl:mb-6">
                 <x-ads />
             </section>
             {{-- ADS SECTION END --}}
 
             {{-- COMMENTARIES SECTION START --}}
-            <section class="mx-6 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto mb-7 md:mb-6 lg:mb-10 2xl:mb-0">
+            <section class="md:mx-7.5 mx-6 mb-7 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto 2xl:mb-0">
                 <x-commentaries />
             </section>
             {{-- COMMENTARIES SECTION END --}}
@@ -66,8 +79,8 @@
         <x-slot name="sidebar">
             {{-- POPULAR AND RECENT NEWS RANKING SECTION START --}}
             <div
-                class="md:flex lg:flex-col md:gap-x-2.5 md:items-stretch md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto mb-7 md:mb-6 lg:mb-7 2xl:mb-6">
-                <section class="mx-6 md:mx-0 mb-7 md:mb-0 lg:mb-7 md:w-1/2 lg:w-full md:flex md:flex-col md:items-stretch">
+                class="md:mx-7.5 mb-7 2xl:container md:mb-6 md:flex md:items-stretch md:gap-x-2.5 lg:mx-10 lg:mb-7 lg:flex-col 2xl:mx-auto 2xl:mb-6">
+                <section class="mx-6 mb-7 md:mx-0 md:mb-0 md:flex md:w-1/2 md:flex-col md:items-stretch lg:mb-7 lg:w-full">
                     <x-popular-recent-news />
                 </section>
 
@@ -79,12 +92,12 @@
             </div>
             {{-- POPULAR AND RECENT NEWS RANKING SECTION END --}}
             {{-- SOCIAL MEDIA SECTION START --}}
-            <section class="mx-6 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto mb-7 md:mb-6 lg:mb-10">
+            <section class="md:mx-7.5 mx-6 mb-7 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
                 <x-social-media />
             </section>
             {{-- SOCIAL MEDIA SECTION END --}}
             {{-- ADS SECTION START --}}
-            <section class="mt-6 lg:mt-7.5 mx-6 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto mb-7 md:mb-6 lg:mb-10">
+            <section class="lg:mt-7.5 md:mx-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
                 <x-ads />
             </section>
             {{-- ADS SECTION END --}}
@@ -93,7 +106,7 @@
     {{-- TRENDING SECTION END --}}
 
     {{-- NEWS FLASH SECTION START --}}
-    <section class="hidden md:block md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto md:mb-6 lg:mb-10">
+    <section class="md:mx-7.5 hidden 2xl:container md:mb-6 md:block lg:mx-10 lg:mb-10 2xl:mx-auto">
         <x-news-flash>
             Breaking News: India wins the cricket world cup! • England defeats Australia • New tournament announced
         </x-news-flash>
@@ -107,14 +120,14 @@
     {{-- FEATURED VIDEO SECTION END --}}
 
     {{-- ADS SECTION START --}}
-    <section class="mx-6 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto mb-7 md:mb-6 lg:mb-10">
+    <section class="md:mx-7.5 mx-6 mb-7 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
         <x-ads />
     </section>
     {{-- ADS SECTION END --}}
 
     {{-- STREAMING PARTNER SECTION START --}}
-    <section class="bg-[#FAFAFA] dark:bg-[#171717] pb-5 md:pb-10 lg:pb-12.5 2xl:pb-20">
-        <div class="mx-6 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto">
+    <section class="lg:pb-12.5 bg-[#FAFAFA] pb-5 md:pb-10 2xl:pb-20 dark:bg-[#171717]">
+        <div class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto">
             <x-streaming-partner />
         </div>
     </section>
@@ -122,7 +135,7 @@
 
     {{-- FOOTER SECTION START --}}
     <section class="bg-[#FAFAFA] dark:bg-[#171717]">
-        <div class="mx-6 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto">
+        <div class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto">
             <x-footer />
         </div>
     </section>

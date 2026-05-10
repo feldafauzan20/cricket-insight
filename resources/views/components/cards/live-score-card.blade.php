@@ -1,34 +1,96 @@
-<div class="bg-white dark:bg-[#353434] border border-[#F5F5F5] dark:border-[#515050] rounded-md p-3.5">
-    <p class="text-[#48494A] dark:text-white text-[8.5px] mb-3">RESULT • 2nd ODI • Rajkot</p>
-    <div class="flex justify-between mb-2">
-        <div class="flex gap-x-2">
-            <img src="{{ asset('images/dummy/live-score-card/dummy-logo-live-score-1.webp') }}" alt="dummy team logo"
-                class="h-5">
-            <h1 class="font-medium text-[#A2A6A9] text-sm">PCI</h1>
-        </div>
-        <p class="font-medium text-[#A2A6A9] text-sm">284/7</p>
-    </div>
-    <div class="flex justify-between mb-3">
-        <div class="flex gap-x-2">
-            <img src="{{ asset('images/dummy/live-score-card/dummy-logo-live-score-2.webp') }}" alt="dummy team logo"
-                class="h-5">
-            <h1 class="font-medium text-[#48494A] dark:text-white text-sm">LGO</h1>
-        </div>
-        <div class="flex gap-x-1 items-end">
-            <p class="text-[#48494A] dark:text-white text-[8.5px]">(47.3/50 ov, T:285)</p>
-            <p class="text-[#48494A] dark:text-white text-sm font-medium">286/3</p>
+@props(['match' => null, 'error' => null])
+
+@if ($error)
+    <div class="rounded-md border border-red-300 bg-white p-3.5 dark:border-red-500 dark:bg-[#353434]">
+        <div class="flex h-32 items-center justify-center">
+            <p class="text-center text-sm text-red-500">{{ $error }}</p>
         </div>
     </div>
-    <div>
-        <p class="text-[8.5px] text-[#48494A] dark:text-white">Logo Ipsum won by 7 wickets (with 15 balls remaining)</p>
-        <div class="bg-[#F5F5F5] dark:bg-[#515050] h-0.5 my-1.5"></div>
-        <div class="flex justify-between items-center">
-            <p class="text-[8.5px] text-[#48494A] dark:text-white">Jan 16, 2:15 PM GMT+7</p>
-            <div
-                class="bg-red-300/30 dark:bg-[#D6111A]/20 rounded-[50px] border border-[#D6111A] flex items-center gap-x-1 px-2 py-0.5">
-                <div class="w-1 h-1 bg-[#D6111A] rounded-full"></div>
-                <span class="text-[#D6111A] text-[8.5px] font-medium">LIVE</span>
+@elseif($match)
+    <div class="rounded-md border border-[#F5F5F5] bg-white p-3.5 dark:border-[#515050] dark:bg-[#353434]">
+        {{-- Match Info Header --}}
+        <p class="mb-3 text-[8.5px] text-[#48494A] dark:text-white">
+            {{ strtoupper($match['status']['text'] ?? 'RESULT') }} •
+            {{ $match['matchInfo']['seriesType'] ?? '' }} •
+            {{ $match['matchInfo']['location'] ?: $match['matchInfo']['seriesName'] ?? '' }}
+        </p>
+
+        {{-- Team 1 --}}
+        <div class="mb-2 flex justify-between">
+            <div class="flex items-center gap-x-2">
+                <img src="{{ $match['team1']['logo'] }}" alt="{{ $match['team1']['name'] }} logo"
+                    class="h-5 w-5 rounded-full object-cover"
+                    onerror="this.src='{{ asset('images/dummy/live-score-card/dummy-logo-live-score-1.webp') }}'">
+                <h1
+                    class="{{ $match['isComplete'] && !empty($match['result']) && str_contains($match['result'], $match['team1']['name'])
+                        ? 'text-[#48494A] dark:text-white'
+                        : 'text-[#A2A6A9]' }} text-sm font-medium">
+                    {{ $match['team1']['code'] ?: $match['team1']['name'] }}
+                </h1>
+            </div>
+            <p
+                class="{{ $match['isComplete'] && !empty($match['result']) && str_contains($match['result'], $match['team1']['name'])
+                    ? 'text-[#48494A] dark:text-white'
+                    : 'text-[#A2A6A9]' }} text-sm font-medium">
+                {{ $match['team1']['score'] }}/{{ $match['team1']['wickets'] }}
+            </p>
+        </div>
+
+        {{-- Team 2 --}}
+        <div class="mb-3 flex justify-between">
+            <div class="flex items-center gap-x-2">
+                <img src="{{ $match['team2']['logo'] }}" alt="{{ $match['team2']['name'] }} logo"
+                    class="h-5 w-5 rounded-full object-cover"
+                    onerror="this.src='{{ asset('images/dummy/live-score-card/dummy-logo-live-score-2.webp') }}'">
+                <h1
+                    class="{{ $match['isComplete'] && !empty($match['result']) && str_contains($match['result'], $match['team2']['name'])
+                        ? 'text-[#48494A] dark:text-white'
+                        : 'text-[#A2A6A9]' }} text-sm font-medium">
+                    {{ $match['team2']['code'] ?: $match['team2']['name'] }}
+                </h1>
+            </div>
+            <div class="flex items-end gap-x-1">
+                <p class="text-[8.5px] text-[#48494A] dark:text-white">
+                    ({{ $match['team2']['overs'] }}/{{ $match['matchInfo']['totalOvers'] }} ov
+                    @if ($match['team1']['score'] > 0)
+                        , T:{{ $match['team1']['score'] }}
+                    @endif)
+                </p>
+                <p
+                    class="{{ $match['isComplete'] && !empty($match['result']) && str_contains($match['result'], $match['team2']['name'])
+                        ? 'text-[#48494A] dark:text-white'
+                        : 'text-[#A2A6A9]' }} text-sm font-medium">
+                    {{ $match['team2']['score'] }}/{{ $match['team2']['wickets'] }}
+                </p>
+            </div>
+        </div>
+
+        {{-- Match Result and Footer --}}
+        <div>
+            <p class="truncate text-[8.5px] text-[#48494A] dark:text-white" title="{{ $match['result'] }}">
+                {{ $match['result'] ?: 'Match in progress' }}
+            </p>
+            <div class="my-1.5 h-0.5 bg-[#F5F5F5] dark:bg-[#515050]"></div>
+            <div class="flex items-center justify-between">
+                <p class="text-[8.5px] text-[#48494A] dark:text-white">
+                    {{ $match['matchDate'] }}
+                </p>
+                @if ($match['status']['show'])
+                    <div
+                        class="{{ $match['status']['class'] }} flex items-center gap-x-1 rounded-[50px] border px-2 py-0.5">
+                        <div
+                            class="{{ str_contains($match['status']['class'], 'red') ? 'bg-[#D6111A]' : '' }} {{ str_contains($match['status']['class'], 'gray') ? 'bg-gray-500' : '' }} {{ str_contains($match['status']['class'], 'blue') ? 'bg-blue-500' : '' }} h-1 w-1 rounded-full">
+                        </div>
+                        <span class="text-[8.5px] font-medium">{{ $match['status']['text'] }}</span>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
-</div>
+@else
+    <div class="rounded-md border border-[#F5F5F5] bg-white p-3.5 dark:border-[#515050] dark:bg-[#353434]">
+        <div class="flex h-32 items-center justify-center">
+            <p class="text-sm text-[#A2A6A9]">No match data available</p>
+        </div>
+    </div>
+@endif
