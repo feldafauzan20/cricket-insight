@@ -1,7 +1,8 @@
 <div class="flex overflow-hidden rounded-md shadow-md">
     <div class="md:w-45 w-40">
-        <img src="{{ asset('images/dummy/gallery/dummy-gallery.webp') }}" alt="Interview Card Image"
-            class="h-full w-full object-cover">
+        {{-- <img src="{{ asset('images/dummy/gallery/dummy-gallery.webp') }}" alt="Interview Card Image"
+            class="h-full w-full object-cover"> --}}
+        <img src="https://placehold.co/400x300" alt="Interview Card Image" class="h-full w-full object-cover">
     </div>
     <div
         class="md:py-7.5 md:px-4.5 w-full rounded-r-md border-y border-r border-[#F3F3F3] p-4 md:p-0 dark:border-[#515050] dark:bg-[#353434]">

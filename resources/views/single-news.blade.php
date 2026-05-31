@@ -9,7 +9,7 @@
             <x-slot name="main">
                 {{-- BREADCRUMB AND CATEGORY SECTION START  --}}
                 <section
-                    class="pt-30 md:pt-34 lg:pt-38 2xl:pt-0 mx-6 md:mx-8 lg:mx-10 2xl:container 2xl:mx-auto mb-3.25 md:mb-3.75">
+                    class="pt-30 md:pt-34 lg:pt-38 mb-3.25 md:mb-3.75 mx-6 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto 2xl:pt-0">
 
                     {{-- BREADCRUMB --}}
                     <div class="mb-3.75">
@@ -36,10 +36,10 @@
                 {{-- BREADCRUMB AND CATEGORY SECTION END  --}}
 
                 {{-- NEWS CONTENT SECTION START --}}
-                <section class="mx-6 md:mx-8 lg:mx-10 2xl:container 2xl:mx-auto mb-7.5">
+                <section class="mb-7.5 mx-6 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
 
                     {{-- TITLE NEWS --}}
-                    <h1 class="text-[#121212] dark:text-white font-medium text-[22px]">
+                    <h1 class="text-[22px] font-medium text-[#121212] dark:text-white">
                         {{ Str::words(
                             'Garuda Gentlemen, triumphed over the Dispora India team in a thrilling encounter at the Cricket World Cup 2024',
                             8,
@@ -48,13 +48,13 @@
                     </h1>
 
                     {{-- SEPARATOR LINE --}}
-                    <div class="flex mt-2.5 mb-3.75">
+                    <div class="mb-3.75 mt-2.5 flex">
                         <div class="w-58 h-px bg-[#EC0226]"></div>
-                        <div class="w-full h-px bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>
+                        <div class="h-px w-full bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>
                     </div>
 
                     {{-- INTRODUCTION PARAGRAPH --}}
-                    <p class="text-[#121212] dark:text-white text-[15px] mb-3.75">
+                    <p class="mb-3.75 text-[15px] text-[#121212] dark:text-white">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                         et
                         dolore
@@ -65,21 +65,22 @@
                     </p>
 
                     {{-- AUTHOR, DATE, TIME READ, AND VIEW NEWS --}}
-                    <div class="flex items-center gap-x-2.5 md:gap-x-3 mb-7.5">
-                        <div class="w-9 md:w-11.25 h-9 md:h-11.25 rounded-full overflow-hidden">
-                            <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}"
-                                alt="Profile Picture" class="w-full h-full object-cover">
+                    <div class="mb-7.5 flex items-center gap-x-2.5 md:gap-x-3">
+                        <div class="md:w-11.25 md:h-11.25 h-9 w-9 overflow-hidden rounded-full">
+                            {{-- <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}"
+                                alt="Profile Picture" class="w-full h-full object-cover"> --}}
+                            <img src="https://placehold.co/36x36" alt="Profile Picture" class="h-full w-full object-cover">
                         </div>
                         <div>
-                            <p class="font-medium text-[13px] mb-0.5 text-[#48494A] dark:text-white">Farhan Dudi</p>
+                            <p class="mb-0.5 text-[13px] font-medium text-[#48494A] dark:text-white">Farhan Dudi</p>
                             <div class="flex items-center gap-x-3">
-                                <div class="flex items-center gap-x-2.25">
+                                <div class="gap-x-2.25 flex items-center">
                                     <p class="text-[13px] text-[#48494A] dark:text-white">April 16, 2025</p>
                                     <p class="text-[13px] text-[#48494A] dark:text-white">/</p>
                                     <p class="text-[13px] text-[#48494A] dark:text-white">4 Min Read</p>
                                 </div>
                                 <div class="flex items-center gap-x-1">
-                                    <x-bi-eye class="w-3.5 h-3.5 text-[#48494A] dark:text-white" />
+                                    <x-bi-eye class="h-3.5 w-3.5 text-[#48494A] dark:text-white" />
                                     <span class="text-[13px] text-[#48494A] dark:text-white">10</span>
                                 </div>
                             </div>
@@ -88,14 +89,16 @@
 
                     {{-- NEWS BODY --}}
                     <div>
-                        <div class="rounded-[5px] md:rounded-[10px] overflow-hidden h-58.5 md:h-109 lg:h-137 mb-7.5">
-                            <img src="{{ asset('images/dummy/hero-home/bg-hero-home.webp') }}" alt="Dummy News Image"
-                                class="w-full h-full object-cover">
+                        <div class="h-58.5 md:h-109 lg:h-137 mb-7.5 overflow-hidden rounded-[5px] md:rounded-[10px]">
+                            {{-- <img src="{{ asset('images/dummy/hero-home/bg-hero-home.webp') }}" alt="Dummy News Image"
+                                class="w-full h-full object-cover"> --}}
+                            <img src="https://placehold.co/1200x600" alt="Dummy News Image"
+                                class="h-full w-full object-cover">
                         </div>
-                        <div class="flex flex-col gap-y-6.25 mb-7.5 md:max-w-145.5 lg:max-w-193.25 md:mx-auto">
+                        <div class="gap-y-6.25 mb-7.5 md:max-w-145.5 lg:max-w-193.25 flex flex-col md:mx-auto">
                             @for ($i = 0; $i < 5; $i++)
                                 <div>
-                                    <p class="text-[#121212] dark:text-[#EEEEEE] text-[15px] leading-[163%]">
+                                    <p class="text-[15px] leading-[163%] text-[#121212] dark:text-[#EEEEEE]">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                         incididunt ut
                                         labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -110,19 +113,21 @@
                             @endfor
                         </div>
                         <div class="mb-7.5">
-                            <div class="rounded-[5px] md:rounded-[15px] overflow-hidden h-54.5 md:h-98.25 lg:h-136.75 mb-2">
-                                <img src="{{ asset('images/dummy/hero-home/bg-hero-home.webp') }}" alt="Dummy News Image"
-                                    class="w-full h-full object-cover">
+                            <div class="h-54.5 md:h-98.25 lg:h-136.75 mb-2 overflow-hidden rounded-[5px] md:rounded-[15px]">
+                                {{-- <img src="{{ asset('images/dummy/hero-home/bg-hero-home.webp') }}" alt="Dummy News Image"
+                                    class="w-full h-full object-cover"> --}}
+                                <img src="https://placehold.co/1200x600" alt="Dummy News Image"
+                                    class="h-full w-full object-cover">
                             </div>
                             {{-- IMAGE CAPTION --}}
-                            <p class="text-[#555] italic text-[13px] leading-[163%] text-center">Lorem ipsum dolor sit amet
+                            <p class="text-center text-[13px] italic leading-[163%] text-[#555]">Lorem ipsum dolor sit amet
                                 consectetur adipiscing elit. Ex sapien vitae pellentesque sem placerat in id.</p>
                         </div>
                         <div
-                            class="flex flex-col gap-y-6.25 mb-4.25 md:mb-12 lg:mb-7.5 md:max-w-145.5 lg:max-w-193.25 md:mx-auto">
+                            class="gap-y-6.25 mb-4.25 lg:mb-7.5 md:max-w-145.5 lg:max-w-193.25 flex flex-col md:mx-auto md:mb-12">
                             @for ($i = 0; $i < 5; $i++)
                                 <div>
-                                    <p class="text-[#121212] dark:text-[#EEEEEE] text-[15px] leading-[163%]">
+                                    <p class="text-[15px] leading-[163%] text-[#121212] dark:text-[#EEEEEE]">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                         incididunt ut
                                         labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -139,22 +144,24 @@
 
                         {{-- ANOTHER ONE NEWS RELATED --}}
                         <div class="md:max-w-145.5 lg:max-w-193.25 md:mx-auto">
-                            <p class="text-[#121212] dark:text-white font-medium text-[15px] leading-[163%] mb-6.25">Don't
+                            <p class="mb-6.25 text-[15px] font-medium leading-[163%] text-[#121212] dark:text-white">Don't
                                 Miss: <a href=""
                                     class="text-[#EC0226] underline underline-offset-8">{{ Str::words('Garuda Gentlemen, triumphed over the Dispora India team in a thrilling encounter at the Cricket World Cup 2024', 8, '...') }}</a>
                             </p>
-                            <div class="mb-11 md:mb-7.5">
+                            <div class="md:mb-7.5 mb-11">
                                 <div
-                                    class="rounded-[5px] md:rounded-[15px] overflow-hidden h-54.5 md:h-81.5 lg:h-114.75 mb-2">
-                                    <img src="{{ asset('images/dummy/hero-home/bg-hero-home.webp') }}"
-                                        alt="Dummy News Image" class="w-full h-full object-cover">
+                                    class="h-54.5 md:h-81.5 lg:h-114.75 mb-2 overflow-hidden rounded-[5px] md:rounded-[15px]">
+                                    {{-- <img src="{{ asset('images/dummy/hero-home/bg-hero-home.webp') }}"
+                                        alt="Dummy News Image" class="w-full h-full object-cover"> --}}
+                                    <img src="https://placehold.co/1200x600" alt="Dummy News Image"
+                                        class="h-full w-full object-cover">
                                 </div>
                                 {{-- IMAGE CAPTION --}}
-                                <p class="text-[#555] italic text-[13px] leading-[163%] text-center">Lorem ipsum dolor sit
+                                <p class="text-center text-[13px] italic leading-[163%] text-[#555]">Lorem ipsum dolor sit
                                     amet
                                     consectetur adipiscing elit. Ex sapien vitae pellentesque sem placerat in id.</p>
                             </div>
-                            <p class="text-[#121212] dark:text-[#EEEEEE] text-[15px] leading-[163%] mb-7.5">
+                            <p class="mb-7.5 text-[15px] leading-[163%] text-[#121212] dark:text-[#EEEEEE]">
                                 Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
                                 pellentesque
                                 sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
@@ -167,8 +174,8 @@
                                 per
                                 conubia nostra inceptos himenaeos.
                             </p>
-                            <div class="flex flex-wrap items-center gap-2.5 mb-12.5">
-                                <p class="text-[#121212] dark:text-white text-[15px] font-medium leading-[163%]">Tags: </p>
+                            <div class="mb-12.5 flex flex-wrap items-center gap-2.5">
+                                <p class="text-[15px] font-medium leading-[163%] text-[#121212] dark:text-white">Tags: </p>
                                 <div class="flex flex-wrap items-center gap-2.5">
                                     <x-cards.category.category-card :dotColor="'#EC0226'" :categoryName="'Cricket Champions'" />
                                     <x-cards.category.category-card :dotColor="'#007DFC'" :categoryName="'Interviews'" />
@@ -179,48 +186,48 @@
                             <div>
                                 {{-- SHARE ARTICLE TITLE --}}
                                 <p
-                                    class="text-[#121212] dark:text-white font-medium text-[16px] leading-[163%] mb-2.5 text-center">
+                                    class="mb-2.5 text-center text-[16px] font-medium leading-[163%] text-[#121212] dark:text-white">
                                     Share
                                     Article</p>
 
                                 {{-- SOCIAL MEDIA ICONS --}}
-                                <div class="flex gap-x-3.5 mb-6 justify-center">
+                                <div class="mb-6 flex justify-center gap-x-3.5">
                                     <div
-                                        class="bg-white dark:bg-[#353434] p-3.25 shadow-md rounded-[5px] cursor-pointer hover:shadow-lg transition-shadow">
+                                        class="p-3.25 cursor-pointer rounded-[5px] bg-white shadow-md transition-shadow hover:shadow-lg dark:bg-[#353434]">
                                         <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}"
                                             target="_blank" rel="noopener noreferrer">
                                             <x-bi-facebook class="w-3.75 h-3.75 text-[#1977F2]" />
                                         </a>
                                     </div>
                                     <div
-                                        class="bg-white dark:bg-[#353434] p-3.25 shadow-md rounded-[5px] cursor-pointer hover:shadow-lg transition-shadow">
+                                        class="p-3.25 cursor-pointer rounded-[5px] bg-white shadow-md transition-shadow hover:shadow-lg dark:bg-[#353434]">
                                         <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}"
                                             target="_blank" rel="noopener noreferrer">
                                             <x-bi-twitter-x class="w-3.75 h-3.75 text-[#000000] dark:text-white" />
                                         </a>
                                     </div>
                                     <div
-                                        class="bg-white dark:bg-[#353434] p-3.25 shadow-md rounded-[5px] cursor-pointer hover:shadow-lg transition-shadow">
+                                        class="p-3.25 cursor-pointer rounded-[5px] bg-white shadow-md transition-shadow hover:shadow-lg dark:bg-[#353434]">
                                         <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
                                             <x-bi-instagram class="w-3.75 h-3.75 text-[#E4405F]" />
                                         </a>
                                     </div>
                                     <div
-                                        class="bg-white dark:bg-[#353434] p-3.25 shadow-md rounded-[5px] cursor-pointer hover:shadow-lg transition-shadow">
+                                        class="p-3.25 cursor-pointer rounded-[5px] bg-white shadow-md transition-shadow hover:shadow-lg dark:bg-[#353434]">
                                         <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
-                                            <x-bi-youtube class="w-3.75 h-3.75 text-[#FF0000] " />
+                                            <x-bi-youtube class="w-3.75 h-3.75 text-[#FF0000]" />
                                         </a>
                                     </div>
                                 </div>
 
                                 {{-- SHARE LINK URL --}}
                                 <div
-                                    class="flex items-center gap-x-2.5 bg-[#F7F7F7] dark:bg-[#353434] py-2 px-2.5 md:max-w-125 md:mx-auto">
+                                    class="md:max-w-125 flex items-center gap-x-2.5 bg-[#F7F7F7] px-2.5 py-2 md:mx-auto dark:bg-[#353434]">
                                     <input type="text" id="shareUrl" value="{{ url()->current() }}" readonly
-                                        class="flex-1 bg-transparent text-[#75788D] dark:text-[#75788D] text-[16px] leading-[163%] outline-none cursor-default">
+                                        class="flex-1 cursor-default bg-transparent text-[16px] leading-[163%] text-[#75788D] outline-none dark:text-[#75788D]">
                                     <button onclick="copyToClipboard()"
-                                        class="shrink-0 p-1.5 hover:bg-[#EEEEEE] dark:hover:bg-[#4B4B4B] rounded transition-colors">
-                                        <x-bi-clipboard class="w-4 h-4 text-[#EC0226] dark:text-white" />
+                                        class="shrink-0 rounded p-1.5 transition-colors hover:bg-[#EEEEEE] dark:hover:bg-[#4B4B4B]">
+                                        <x-bi-clipboard class="h-4 w-4 text-[#EC0226] dark:text-white" />
                                     </button>
                                 </div>
                             </div>
@@ -232,7 +239,7 @@
             </x-slot>
             <x-slot name="sidebar">
                 {{-- POPULAR & RECENT NEWS SECTION START --}}
-                <section class="mx-6 md:mx-8 2xl:mx-0 mb-7 md:mb-0 lg:mb-7">
+                <section class="mx-6 mb-7 md:mx-8 md:mb-0 lg:mb-7 2xl:mx-0">
                     <x-popular-recent-news />
                 </section>
                 {{-- POPULAR & RECENT NEWS SECTION END --}}
@@ -247,14 +254,14 @@
     {{-- RELATED ARTICLES SECTION END --}}
 
     {{-- ADS SECTION START --}}
-    <section class="mt-6 lg:mt-7.5 mx-6 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto mb-7 md:mb-6 lg:mb-10">
+    <section class="lg:mt-7.5 md:mx-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
         <x-ads />
     </section>
     {{-- ADS SECTION END --}}
 
     {{-- STREAMING PARTNER SECTION START --}}
-    <section class="bg-[#FAFAFA] dark:bg-[#171717] pb-5 md:pb-10 lg:pb-12.5 2xl:pb-20">
-        <div class="mx-6 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto">
+    <section class="lg:pb-12.5 bg-[#FAFAFA] pb-5 md:pb-10 2xl:pb-20 dark:bg-[#171717]">
+        <div class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto">
             <x-streaming-partner />
         </div>
     </section>
@@ -262,7 +269,7 @@
 
     {{-- FOOTER SECTION START --}}
     <section class="bg-[#FAFAFA] dark:bg-[#171717]">
-        <div class="mx-6 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto">
+        <div class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto">
             <x-footer />
         </div>
     </section>

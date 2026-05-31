@@ -19,3 +19,7 @@ Route::get('/archive', [GalleryController::class, 'index'])->name('gallery.index
 Route::get('/interview', function () {
     return view('interview');
 });
+
+Route::get('/match-centre', function () {
+    return view('match-centre');
+});

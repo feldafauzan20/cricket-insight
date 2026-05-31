@@ -126,7 +126,7 @@
     {{-- ADS SECTION END --}}
 
     {{-- STREAMING PARTNER SECTION START --}}
-    <section class="lg:pb-12.5 bg-[#FAFAFA] pb-5 md:pb-10 2xl:pb-20 dark:bg-[#171717]">
+    <section class="lg:pb-12.5 pb-12.5 bg-[#FAFAFA] md:pb-10 2xl:pb-20 dark:bg-[#171717]">
         <div class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto">
             <x-streaming-partner />
         </div>

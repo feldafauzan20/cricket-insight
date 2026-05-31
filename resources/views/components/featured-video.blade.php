@@ -70,21 +70,24 @@
 
 <div class="2xl:flex">
     {{-- Header Section --}}
-    <div class="relative w-full 2xl:w-107.25 2xl:h-131.25 2xl:shrink-0 2xl:flex 2xl:items-center 2xl:justify-center ">
+    <div class="2xl:w-107.25 2xl:h-131.25 relative w-full 2xl:flex 2xl:shrink-0 2xl:items-center 2xl:justify-center">
         {{-- Background image with img tag --}}
-        <img src="{{ asset('images/dummy/featured-video/dummy-bg-featured-video.webp') }}" alt="Featured Video Background"
-            class="absolute w-full h-full object-cover opacity-10 z-20" />
+        {{-- <img src="{{ asset('images/dummy/featured-video/dummy-bg-featured-video.webp') }}" alt="Featured Video Background"
+            class="absolute z-20 h-full w-full object-cover opacity-10" loading="lazy" /> --}}
+        <img src="https://placehold.co/800x600" alt="Featured Video Background"
+            class="absolute z-20 h-full w-full object-cover opacity-10" loading="lazy" />
 
         {{-- Blue Background --}}
-        <div class="absolute inset-0 bg-[#1F1D5E] z-10"></div>
+        <div class="absolute inset-0 z-10 bg-[#1F1D5E]"></div>
 
         {{-- content --}}
-        <div class="relative px-10 py-17.5 2xl:px-0 2xl:py-0 z-30">
-            <div class="bg-white w-10 h-0.5 mb-2.5 md:mb-5"></div>
-            <h1 class="text-white font-semibold text-[20px] mb-1">Featured Video</h1>
-            <p class="text-white leading-[217%] text-[11px] mb-12.5">Don’t Miss And Stay Up-to-date. Top pic for you.</p>
+        <div class="py-17.5 relative z-30 px-10 2xl:px-0 2xl:py-0">
+            <div class="mb-2.5 h-0.5 w-10 bg-white md:mb-5"></div>
+            <h1 class="mb-1 text-[20px] font-semibold text-white">Featured Video</h1>
+            <p class="mb-12.5 text-[11px] leading-[217%] text-white">Don’t Miss And Stay Up-to-date. Top pic for you.
+            </p>
             <div class="flex items-center gap-x-9">
-                <div class="bg-white/20 w-full h-px"></div>
+                <div class="h-px w-full bg-white/20"></div>
                 <div class="flex items-center gap-x-1">
                     <x-buttons.previous-button class="featured-video-button-prev" />
                     <x-buttons.next-button class="featured-video-button-next" />
@@ -94,42 +97,46 @@
     </div>
 
     {{-- Carousel Section --}}
-    <div class="swiper featured-video-swiper w-full 2xl:w-auto overflow-hidden">
+    <div class="swiper featured-video-swiper w-full overflow-hidden 2xl:w-auto">
         <div class="swiper-wrapper">
             @foreach ($featuredVideos as $video)
-                <div class="swiper-slide w-full 2xl:w-107.25! 2xl:shrink-0">
-                    <div class="relative h-131.25">
+                <div class="swiper-slide 2xl:w-107.25! w-full 2xl:shrink-0">
+                    <div class="h-131.25 relative">
                         {{-- Background image with img tag --}}
-                        <img src="{{ asset($video['image']) }}" alt="{{ $video['title'] }}"
-                            class="absolute w-full h-full object-cover" />
+                        {{-- <img src="{{ asset($video['image']) }}" alt="{{ $video['title'] }}"
+                            class="absolute h-full w-full object-cover" loading="lazy" /> --}}
+                        <img src="https://placehold.co/1200x800" alt="{{ $video['title'] }}"
+                            class="absolute h-full w-full object-cover" loading="lazy" />
 
                         {{-- Overlay Background --}}
-                        <div class="absolute inset-0 bg-linear-to-b from-black/0 to-black w-full"></div>
+                        <div class="bg-linear-to-b absolute inset-0 w-full from-black/0 to-black"></div>
 
                         {{-- content --}}
-                        <div class="relative px-7.5 py-10 flex flex-col justify-between h-full">
-                            <div class="flex items-center text-white gap-x-2.5">
-                                <div class="w-9 h-9 rounded-full overflow-hidden">
-                                    <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}"
-                                        alt="Profile Picture" class="w-full h-full object-cover">
+                        <div class="px-7.5 relative flex h-full flex-col justify-between py-10">
+                            <div class="flex items-center gap-x-2.5 text-white">
+                                <div class="h-9 w-9 overflow-hidden rounded-full">
+                                    {{-- <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}"
+                                        alt="Profile Picture" class="h-full w-full object-cover" loading="lazy"> --}}
+                                    <img src="https://placehold.co/36x36" alt="Profile Picture"
+                                        class="h-full w-full object-cover" loading="lazy">
                                 </div>
-                                <p class="font-semibold text-[10px] md:text-sm">BY {{ $video['author'] }}</p>
+                                <p class="text-[10px] font-semibold md:text-sm">BY {{ $video['author'] }}</p>
                             </div>
                             <div>
-                                <div class="bg-[#D6111A] w-fit py-1.5 px-5 rounded-[3px] mb-1">
-                                    <span class="text-white font-medium text-xs">{{ $video['category'] }}</span>
+                                <div class="mb-1 w-fit rounded-[3px] bg-[#D6111A] px-5 py-1.5">
+                                    <span class="text-xs font-medium text-white">{{ $video['category'] }}</span>
                                 </div>
-                                <h1 class="text-[19px] font-semibold text-white mb-1">
+                                <h1 class="mb-1 text-[19px] font-semibold text-white">
                                     {{ Str::words($video['title'], 8, '...') }}
                                 </h1>
                                 <div class="flex items-center gap-x-4">
                                     <div class="flex items-center gap-x-2">
-                                        <x-letsicon-time-atack class="w-2.5 h-2.5 text-[#EC0226]" />
-                                        <span class="font-semibold text-[10px] text-white">{{ $video['date'] }}</span>
+                                        <x-letsicon-time-atack class="h-2.5 w-2.5 text-[#EC0226]" />
+                                        <span class="text-[10px] font-semibold text-white">{{ $video['date'] }}</span>
                                     </div>
                                     <div class="flex items-center gap-x-1.5">
-                                        <x-bi-eye class="w-2.5 h-2.5 text-[#EC0226]" />
-                                        <span class="font-semibold text-[10px] text-white">{{ $video['views'] }}</span>
+                                        <x-bi-eye class="h-2.5 w-2.5 text-[#EC0226]" />
+                                        <span class="text-[10px] font-semibold text-white">{{ $video['views'] }}</span>
                                     </div>
                                 </div>
                             </div>

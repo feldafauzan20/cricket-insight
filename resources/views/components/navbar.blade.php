@@ -7,13 +7,15 @@
                 {{-- Logo --}}
                 <a href="/" class="mr-11 text-xl font-bold">
                     {{-- Light mode logo --}}
-                    <img x-show="!$store.darkMode.on" x-cloak
+                    {{-- <img x-show="!$store.darkMode.on" x-cloak
                         src="{{ asset('images/logo/cricket-insight-logo-blue.webp') }}" alt="cricket insight logo"
-                        class="h-8.5 md:h-12.5">
+                        class="h-8.5 md:h-12.5" loading="eager" fetchpriority="high"> --}}
                     {{-- Dark mode logo (jika ada versi putih/terang) --}}
-                    <img x-show="$store.darkMode.on" x-cloak
+                    {{-- <img x-show="$store.darkMode.on" x-cloak
                         src="{{ asset('images/logo/cricket-insight-logo-white.webp') }}" alt="cricket insight logo"
-                        class="h-8.5 md:h-12.5">
+                        class="h-8.5 md:h-12.5" loading="eager" fetchpriority="high"> --}}
+                    <img src="https://placehold.co/200x50" alt="cricket insight logo" class="h-8.5 md:h-12.5"
+                        loading="eager" fetchpriority="high">
                 </a>
 
                 {{-- Desktop Menu --}}
@@ -50,8 +52,10 @@
                     {{-- Translate Feature --}}
                     <div class="h-15 hidden cursor-pointer select-none items-center gap-2 rounded-full px-4 md:h-12 lg:flex"
                         @click="lang = (lang === 'ENG') ? 'IND' : 'ENG'">
-                        <img :src="lang === 'ENG' ? 'https://flagcdn.com/16x12/gb.webp' : 'https://flagcdn.com/16x12/id.webp'"
-                            :alt="lang === 'ENG' ? 'English' : 'Indonesia'" class="h-auto w-6 rounded-sm">
+                        {{-- <img :src="lang === 'ENG' ? 'https://flagcdn.com/16x12/gb.webp' : 'https://flagcdn.com/16x12/id.webp'"
+                            :alt="lang === 'ENG' ? 'English' : 'Indonesia'" class="h-auto w-6 rounded-sm"> --}}
+                        <img src="https://placehold.co/24x16" :alt="lang === 'ENG' ? 'English' : 'Indonesia'"
+                            class="h-auto w-6 rounded-sm">
                         <span class="text-sm font-semibold text-gray-700 dark:text-gray-200" x-text="lang"></span>
                     </div>
 

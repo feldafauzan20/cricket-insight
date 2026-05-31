@@ -7,6 +7,11 @@
 
     <title>@yield('title', config('app.name', 'Cricket Insight'))</title>
 
+    {{-- Preload critical assets --}}
+    <link rel="preload" href="/resources/fonts/Poppins-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/resources/fonts/Poppins-Medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/resources/fonts/Poppins-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+
     {{-- Prevent FOUC (Flash of Unstyled Content) --}}
     <script>
         // Jalankan SEBELUM page render

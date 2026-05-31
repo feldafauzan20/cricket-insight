@@ -2,8 +2,9 @@
 
 <div class="overflow-hidden rounded-[3px]">
     <div class="h-93.75">
-        <img src="{{ asset('images/dummy/commentaries/dummy-commentaries-1.webp') }}" alt="Dummy best interview image"
-            class="h-full w-full object-cover">
+        {{-- <img src="{{ asset('images/dummy/commentaries/dummy-commentaries-1.webp') }}" alt="Dummy best interview image"
+            class="h-full w-full object-cover"> --}}
+        <img src="https://placehold.co/800x750" alt="Dummy best interview image" class="h-full w-full object-cover">
     </div>
     <div class="py-5.5 px-3.75 border-x border-b border-[#F3F3F3] dark:border-[#515050] dark:bg-[#353434]">
         <div class="py-1.25 mb-1.25 w-fit rounded-[3px] bg-[#D6111A] px-3">
@@ -21,8 +22,9 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-x-2.5 text-[#121212] dark:text-white">
                 <div class="h-9 w-9 overflow-hidden rounded-full">
-                    <img src="{{ asset($interview['author_image']) }}" alt="Profile Picture"
-                        class="h-full w-full object-cover">
+                    {{-- <img src="{{ asset($interview['author_image']) }}" alt="Profile Picture"
+                        class="h-full w-full object-cover"> --}}
+                    <img src="https://placehold.co/36x36" alt="Profile Picture" class="h-full w-full object-cover">
                 </div>
                 <p class="text-[10px] font-medium">BY {{ $interview['author'] }}</p>
             </div>
