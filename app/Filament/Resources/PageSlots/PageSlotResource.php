@@ -32,21 +32,37 @@ class PageSlotResource extends Resource
             ])->columns(2),
 
             Section::make('Pilih Konten untuk Ditampilkan')->schema([
-                Select::make('article_id')
-                    ->relationship('article', 'title')
-                    ->searchable()
-                    ->preload()
-                    ->label('Pilih Artikel / Turnamen')
-                    ->helperText('Isi ini jika slot membutuhkan Artikel/Berita. Kosongkan jika slot untuk Video.'),
+                            Select::make('article_id')
+                                ->relationship('article', 'title')
+                                ->searchable()
+                                ->preload()
+                                ->allowHtml()
+                                ->getOptionLabelFromRecordUsing(fn ($record) => "
+                                    <div style='display: flex; gap: 12px; align-items: center;'>
+                                        <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "' 
+                                            style='width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;' />
+                                        <span style='font-weight: 500;'>{$record->title}</span>
+                                    </div>
+                                ")
+                                ->label('Pilih Artikel / Turnamen')
+                                ->helperText('Isi ini jika slot membutuhkan Artikel/Berita. Kosongkan jika slot untuk Video.'),
 
-                Select::make('video_id')
-                    ->relationship('video', 'title')
-                    ->searchable()
-                    ->preload()
-                    ->label('Pilih Video')
-                    ->helperText('Isi ini jika slot membutuhkan Video. Kosongkan jika slot untuk Artikel.'),
-            ])->columns(2),
-        ]);
+                            Select::make('video_id')
+                                ->relationship('video', 'title')
+                                ->searchable()
+                                ->preload()
+                                ->allowHtml()
+                                ->getOptionLabelFromRecordUsing(fn ($record) => "
+                                    <div style='display: flex; gap: 12px; align-items: center;'>
+                                        <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "' 
+                                            style='width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;' />
+                                        <span style='font-weight: 500;'>{$record->title}</span>
+                                    </div>
+                                ")
+                                ->label('Pilih Video')
+                                ->helperText('Isi ini jika slot membutuhkan Video. Kosongkan jika slot untuk Artikel.'),
+                        ])->columns(2),
+                ]);
     }
 
     public static function table(Table $table): Table

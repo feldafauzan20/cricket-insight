@@ -1,46 +1,51 @@
 @php
-    // Hero Carousel Slides Data
-    $heroSlides = [
-        [
-            'id' => 1,
-            'image' => 'images/dummy/hero-home/bg-hero-home.webp',
-            'category' => 'Matches',
-            'title' => 'Garuda Gentlemen, triumphed over the Dispora India team',
-            'description' =>
-                "As cricket continues to grow across the archipelago, we're bringing you stories from the pitch, updates from local leagues, and progress from national development programs. Join us as we spotlight the players, coaches, and communities that are shaping the future of Indonesian cricket—one innings at a time. In this edition, we celebrate the Garuda Gentlemen's thrilling victory over the Dispora India team, a testament to the rising talent and passion for cricket in Indonesia.",
-            'author_image' => 'images/dummy/hero-home/profile-picture-dummy.webp',
-            'author_name' => 'FARHAN DUDI',
-            'date' => '19 JAN 2026',
-            'thumbnail' => 'images/dummy/news-card/dummy-news-card.webp',
-            'thumbnail_title' => "The Indonesian men's national cricket team",
-        ],
-        [
-            'id' => 2,
-            'image' => 'images/dummy/hero-home/bg-hero-home.webp',
-            'category' => 'Business',
-            'title' => 'ICC T20 WOMENS T20 WORLD CUP EAST ASIA QUALIFIERS EAST INDONESIA VS VIETNAM NEW GUINEA MATCHES',
-            'description' =>
-                'Indonesia women\'s cricket team showcases remarkable performance in the regional qualifiers, demonstrating the growing strength of women\'s cricket in Southeast Asia. With a blend of experienced players and emerging talent, the team has made significant strides in international competitions, inspiring a new generation of female cricketers across the country. As they continue to compete on the global stage, their journey reflects the dedication and passion driving the development of cricket in Indonesia.',
-            'author_image' => 'images/dummy/hero-home/profile-picture-dummy.webp',
-            'author_name' => 'SARAH WILLIAMS',
-            'date' => '18 JAN 2026',
-            'thumbnail' => 'images/dummy/news-card/dummy-news-card.webp',
-            'thumbnail_title' => 'ICC T20 Womens T20 World Cup East',
-        ],
-        [
-            'id' => 3,
-            'image' => 'images/dummy/hero-home/bg-hero-home.webp',
-            'category' => 'Development',
-            'title' => 'Local Cricket League Expands to Eastern Indonesia',
-            'description' =>
-                'The national cricket development program reaches new heights as local leagues expand across the archipelago, bringing opportunities to young cricketers in remote areas. With increased investment in grassroots initiatives and community engagement, the sport is flourishing in regions previously underserved. This expansion not only nurtures local talent but also strengthens the national team\'s pipeline, ensuring a bright future for Indonesian cricket on the international stage.',
-            'author_image' => 'images/dummy/hero-home/profile-picture-dummy.webp',
-            'author_name' => 'AHMAD RIZKI',
-            'date' => '17 JAN 2026',
-            'thumbnail' => 'images/dummy/news-card/dummy-news-card.webp',
-            'thumbnail_title' => 'Local Cricket League Expands to Eastern',
-        ],
-    ];
+    use App\Models\PageSlot;
+    use Illuminate\Support\Str;
+    
+    $slots = PageSlot::with(['article.category', 'article.uploader', 'video'])
+        ->where('page_key', 'homepage')
+        ->whereIn('section_key', ['hero_carousel_1', 'hero_carousel_2', 'hero_carousel_3'])
+        ->orderBy('section_key', 'asc')
+        ->get();
+
+    $heroSlides = $slots->map(function ($slot, $index) {
+        $article = $slot->article;
+        $video = $slot->video;
+
+        if (!$article && !$video) {
+            return null;
+        }
+
+        if ($article) {
+            return [
+                'id' => $index + 1,
+                'image' => $article->thumbnail ? asset('storage/' . $article->thumbnail) : asset('images/dummy/hero-home/bg-hero-home.webp'),
+                'category' => $article->category ? $article->category->name : 'Uncategorized',
+                'title' => $article->title,
+                'description' => strip_tags($article->description ?? $article->content),
+                'author_image' => asset('images/dummy/hero-home/profile-picture-dummy.webp'),
+                'author_name' => strtoupper($article->uploader->name ?? 'SUPER ADMIN'),
+                'date' => strtoupper($article->published_at ? $article->published_at->format('d M Y') : $article->created_at->format('d M Y')),
+                'thumbnail' => $article->thumbnail ? asset('storage/' . $article->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp'),
+                'thumbnail_title' => $article->title,
+            ];
+        }
+
+        if ($video) {
+            return [
+                'id' => $index + 1,
+                'image' => $video->thumbnail ? asset('storage/' . $video->thumbnail) : asset('images/dummy/hero-home/bg-hero-home.webp'),
+                'category' => 'Video',
+                'title' => $video->title,
+                'description' => strip_tags($video->description ?? ''),
+                'author_image' => asset('images/dummy/hero-home/profile-picture-dummy.webp'),
+                'author_name' => strtoupper($video->uploader->name ?? 'SUPER ADMIN'),
+                'date' => strtoupper($video->created_at->format('d M Y')),
+                'thumbnail' => $video->thumbnail ? asset('storage/' . $video->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp'),
+                'thumbnail_title' => $video->title,
+            ];
+        }
+    })->filter()->values(); 
 @endphp
 
 <section class="relative overflow-hidden">

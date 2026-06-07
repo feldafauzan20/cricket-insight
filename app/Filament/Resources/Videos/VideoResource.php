@@ -42,7 +42,7 @@ class VideoResource extends Resource
                 ->required(),
                 
             FileUpload::make('thumbnail')
-                ->image()
+                ->image()->disk('public')
                 ->directory('videos'),
                 
             Textarea::make('description'),

@@ -29,7 +29,7 @@ class VisualStoryResource extends Resource
         return $schema->components([
             TextInput::make('title')->required(),
             TextInput::make('slug')->required(),
-            FileUpload::make('thumbnail')->image()->directory('visuals'),
+            FileUpload::make('thumbnail')->image()->disk('public')->directory('visuals'),
             Textarea::make('description')->required(),
             TextInput::make('visual_year')->label('Tahun')->numeric()->required(),
             TextInput::make('source_link')->label('Link Redirect')->url()->required(),

@@ -10,16 +10,17 @@ use Illuminate\Database\Eloquent\Builder;
 
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\DateTimePicker;
+use Illuminate\Support\Str;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
 
 class NewsResource extends Resource
 {
@@ -32,25 +33,68 @@ class NewsResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            Section::make('Konten Berita')->schema([
-                TextInput::make('title')->required(),
-                TextInput::make('slug')->required()->unique(ignoreRecord: true),
-                FileUpload::make('thumbnail')->image()->directory('news'),
+            Section::make('Konten Artikel')->schema([
+                TextInput::make('title')
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (string $operation, ?string $state, $set) => 
+                        $operation === 'create' ? $set('slug', Str::slug($state)) : null
+                    ),
+                
+                TextInput::make('slug')
+                    ->required()
+                    ->unique(ignoreRecord: true),
+                    
+                FileUpload::make('thumbnail')->image()->disk('public')->directory('news'),
+                
+                // Tambahan Foto 1 dan 2
+                FileUpload::make('foto1')->image()->disk('public')->directory('news'),
+                FileUpload::make('foto2')->image()->disk('public')->directory('news'),
+                
                 Textarea::make('description'),
                 RichEditor::make('content')->required(),
             ])->columnSpan(2),
 
             Section::make('Pengaturan')->schema([
+                Select::make('category_id')
+                    ->label('Kategori')
+                    ->relationship('category', 'name')
+                    ->required()
+                    ->searchable()
+                    ->preload(),
+
+                Select::make('user_id')
+                    ->label('Uploader / Jurnalis')
+                    ->relationship('uploader', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+                    
                 Select::make('tags')
                     ->relationship('tags', 'name')
                     ->multiple()
-                    ->preload(),
+                    ->preload()
+                    ->searchable()
+                    ->createOptionForm([
+                        \Filament\Forms\Components\TextInput::make('name')
+                            ->label('Nama Tag Baru')
+                            ->required()
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(fn (string $operation, ?string $state, $set) => 
+                                $set('slug', Str::slug($state))
+                            ),
+                        \Filament\Forms\Components\TextInput::make('slug')
+                            ->required()
+                            ->unique('tags', 'slug'),
+                    ]),
+
                 Toggle::make('is_editor_choice')->label("Editor's Choice"),
                 Toggle::make('is_trending_manual')->label("Jadikan Trending"),
                 Select::make('status')
                     ->options(['draft' => 'Draft', 'published' => 'Published'])
-                    ->default('draft'),
-                DateTimePicker::make('published_at'),
+                    ->default('draft')
+                    ->required(),
+                DateTimePicker::make('published_at')->default(now()),
             ])->columnSpan(1),
         ])->columns(3);
     }
@@ -58,17 +102,32 @@ class NewsResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            ImageColumn::make('thumbnail'),
-            TextColumn::make('title')->searchable(),
-            IconColumn::make('is_editor_choice')->boolean(),
-            TextColumn::make('status')->badge(),
+            ImageColumn::make('thumbnail')
+                ->label('Thumb')
+                ->disk('public'),
+            TextColumn::make('title')
+                ->label('Judul')
+                ->searchable()
+                ->limit(30),
+            TextColumn::make('category.name')
+                ->label('Kategori')
+                ->sortable(),
+            IconColumn::make('is_editor_choice')
+                ->boolean()
+                ->label("Editor's Choice"),
+            IconColumn::make('is_trending_manual')
+                ->boolean()
+                ->label('Trending'),
+            TextColumn::make('status')
+                ->badge()
+                ->label('Status'),
         ]);
     }
 
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->whereHas('category', function ($query) {
-            $query->where('slug', 'news');
+            $query->whereIn('slug', ['news', 'commentaries']);
         });
     }
 

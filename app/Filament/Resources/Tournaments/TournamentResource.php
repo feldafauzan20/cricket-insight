@@ -29,7 +29,7 @@ class TournamentResource extends Resource
         return $schema->components([
             TextInput::make('title')->required(),
             TextInput::make('slug')->required(),
-            FileUpload::make('thumbnail')->image()->directory('tournaments'),
+            FileUpload::make('thumbnail')->image()->disk('public')->directory('tournaments'),
             RichEditor::make('content')->required(),
             DateTimePicker::make('match_date')->label('Tanggal Pertandingan')->required(),
             Select::make('status')->options(['draft' => 'Draft', 'published' => 'Published'])->default('draft'),

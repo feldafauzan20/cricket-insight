@@ -24,7 +24,7 @@ class NationRankingResource extends Resource
         return $schema->components([
             TextInput::make('rank')->numeric()->unique(ignoreRecord: true)->required(),
             TextInput::make('country_name')->required(),
-            FileUpload::make('flag_image')->image()->directory('flags'),
+            FileUpload::make('flag_image')->image()->disk('public')->directory('flags'),
         ]);
     }
 
