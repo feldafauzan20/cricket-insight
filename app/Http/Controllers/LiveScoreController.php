@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -11,13 +12,37 @@ class LiveScoreController extends Controller
 {
     /**
      * Get list of matches with live scores
+     * Implements caching to improve performance
      *
      * @param int $limit Number of matches to fetch
      * @return array
      */
     public function getMatches($limit = 10)
     {
+        // Create cache key based on limit
+        $cacheKey = "live_scores_{$limit}";
+
+        // Cache for 2 minutes (120 seconds) for live scores
+        // Adjust this value based on your needs:
+        // - 60 seconds = very fresh data, more API calls
+        // - 300 seconds (5 min) = less API calls, slightly stale data
+        $cacheMinutes = 2;
+
+        return Cache::remember($cacheKey, now()->addMinutes($cacheMinutes), function () use ($limit) {
+            return $this->fetchMatchesFromAPI($limit);
+        });
+    }
+
+    /**
+     * Fetch matches from API (extracted for caching)
+     *
+     * @param int $limit
+     * @return array
+     */
+    private function fetchMatchesFromAPI($limit)
+    {
         try {
+            // dd('fetching from API');
             $apiUrl = config('app.cricket_api_url');
             $clubId = config('app.cricket_club_id', '19323');
 
@@ -87,7 +112,7 @@ class LiveScoreController extends Controller
             return [
                 'success' => false,
                 'data' => [],
-                'error' => 'An error occurred while fetching live scores'
+                'error' => 'An error occurred while fetching live scoress'
             ];
         }
     }
@@ -221,12 +246,12 @@ class LiveScoreController extends Controller
         try {
             if (!empty($matchDate)) {
                 $date = Carbon::createFromFormat('m/d/Y', $matchDate);
-                return $date->format('M d, g:i A') . ' GMT+7';
+                return $date->format('M d Y');
             }
 
             if (!empty($lastUpdated)) {
                 $date = Carbon::parse($lastUpdated);
-                return $date->format('M d, g:i A') . ' GMT+7';
+                return $date->format('M d Y');
             }
 
             return 'Date TBA';

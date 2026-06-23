@@ -59,7 +59,7 @@ class PageSlotResource extends Resource
                                         <span style='font-weight: 500;'>{$record->title}</span>
                                     </div>
                                 ")
-                                ->label('Pilih Video')
+                                ->label('Pilih Video (Do not use this for Carousel slots)')
                                 ->helperText('Isi ini jika slot membutuhkan Video. Kosongkan jika slot untuk Artikel.'),
                         ])->columns(2),
                 ]);

@@ -12,12 +12,21 @@ class NewsController extends Controller
      */
     public function index()
     {
+
+        $liveScoreController = new LiveScoreController();
+        $matchesData = $liveScoreController->getMatches(10);
+
         // Mengambil semua berita yang sudah published, diurutkan terbaru
-        $articles = Article::where('status', 'published')
+        $news = Article::where('status', 'published')
             ->orderBy('published_at', 'desc')
             ->paginate(10);
             
-        return view('news.index', compact('articles'));
+        return view('news', [
+            'news' => $news,
+            'matches' => $matchesData['data'] ?? [],
+            'hasError' => !$matchesData['success'],
+            'error' => $matchesData['error'] ?? null
+        ]);
     }
 
     /**

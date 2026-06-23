@@ -1,4 +1,4 @@
-<div class="pt-12.5 md:pt-15 ">
+<div class="pt-12.5 md:pt-15" x-init="$store.darkMode.init()">
     <h1
         class="leading-[130%] text-center text-2xl md:text-[32px] font-semibold mb-2.5 text-[#121212] dark:text-[#EEEEEE]">
         Our streaming
@@ -10,37 +10,51 @@
             ea commodo consequat.
         </p>
     </div>
-    <div
-        class="grid grid-cols-2 place-items-center md:grid-cols-6 lg:grid-cols-6 2xl:grid-cols-5 gap-x-8 md:gap-x-11.5 2xl:gap-x-18 gap-y-8">
+    <div class="grid grid-cols-2 gap-2 md:grid-cols-3 2xl:grid-cols-6">
         <!-- Logo 1 -->
-        <div
-            class="flex justify-center md:justify-start md:col-start-1 md:col-start lg:col-start-1 lg:col-span-2 2xl:col-start-1 2xl:col-span-1 2xl:justify-center md:col-end-4">
-            <img src="{{ asset('images/dummy/streaming-partner/dummy-streaming-partner.webp') }}"
-                alt="dummy streaming partner" class="w-53.75 md:w-71.25 h-auto object-contain">
+        <div class="flex items-center justify-center">
+            <img src="{{ asset('images/logo/streaming-partner-logo/facebook-live-logo.svg') }}"
+                alt="dummy streaming partner" class="w-25 md:w-35 h-auto object-contain" loading="lazy">
+            {{-- <img src="https://placehold.co/140x56" alt="dummy streaming partner" class="w-25 md:w-35 h-auto object-contain"
+                loading="lazy"> --}}
         </div>
         <!-- Logo 2 -->
-        <div
-            class="flex justify-center md:justify-end md:col-start-4 md:col-end-7 lg:col-start-3 lg:col-span-2 2xl:col-start-2 2xl:col-span-1 2xl:justify-center">
-            <img src="{{ asset('images/dummy/streaming-partner/dummy-streaming-partner.webp') }}"
-                alt="dummy streaming partner" class="w-53.75 md:w-71.25 h-auto object-contain">
+        <div class="flex items-center justify-center">
+            <img src="{{ asset('images/logo/streaming-partner-logo/fancode-logo.svg') }}" alt="dummy streaming partner"
+                class="w-25 md:w-35 h-auto object-contain" loading="lazy">
+            {{-- <img src="https://placehold.co/140x56" alt="dummy streaming partner"
+                class="w-25 md:w-35 h-auto object-contain" loading="lazy"> --}}
         </div>
         <!-- Logo 3 -->
-        <div
-            class="flex justify-center md:col-start-2 md:col-end-4 lg:col-start-5 lg:col-span-2 2xl:col-start-3 2xl:col-span-1">
-            <img src="{{ asset('images/dummy/streaming-partner/dummy-streaming-partner.webp') }}"
-                alt="dummy streaming partner" class="w-53.75 md:w-71.25 h-auto object-contain">
+        <div class="flex items-center justify-center">
+            <img src="{{ asset('images/logo/streaming-partner-logo/icc-tv-logo.svg') }}" alt="dummy streaming partner"
+                class="w-25 md:w-35 h-auto object-contain" loading="lazy">
+            {{-- <img src="https://placehold.co/140x56" alt="dummy streaming partner"
+                class="w-25 md:w-35 h-auto object-contain" loading="lazy"> --}}
         </div>
         <!-- Logo 4 -->
-        <div
-            class="flex justify-center md:col-start-4 md:col-end-6 lg:row-start-2 lg:col-start-2 lg:col-end-4 lg:col-span-2 lg:justify-end 2xl:row-start-1 2xl:col-start-4 2xl:col-span-1 2xl:justify-center">
-            <img src="{{ asset('images/dummy/streaming-partner/dummy-streaming-partner.webp') }}"
-                alt="dummy streaming partner" class="w-53.75 md:w-71.25 h-auto object-contain">
+        <div class="flex items-center justify-center">
+            <img src="{{ asset('images/logo/streaming-partner-logo/img-arena-logo.svg') }}"
+                alt="dummy streaming partner" class="w-25 md:w-35 h-auto object-contain" loading="lazy">
+            {{-- <img src="https://placehold.co/140x56" alt="dummy streaming partner"
+                class="w-25 md:w-35 h-auto object-contain" loading="lazy"> --}}
         </div>
         <!-- Logo 5 -->
-        <div
-            class="flex justify-center col-span-2 md:col-start-3 md:col-end-5 lg:row-start-2 lg:col-start-4 lg:col-end-6 lg:justify-start 2xl:row-start-1 2xl:col-start-5 2xl:col-span-1 2xl:justify-center">
-            <img src="{{ asset('images/dummy/streaming-partner/dummy-streaming-partner.webp') }}"
-                alt="dummy streaming partner" class="w-53.75 md:w-71.25 h-auto object-contain">
+        <div class="flex items-center justify-center">
+            <img src="{{ asset('images/logo/streaming-partner-logo/styx-sport-logo.svg') }}"
+                alt="dummy streaming partner" class="w-25 md:w-35 h-auto object-contain" loading="lazy">
+            {{-- <img src="https://placehold.co/140x56" alt="dummy streaming partner"
+                class="w-25 md:w-35 h-auto object-contain" loading="lazy"> --}}
+        </div>
+        <!-- Logo 6 -->
+        <div class="flex items-center justify-center">
+            <img x-show="!$store.darkMode.on" src="{{ asset('images/logo/streaming-partner-logo/youtube-logo.svg') }}"
+                alt="dummy streaming partner" class="w-25 md:w-35 h-auto object-contain" loading="lazy">
+            <img x-show="$store.darkMode.on" x-cloak
+                src="{{ asset('images/logo/streaming-partner-logo/youtube-logo-white.svg') }}"
+                alt="cricket insight logo" class="w-25 md:w-35 h-auto object-contain" loading="lazy">
+            {{-- <img src="https://placehold.co/140x56" alt="dummy streaming partner"
+                class="w-25 md:w-35 h-auto object-contain" loading="lazy"> --}}
         </div>
     </div>
 </div>

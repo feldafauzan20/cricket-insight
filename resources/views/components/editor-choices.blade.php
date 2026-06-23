@@ -18,8 +18,8 @@
     </div>
     <div class="relative overflow-hidden 2xl:w-3/5">
         {{-- Background Image --}}
-        <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}" alt="Background Image" class="absolute inset-0 w-full h-full object-cover opacity-0">
-
+        <img src="{{ asset('images/dummy/dummy-editor-choices.webp') }}" alt="Editor's Choices Background"
+            class="absolute inset-0 z-20 h-full w-full object-cover opacity-40">
         {{-- Gradient Overlay --}}
         <div
             class="absolute inset-0 bg-linear-to-br from-[#EC0226] from-1% via-[#6A469C] via-30% to-[#007DFC] to-90% z-10">

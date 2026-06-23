@@ -4,143 +4,234 @@
 
 @section('content')
 
-@php
-    use Illuminate\Support\Str;
-    // Hitung estimasi waktu baca (200 kata per menit)
-    $wordCount = str_word_count(strip_tags($article->content));
-    $readTime = max(1, ceil($wordCount / 200));
-@endphp
+    @php
+        use Illuminate\Support\Str;
+        // Hitung estimasi waktu baca (200 kata per menit)
+        $wordCount = str_word_count(strip_tags($article->content));
+        $readTime = max(1, ceil($wordCount / 200));
+    @endphp
 
-<section class="2xl:pt-30">
-    <x-layout.two-column-layout paddingRight="2xl:pr-0" marginRight="2xl:mr-9" borderRight="2xl:border-none">
-        <x-slot name="main">
-            {{-- BREADCRUMB AND CATEGORY SECTION --}}
-            <section class="pt-30 md:pt-34 lg:pt-38 2xl:pt-0 mx-6 md:mx-8 lg:mx-10 2xl:container 2xl:mx-auto mb-3.25 md:mb-3.75">
-                <div class="mb-3.75">
-                    <x-bread-crumb :items="[
-                        ['title' => 'Home', 'url' => '/'],
-                        ['title' => 'News', 'url' => '/news'],
-                        ['title' => $article->category->name ?? 'Category', 'url' => '#'],
-                        ['title' => Str::words($article->title, 2, '...'), 'url' => '#'],
-                    ]" />
-                </div>
-                <div class="flex flex-wrap items-center gap-2.5">
-                    <x-cards.category.category-card :dotColor="'#EC0226'" :categoryName="$article->category->name ?? 'News'" />
-                    @foreach($article->tags as $tag)
-                        <x-cards.category.category-card :dotColor="'#007DFC'" :categoryName="$tag->name" />
-                    @endforeach
-                </div>
-            </section>
-
-            {{-- NEWS CONTENT SECTION --}}
-            <section class="mx-6 md:mx-8 lg:mx-10 2xl:container 2xl:mx-auto mb-7.5">
-                
-                {{-- TITLE --}}
-                <h1 class="text-[#121212] dark:text-white font-medium text-[22px] md:text-[32px] leading-tight">
-                    {{ $article->title }}
-                </h1>
-
-                <div class="flex mt-2.5 mb-3.75">
-                    <div class="w-58 h-px bg-[#EC0226]"></div>
-                    <div class="w-full h-px bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>
-                </div>
-
-                {{-- INTRO --}}
-                <p class="text-[#121212] dark:text-white text-[15px] mb-3.75 leading-relaxed italic">
-                    {{ $article->description }}
-                </p>
-
-                {{-- AUTHOR INFO --}}
-                <div class="flex items-center gap-x-2.5 md:gap-x-3 mb-7.5">
-                    <div class="w-9 md:w-11.25 h-9 md:h-11.25 rounded-full overflow-hidden shrink-0">
-                        <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}" alt="Author" class="w-full h-full object-cover">
+    <section class="2xl:pt-30">
+        <x-layout.two-column-layout paddingRight="2xl:pr-0" marginRight="2xl:mr-9" borderRight="2xl:border-none">
+            <x-slot name="main">
+                {{-- BREADCRUMB AND CATEGORY SECTION --}}
+                <section
+                    class="pt-30 md:pt-34 lg:pt-38 2xl:pt-0 mx-6 md:mx-8 lg:mx-10 2xl:container 2xl:mx-auto mb-3.25 md:mb-3.75">
+                    <div class="mb-3.75">
+                        <x-bread-crumb :items="[
+                            ['title' => 'Home', 'url' => '/'],
+                            ['title' => 'News', 'url' => '/news'],
+                            ['title' => $article->category->name ?? 'Category', 'url' => '#'],
+                            ['title' => Str::words($article->title, 2, '...'), 'url' => '#'],
+                        ]" />
                     </div>
-                    <div>
-                        <p class="font-medium text-[13px] mb-0.5 text-[#48494A] dark:text-white">{{ $article->uploader->name ?? 'Admin' }}</p>
-                        <div class="flex items-center gap-x-3 text-[13px] text-[#48494A] dark:text-white">
-                            <span>{{ $article->published_at ? $article->published_at->format('M d, Y') : $article->created_at->format('M d, Y') }}</span>
-                            <span>/</span>
-                            <span>{{ $readTime }} Min Read</span>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- CONTENT BODY --}}
-                <div>
-                    {{-- THUMBNAIL UTAMA --}}
-                    @if($article->thumbnail)
-                        <div class="rounded-[5px] md:rounded-[10px] overflow-hidden h-58.5 md:h-109 lg:h-137 mb-7.5">
-                            <img src="{{ asset('storage/' . $article->thumbnail) }}" alt="{{ $article->title }}" class="w-full h-full object-cover">
-                        </div>
-                    @endif
-
-                    {{-- ARTICLE TEXT --}}
-                    <div class="prose dark:prose-invert max-w-none text-[#121212] dark:text-[#EEEEEE] text-[15px] leading-[170%] mb-7.5">
-                        {!! $article->content !!}
-                    </div>
-
-                    {{-- FOTO 1 --}}
-                    @if($article->foto1)
-                        <div class="mb-7.5">
-                            <div class="rounded-[5px] md:rounded-[15px] overflow-hidden h-54.5 md:h-98.25 lg:h-136.75 mb-2">
-                                <img src="{{ asset('storage/' . $article->foto1) }}" alt="News Photo 1" class="w-full h-full object-cover">
-                            </div>
-                        </div>
-                    @endif
-
-                    {{-- FOTO 2 --}}
-                    @if($article->foto2)
-                        <div class="mb-7.5">
-                            <div class="rounded-[5px] md:rounded-[15px] overflow-hidden h-54.5 md:h-98.25 lg:h-136.75 mb-2">
-                                <img src="{{ asset('storage/' . $article->foto2) }}" alt="News Photo 2" class="w-full h-full object-cover">
-                            </div>
-                        </div>
-                    @endif
-
-                    {{-- SHARE & TAGS --}}
-                    <div class="flex flex-wrap items-center gap-2.5 mb-12.5 border-t pt-10 border-gray-200">
-                        <p class="text-[#121212] dark:text-white text-[15px] font-medium">Tags: </p>
-                        @foreach($article->tags as $tag)
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <x-cards.category.category-card :dotColor="'#EC0226'" :categoryName="$article->category->name ?? 'News'" />
+                        @foreach ($article->tags as $tag)
                             <x-cards.category.category-card :dotColor="'#007DFC'" :categoryName="$tag->name" />
                         @endforeach
                     </div>
+                </section>
 
-                    {{-- SHARE BUTTONS --}}
-                    <div class="bg-gray-50 dark:bg-[#1a1a1a] p-6 rounded-lg">
-                        <p class="text-[#121212] dark:text-white font-medium text-center mb-4">Share Article</p>
-                        <div class="flex gap-4 justify-center mb-6">
-                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank" class="p-3 bg-white rounded shadow hover:bg-gray-100"><x-bi-facebook class="w-5 h-5 text-[#1977F2]" /></a>
-                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}" target="_blank" class="p-3 bg-white rounded shadow hover:bg-gray-100"><x-bi-twitter-x class="w-5 h-5 text-black" /></a>
+                {{-- NEWS CONTENT SECTION --}}
+                <section class="mx-6 md:mx-8 lg:mx-10 2xl:container 2xl:mx-auto mb-7.5">
+
+                    {{-- TITLE --}}
+                    <h1 class="text-[#121212] dark:text-white font-medium text-[22px] md:text-[32px] leading-tight">
+                        {{ $article->title }}
+                    </h1>
+
+                    <div class="flex mt-2.5 mb-3.75">
+                        <div class="w-58 h-px bg-[#EC0226]"></div>
+                        <div class="w-full h-px bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>
+                    </div>
+
+                    {{-- INTRO --}}
+                    <p class="text-[#121212] dark:text-white text-[15px] mb-3.75 leading-relaxed italic">
+                        {{ $article->description }}
+                    </p>
+
+                    {{-- AUTHOR INFO --}}
+                    <div class="flex items-center gap-x-2.5 md:gap-x-3 mb-7.5">
+                        <div class="w-9 md:w-11.25 h-9 md:h-11.25 rounded-full overflow-hidden shrink-0">
+                            <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}" alt="Author"
+                                class="w-full h-full object-cover">
                         </div>
-                        <div class="flex items-center gap-x-2.5 bg-[#F7F7F7] dark:bg-[#353434] py-2 px-3 rounded">
-                            <input type="text" id="shareUrl" value="{{ url()->current() }}" readonly class="flex-1 bg-transparent text-[#75788D] outline-none">
-                            <button onclick="copyToClipboard()" class="p-2 text-[#EC0226]"><x-bi-clipboard class="w-5 h-5" /></button>
+                        <div>
+                            <p class="font-medium text-[13px] mb-0.5 text-[#48494A] dark:text-white">
+                                {{ $article->uploader->name ?? 'Admin' }}</p>
+                            <div class="flex items-center gap-x-3 text-[13px] text-[#48494A] dark:text-white">
+                                <span>{{ $article->published_at ? $article->published_at->format('M d, Y') : $article->created_at->format('M d, Y') }}</span>
+                                <span>/</span>
+                                <span>{{ $readTime }} Min Read</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </x-slot>
-        
-        <x-slot name="sidebar">
-            <section class="mx-6 md:mx-8 2xl:mx-0 mb-7">
-                <x-popular-recent-news />
-            </section>
-        </x-slot>
-    </x-layout.two-column-layout>
-</section>
 
-{{-- RELATED ARTICLES & FOOTER --}}
-<section class="dark:bg-[#121212]"><x-related-articles :category="$article->category_id" :exclude="$article->id" /></section>
-<section class="mt-10 mx-6 lg:mx-10"><x-ads /></section>
-<section class="bg-[#FAFAFA] dark:bg-[#171717] py-10"><div class="mx-6 lg:mx-10"><x-streaming-partner /></div></section>
-<footer class="bg-[#FAFAFA] dark:bg-[#171717]"><div class="mx-6 lg:mx-10"><x-footer /></div></footer>
+                    {{-- CONTENT BODY --}}
+                    <div class="space-y-6">
+                        {{-- HERO / THUMBNAIL --}}
+                        <div class="rounded-[5px] md:rounded-[10px] overflow-hidden h-58.5 md:h-109 lg:h-137 mb-7.5">
+                            @if ($article->thumbnail)
+                                <img src="{{ asset('storage/' . $article->thumbnail) }}" alt="{{ $article->title }}"
+                                    class="w-full h-full object-cover">
+                            @elseif($article->foto1)
+                                <img src="{{ asset('storage/' . $article->foto1) }}" alt="{{ $article->title }}"
+                                    class="w-full h-full object-cover">
+                            @else
+                                <img src="{{ asset('images/dummy/hero-home/bg-hero-home.webp') }}" alt="Dummy News Image"
+                                    class="w-full h-full object-cover">
+                            @endif
+                        </div>
+                        @php
+                            // 1. Pecah konten berdasarkan paragraf agar tidak rusak tag HTML-nya
+                            $content = $article->content;
+                            $paragraphs = explode('</p>', $content);
 
-<script>
-    function copyToClipboard() {
-        const urlInput = document.getElementById('shareUrl');
-        urlInput.select();
-        navigator.clipboard.writeText(urlInput.value).then(() => alert('Link copied!'));
-    }
-</script>
+                            // Bersihkan array dari elemen kosong
+                            $paragraphs = array_filter($paragraphs, fn($p) => trim(strip_tags($p)) !== '');
+
+                            // 2. Hitung titik tengah
+                            $totalParagraphs = count($paragraphs);
+                            $midPoint = ceil($totalParagraphs / 2);
+
+                            // 3. Bagi menjadi dua bagian
+                            $part1 = array_slice($paragraphs, 0, $midPoint);
+                            $part2 = array_slice($paragraphs, $midPoint);
+                        @endphp
+
+                        {{-- BAGIAN TEKS PERTAMA --}}
+                        <div
+                            class="prose dark:prose-invert max-w-none text-[#121212] dark:text-[#EEEEEE] text-[15px] leading-[170%]">
+                            @foreach ($part1 as $p)
+                                {!! $p !!}</p>
+                            @endforeach
+                        </div>
+
+                        {{-- FOTO 1 (Tengah) --}}
+                        @if ($article->foto1)
+                            <div class="my-8">
+                                <div
+                                    class="rounded-[5px] md:rounded-[15px] overflow-hidden h-54.5 md:h-98.25 lg:h-136.75 shadow-lg">
+                                    <img src="{{ asset('storage/' . $article->foto1) }}" alt="Foto Tengah"
+                                        class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                        @endif
+
+                        {{-- BAGIAN TEKS KEDUA --}}
+                        <div
+                            class="prose dark:prose-invert max-w-none text-[#121212] dark:text-[#EEEEEE] text-[15px] leading-[170%]">
+                            @foreach ($part2 as $p)
+                                {!! $p !!}</p>
+                            @endforeach
+                        </div>
+
+                        {{-- FOTO 2 (Paling Bawah) --}}
+                        @if ($article->foto2)
+                            <div class="mt-8 mb-7.5">
+                                <div
+                                    class="rounded-[5px] md:rounded-[15px] overflow-hidden h-54.5 md:h-98.25 lg:h-136.75 shadow-lg">
+                                    <img src="{{ asset('storage/' . $article->foto2) }}" alt="Foto Bawah"
+                                        class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    {{-- SHARE THIS ARTICLE --}}
+                    <div>
+                        {{-- SHARE ARTICLE TITLE --}}
+                        <p class="mb-2.5 text-center text-[16px] font-medium leading-[163%] text-[#121212] dark:text-white">
+                            Share
+                            Article</p>
+
+                        {{-- SOCIAL MEDIA ICONS --}}
+                        <div class="mb-6 flex justify-center gap-x-3.5">
+                            <div
+                                class="p-3.25 cursor-pointer rounded-[5px] bg-white shadow-md transition-shadow hover:shadow-lg dark:bg-[#353434]">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <x-bi-facebook class="w-3.75 h-3.75 text-[#1977F2]" />
+                                </a>
+                            </div>
+                            <div
+                                class="p-3.25 cursor-pointer rounded-[5px] bg-white shadow-md transition-shadow hover:shadow-lg dark:bg-[#353434]">
+                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <x-bi-twitter-x class="w-3.75 h-3.75 text-[#000000] dark:text-white" />
+                                </a>
+                            </div>
+                            <div
+                                class="p-3.25 cursor-pointer rounded-[5px] bg-white shadow-md transition-shadow hover:shadow-lg dark:bg-[#353434]">
+                                <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                                    <x-bi-instagram class="w-3.75 h-3.75 text-[#E4405F]" />
+                                </a>
+                            </div>
+                            <div
+                                class="p-3.25 cursor-pointer rounded-[5px] bg-white shadow-md transition-shadow hover:shadow-lg dark:bg-[#353434]">
+                                <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+                                    <x-bi-youtube class="w-3.75 h-3.75 text-[#FF0000]" />
+                                </a>
+                            </div>
+                        </div>
+
+                        {{-- SHARE LINK URL --}}
+                        <div
+                            class="md:max-w-125 flex items-center gap-x-2.5 bg-[#F7F7F7] px-2.5 py-2 md:mx-auto dark:bg-[#353434]">
+                            <input type="text" id="shareUrl" value="{{ url()->current() }}" readonly
+                                class="flex-1 cursor-default bg-transparent text-[16px] leading-[163%] text-[#75788D] outline-none dark:text-[#75788D]">
+                            <button onclick="copyToClipboard()"
+                                class="shrink-0 rounded p-1.5 transition-colors hover:bg-[#EEEEEE] dark:hover:bg-[#4B4B4B]">
+                                <x-bi-clipboard class="h-4 w-4 text-[#EC0226] dark:text-white" />
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </x-slot>
+
+            <x-slot name="sidebar">
+                <section class="mx-6 md:mx-8 2xl:mx-0 mb-7">
+                    <x-popular-recent-news />
+                </section>
+            </x-slot>
+        </x-layout.two-column-layout>
+    </section>
+
+    {{-- RELATED ARTICLES & FOOTER --}}
+    <section class="dark:bg-[#121212]">
+        <x-related-articles :category="$article->category_id" :exclude="$article->id" />
+    </section>
+
+    {{-- ADS SECTION START --}}
+    <section class="lg:mt-7.5 md:mx-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
+        <x-ads />
+    </section>
+    {{-- ADS SECTION END --}}
+
+    {{-- STREAMING PARTNER SECTION START --}}
+    <section class="lg:pb-12.5 bg-[#FAFAFA] pb-5 md:pb-10 2xl:pb-20 dark:bg-[#171717]">
+        <div class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto">
+            <x-streaming-partner />
+        </div>
+    </section>
+    {{-- STREAMING PARTNER SECTION END --}}
+
+    {{-- FOOTER SECTION START --}}
+    <section class="bg-[#FAFAFA] dark:bg-[#171717]">
+        <div class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto">
+            <x-footer />
+        </div>
+    </section>
+    {{-- FOOTER SECTION END --}}
+
+
+    <script>
+        function copyToClipboard() {
+            const urlInput = document.getElementById('shareUrl');
+            urlInput.select();
+            navigator.clipboard.writeText(urlInput.value).then(() => alert('Link copied!'));
+        }
+    </script>
 
 @endsection
