@@ -4,19 +4,32 @@
 
 @section('content')
     {{-- LIVE SCORE CARD START --}}
-    <section class="bg-[#F3F3F3] dark:bg-[#171717] mb-5">
-        <div class="pt-29 lg:pt-35 2xl:container 2xl:mx-auto mx-6 md:mx-8 lg:mx-10 pb-7.5 ">
-            <div class="swiper live-score-swiper overflow-hidden">
-                <div class="swiper-wrapper">
-                    @for ($i = 0; $i < 15; $i++)
-                        <div class="swiper-slide w-auto!">
-                            <x-cards.live-score-card />
-                        </div>
-                    @endfor
+    <div class="bg-[#F3F3F3] dark:bg-[#171717]">
+        <div class="pt-29 lg:pt-35 pb-7.5 mx-6 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
+            @if (isset($hasError) && $hasError)
+                <div class="mb-4 rounded-md border border-red-300 bg-white p-4 dark:border-red-500 dark:bg-[#353434]">
+                    <p class="text-sm text-red-500">{{ $error ?? 'Failed to load live scores' }}</p>
                 </div>
-            </div>
+            @endif
+
+            @if (!empty($matches))
+                <div class="swiper live-score-swiper overflow-hidden">
+                    <div class="swiper-wrapper">
+                        @foreach ($matches as $match)
+                            <div class="swiper-slide w-76!">
+                                <x-cards.live-score-card :match="$match" />
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @else
+                <div
+                    class="rounded-md border border-[#F5F5F5] bg-white p-8 text-center dark:border-[#515050] dark:bg-[#353434]">
+                    <p class="text-sm text-[#A2A6A9]">No live matches available at the moment</p>
+                </div>
+            @endif
         </div>
-    </section>
+    </div>
     {{-- LIVE SCORE CARD END --}}
 
     {{-- BREADCRUM AND HEADER SECTION START --}}

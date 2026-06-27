@@ -4,6 +4,18 @@
 
 @section('content')
 
+    {{-- ONGOING TOURNAMENT SECTION START --}}
+    <section class="lg:pt-35 pb-7.5 mx-6 mb-7 pt-44 2xl:container md:mx-8 md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
+        <x-ongoing-tournament />
+    </section>
+    {{-- ONGOING TOURNAMENT SECTION END --}}
+
+    {{-- FIXTURES AND RESULTS SECTION START --}}
+    <section class="mx-6 mb-7 2xl:container md:mx-8 md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
+        <x-fixtures-results />
+    </section>
+    {{-- FIXTURES AND RESULTS SECTION END --}}
+
     {{-- FEATURED VIDEO SECTION START --}}
     <section class="mb-7 md:mb-6 lg:mb-10">
         <x-featured-video />

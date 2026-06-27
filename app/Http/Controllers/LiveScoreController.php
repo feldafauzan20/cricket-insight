@@ -42,6 +42,7 @@ class LiveScoreController extends Controller
     private function fetchMatchesFromAPI($limit)
     {
         try {
+            // dd('fetching from API');
             $apiUrl = config('app.cricket_api_url');
             $clubId = config('app.cricket_club_id', '19323');
 
@@ -111,7 +112,7 @@ class LiveScoreController extends Controller
             return [
                 'success' => false,
                 'data' => [],
-                'error' => 'An error occurred while fetching live scores'
+                'error' => 'An error occurred while fetching live scoress'
             ];
         }
     }

@@ -64,9 +64,11 @@
             </section>
             {{-- EDITOR CHOICES END --}}
             {{-- ADS SECTION START --}}
-            <section
-                class="lg:mt-7.5 md:mx-7.5 lg:mb-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 2xl:mx-auto 2xl:mb-6">
-                <x-ads />
+            <section class="lg:mt-7.5 md:mx-7.5 lg:mb-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 2xl:mx-auto 2xl:mb-6">
+                
+                {{-- Panggil Iklan Atas --}}
+                <x-ads position="home_top" />
+
             </section>
             {{-- ADS SECTION END --}}
 
@@ -97,8 +99,11 @@
             </section>
             {{-- SOCIAL MEDIA SECTION END --}}
             {{-- ADS SECTION START --}}
-            <section class="lg:mt-7.5 md:mx-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
-                <x-ads />
+            <section class="lg:mt-7.5 md:mx-7.5 lg:mb-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 2xl:mx-auto 2xl:mb-6">
+                
+                {{-- Panggil Iklan Atas --}}
+                <x-ads position="home_middle" />
+
             </section>
             {{-- ADS SECTION END --}}
         </x-slot>
@@ -107,21 +112,33 @@
 
     {{-- NEWS FLASH SECTION START --}}
     <section class="md:mx-7.5 hidden 2xl:container md:mb-6 md:block lg:mx-10 lg:mb-10 2xl:mx-auto">
-        <x-news-flash>
-            Breaking News: India wins the cricket world cup! • England defeats Australia • New tournament announced
-        </x-news-flash>
+        @php
+            use App\Models\NewsFlash;
+            $newsFlash = NewsFlash::where('is_active', true)
+                ->orderByDesc('updated_at')
+                ->first();
+            $newsText = $newsFlash?->description ?? $newsFlash?->title ?? 'No news at the moment.';
+        @endphp
+        <x-news-flash>{{ $newsText }}</x-news-flash>
     </section>
     {{-- NEWS FLASH SECTION END --}}
 
     {{-- FEATURED VIDEO SECTION START --}}
     <section class="mb-7 md:mb-6 lg:mb-10">
-        <x-featured-video />
+        @php
+            use App\Models\PageSlot;
+            $featuredSlot = PageSlot::where('page_key', 'homepage')
+                ->where('section_key', 'featured_video')
+                ->first();
+        @endphp
+
+        <x-featured-video :slot-id="$featuredSlot?->id" />
     </section>
     {{-- FEATURED VIDEO SECTION END --}}
 
     {{-- ADS SECTION START --}}
     <section class="md:mx-7.5 mx-6 mb-7 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
-        <x-ads />
+        <x-ads position="home_bottom" />
     </section>
     {{-- ADS SECTION END --}}
 

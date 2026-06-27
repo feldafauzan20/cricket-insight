@@ -1,5 +1,9 @@
 import "./bootstrap";
 import Alpine from "alpinejs";
+import Swiper from "swiper";
+import { FreeMode, Navigation, Autoplay, Pagination } from "swiper/modules";
+import { initInterviewVideosSwiper } from "./interview-videos";
+import flatpickr from "flatpickr";
 
 // Dark Mode Store dengan localStorage persistence
 Alpine.store("darkMode", {
@@ -39,15 +43,105 @@ Alpine.store("darkMode", {
 });
 
 window.Alpine = Alpine;
+
+// Alpine.js Component for Fixtures Filters
+Alpine.data("fixturesFilters", () => ({
+    activeTab: "women",
+    selectedYear: new Date().getFullYear(),
+    selectedFormat: "ODI",
+    selectedTeam: "",
+    openYear: false,
+    // yearPicker: null,
+
+    get yearList() {
+        const current = new Date().getFullYear();
+        const years = [];
+        for (let y = current; y >= 2016; y--) years.push(y);
+        return years;
+    },
+
+    // init() {
+    //     // Initialize Flatpickr for year picker
+    //     this.yearPicker = flatpickr(this.$refs.yearPicker, {
+    //         mode: "single",
+    //         dateFormat: "Y",
+    //         defaultDate: new Date().getFullYear().toString(),
+    //         minDate: "2016",
+    //         maxDate: new Date().getFullYear().toString(),
+    //         onChange: (selectedDates, dateStr) => {
+    //             this.selectedYear = parseInt(dateStr);
+    //         },
+    //         onOpen: function (selectedDates, dateStr, instance) {
+    //             // Switch to year mode when calendar opens
+    //             instance.currentYear = instance.selectedDates[0]
+    //                 ? instance.selectedDates[0].getFullYear()
+    //                 : new Date().getFullYear();
+    //             instance.redraw();
+    //         },
+    //         plugins: [
+    //             function (fp) {
+    //                 return {
+    //                     onReady: function () {
+    //                         // Custom year picker functionality
+    //                         const yearSelect = fp.currentYearElement;
+    //                         if (yearSelect) {
+    //                             yearSelect.removeAttribute("disabled");
+    //                         }
+    //                     },
+    //                 };
+    //             },
+    //         ],
+    //     });
+    // },
+
+    previousYear() {
+        if (this.selectedYear > 2016) {
+            this.selectedYear--;
+            this.openYear = false; // Close the year picker after selection
+        }
+    },
+
+    nextYear() {
+        const currentYear = new Date().getFullYear();
+        if (this.selectedYear < currentYear) {
+            this.selectedYear++;
+            this.openYear = false; // Close the year picker after selection
+        }
+    },
+
+    selectFormat(format) {
+        this.selectedFormat = format;
+    },
+
+    selectTeam(team) {
+        this.selectedTeam = team;
+    },
+}));
+
 Alpine.start();
 
-import Swiper from "swiper";
-import { FreeMode, Navigation, Autoplay, Pagination } from "swiper/modules";
-import { initInterviewVideosSwiper } from "./interview-videos";
-
 document.addEventListener("DOMContentLoaded", () => {
+    // Fixtures Tabs Swiper
+    new Swiper(".fixtures-tabs-swiper", {
+        slidesPerView: "auto",
+        spaceBetween: 0,
+        freeMode: true,
+        grabCursor: true,
+    });
+
+    // Fixtures Filters Swiper (Year, Formats, Teams)
+    new Swiper(".fixtures-filters-swiper", {
+        slidesPerView: "auto",
+        spaceBetween: 12,
+        freeMode: true,
+        grabCursor: true,
+        preventClicks: false,
+        preventClicksPropagation: false,
+        slideToClickedSlide: false,
+    });
+
     new Swiper(".live-score-swiper", {
-        modules: [FreeMode],
+        // modules: [FreeMode],
         slidesPerView: "auto",
         spaceBetween: 15,
         freeMode: true,
@@ -61,6 +155,13 @@ document.addEventListener("DOMContentLoaded", () => {
             nextEl: ".latest-news-button-next",
             prevEl: ".latest-news-button-prev",
         },
+        grabCursor: true,
+    });
+
+    // Ongoing Tournament Swiper
+    new Swiper(".ongoing-tournament-swiper", {
+        slidesPerView: "auto",
+        spaceBetween: 29,
         grabCursor: true,
     });
 

@@ -2,28 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\News;
+use App\Models\Article;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class NewsController extends Controller
 {
     /**
-     * Display a listing of news with pagination.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\View\View
+     * Menampilkan daftar semua berita
      */
-    public function index(Request $request): View
+    public function index()
     {
-        // Paginate news with 10 items per page
-        // This creates 10 pages with 100 records, perfect for testing all 4 pagination scenarios
-        $news = News::orderBy('published_at', 'desc')
-            ->paginate(10)
-            ->withQueryString(); // Preserve other query parameters
 
+        $liveScoreController = new LiveScoreController();
+        $matchesData = $liveScoreController->getMatches(10);
+
+        // Mengambil semua berita yang sudah published, diurutkan terbaru
+        $news = Article::where('status', 'published')
+            ->orderBy('published_at', 'desc')
+            ->paginate(10);
+            
         return view('news', [
             'news' => $news,
+            'matches' => $matchesData['data'] ?? [],
+            'hasError' => !$matchesData['success'],
+            'error' => $matchesData['error'] ?? null
         ]);
+    }
+
+    /**
+     * Menampilkan detail satu berita
+     */
+    public function show($slug)
+    {
+        // Mencari artikel berdasarkan slug, jika tidak ketemu akan menampilkan error 404
+        $article = Article::where('slug', $slug)->firstOrFail();
+        
+        // Mengirim data ke view 'single-news'
+        return view('single-news', compact('article'));
     }
 }

@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function index()
     {
         $liveScoreController = new LiveScoreController();
-        $matchesData = $liveScoreController->getMatches(50);
+        $matchesData = $liveScoreController->getMatches(10);
 
         return view('home', [
             'matches' => $matchesData['data'] ?? [],
