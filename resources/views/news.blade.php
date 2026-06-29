@@ -45,7 +45,17 @@
             <x-news-header />
         </div>
         <div>
-            <x-filter.filter />
+            <x-filter.filter
+                :categories="$categories"
+                :uploaders="$uploaders"
+                :tags="$tags"
+                :statuses="$statuses"
+                :region-options="$regionOptions"
+                :sort-options="$sortOptions"
+                :time-frames="$timeFrames"
+                :popularity-options="$popularityOptions"
+                :filters="$filters"
+            />
         </div>
     </section>
     {{-- BREADCRUM AND HEADER SECTION END --}}
@@ -65,7 +75,7 @@
             <section class="mx-6 md:mx-8 lg:mx-10 2xl:container 2xl:mx-auto mb-5 md:mb-7.5 2xl:mb-6.25">
                 <div class="flex flex-col gap-y-7.5">
                     @forelse ($news as $newsItem)
-                        <x-cards.news-card />
+                        <x-cards.news-card :article="$newsItem" />
                     @empty
                         <p class="text-center text-gray-500 dark:text-gray-400">No news available.</p>
                     @endforelse
