@@ -4,6 +4,7 @@ import Swiper from "swiper";
 import { FreeMode, Navigation, Autoplay, Pagination } from "swiper/modules";
 import { initInterviewVideosSwiper } from "./interview-videos";
 import flatpickr from "flatpickr";
+import initScoreCardTournamentSwiper from "./ScoreCardTournament";
 
 // Dark Mode Store dengan localStorage persistence
 Alpine.store("darkMode", {
@@ -167,6 +168,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Interview Videos Swiper
     initInterviewVideosSwiper();
+
+    // Score Card Tournament Swiper\
+    initScoreCardTournamentSwiper();
 
     // Featured Video Carousel
     new Swiper(".featured-video-swiper", {
