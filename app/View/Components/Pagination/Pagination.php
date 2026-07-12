@@ -9,7 +9,7 @@ use Illuminate\View\Component;
 
 class Pagination extends Component
 {
-    public LengthAwarePaginator $paginator;
+    public ?LengthAwarePaginator $paginator;
     public int $currentPage;
     public int $lastPage;
     public array $pages;
@@ -17,12 +17,12 @@ class Pagination extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(LengthAwarePaginator $paginator)
+    public function __construct(?LengthAwarePaginator $paginator = null)
     {
         $this->paginator = $paginator;
-        $this->currentPage = $paginator->currentPage();
-        $this->lastPage = $paginator->lastPage();
-        $this->pages = $this->computePageRange();
+        $this->currentPage = $paginator?->currentPage() ?? 1;
+        $this->lastPage = $paginator?->lastPage() ?? 1;
+        $this->pages = $paginator ? $this->computePageRange() : [1];
     }
 
     /**

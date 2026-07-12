@@ -5,16 +5,28 @@
 @section('content')
 
     {{-- ONGOING TOURNAMENT SECTION START --}}
-    <section class="lg:pt-35 pb-7.5 mx-6 mb-7 pt-44 2xl:container md:mx-8 md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
+    <section class="lg:pt-35 pb-7.5 md:pt-35 mx-6 mb-7 pt-44 2xl:container md:mx-8 md:mb-6 lg:mx-9 lg:mb-10 2xl:mx-auto">
         <x-ongoing-tournament />
     </section>
     {{-- ONGOING TOURNAMENT SECTION END --}}
 
     {{-- FIXTURES AND RESULTS SECTION START --}}
-    <section class="mx-6 mb-7 2xl:container md:mx-8 md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
+    <section class="lg:mb-17.5 mx-6 mb-7 2xl:container md:mx-8 md:mb-6 lg:mx-10 2xl:mx-auto">
         <x-fixtures-results />
     </section>
     {{-- FIXTURES AND RESULTS SECTION END --}}
+
+    {{-- ADS SECTION START --}}
+    <section class="md:mx-7.5 lg:mb-12.5 mx-6 mb-7 2xl:container md:mb-6 lg:mx-10 2xl:mx-auto">
+        <x-ads />
+    </section>
+    {{-- ADS SECTION END --}}
+
+    {{-- POINTS TABLE SECTION START --}}
+    <section class="md:mx-7.5 mx-6 mb-7 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
+        <x-points-table />
+    </section>
+    {{-- POINTS TABLE SECTION END --}}
 
     {{-- FEATURED VIDEO SECTION START --}}
     <section class="mb-7 md:mb-6 lg:mb-10">

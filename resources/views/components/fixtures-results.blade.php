@@ -1,11 +1,15 @@
 <div class="rounded-[7px] border border-[#EDF1F6] dark:border-[#353434]" x-data="fixturesFilters()">
+    @php
+        $dummyFixturesPaginator = new \Illuminate\Pagination\LengthAwarePaginator(collect(range(1, 50)), 50, 30, 1);
+    @endphp
+
     {{-- HEADER --}}
-    <div class="rounded-t-[7px] bg-[#0A1628] py-3.5 pl-2.5">
-        <h1 class="text-xl font-semibold text-white">FIXTURES & RESULTS</h1>
+    <div class="md:pl-9.5 rounded-t-[7px] bg-[#0A1628] py-3.5 pl-2.5 dark:bg-[#1F1F1F]">
+        <h1 class="text-xl font-semibold text-white lg:text-[22px]">FIXTURES & RESULTS</h1>
     </div>
 
     {{-- TAB NAVIGATION: MEN, WOMEN, RESULTS, FIXTURES --}}
-    <div class="border-b border-[#E0E0E0] bg-white dark:border-[#353434] dark:bg-[#171717]">
+    <div class="border-b border-[#E0E0E0] bg-white md:pl-3.5 dark:border-[#353434] dark:bg-[#353434]">
         <div class="swiper fixtures-tabs-swiper overflow-hidden">
             <div class="swiper-wrapper">
                 <div class="swiper-slide w-auto!">
@@ -41,7 +45,7 @@
     </div>
 
     {{-- FILTER: YEAR, FORMATS, AND TEAMS --}}
-    <div class="bg-[#F8FAFC] p-4 dark:bg-[#171717]">
+    <div class="md:px-6.5 bg-[#F8FAFC] p-4 md:p-0 md:py-4 dark:bg-[#515050]">
         <div class="swiper fixtures-filters-swiper">
             <div class="swiper-wrapper">
                 {{-- YEAR FILTER --}}
@@ -93,7 +97,7 @@
                     <div class="relative" x-data="{ open: false }">
                         <div @click="open = !open" class="cursor-pointer">
                             <div
-                                class="flex w-fit items-center gap-x-2 rounded-[3px] border border-[#E0E0E0] bg-white p-2 shadow-md dark:border-[#171717] dark:bg-[#353434]">
+                                class="flex w-fit items-center gap-x-2 rounded-[3px] border border-[#E0E0E0] bg-white p-2 shadow-md dark:border-[#353434] dark:bg-[#353434]">
                                 <div class="gap-x-0.75 flex items-center">
                                     <x-ri-settings-line class="h-6 w-6" style="color: #EC0226" />
                                     <p class="text-[15px] text-[#121212] dark:text-white">All Formats</p>
@@ -115,7 +119,7 @@
                             x-transition:leave="transition ease-in duration-150"
                             x-transition:leave-start="opacity-100 translate-y-0"
                             x-transition:leave-end="opacity-0 translate-y-1"
-                            class="absolute left-0 top-full z-50 mt-2 w-48 rounded-[3px] border border-[#E0E0E0] bg-white shadow-lg dark:border-[#171717] dark:bg-[#353434]">
+                            class="absolute left-0 top-full z-50 mt-2 w-48 rounded-[3px] border border-[#E0E0E0] bg-white shadow-lg dark:border-[#353434] dark:bg-[#353434]">
                             <div class="py-1">
                                 <button @click="selectFormat('Test'); open = false"
                                     :class="selectedFormat === 'Test' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
@@ -157,7 +161,7 @@
                     <div class="relative" x-data="{ open: false }">
                         <div @click="open = !open" class="cursor-pointer">
                             <div
-                                class="flex w-fit items-center gap-x-2 rounded-[3px] border border-[#E0E0E0] bg-white p-2 shadow-md dark:border-[#171717] dark:bg-[#353434]">
+                                class="flex w-fit items-center gap-x-2 rounded-[3px] border border-[#E0E0E0] bg-white p-2 shadow-md dark:border-[#353434] dark:bg-[#353434]">
                                 <div class="gap-x-0.75 flex items-center">
                                     <x-ri-flag-line class="h-6 w-6" style="color: #EC0226" />
                                     <p class="text-[15px] text-[#121212] dark:text-white">All Teams</p>
@@ -256,341 +260,176 @@
     </div>
 
     {{-- FIXTURES CONTENT --}}
-    <div>
-        {{-- DATE --}}
-        <div class="bg-linear-to-r py-1.25 from-[#1A56DB] from-0% to-[#0E2E75] to-100% px-2.5">
-            <p class="text-sm font-semibold text-white">30 MARCH, 2026</p>
-        </div>
+    <div class="dark:bg-[#515050]">
+        @php
+            // TODO: ganti dengan data asli dari controller
+            $fixtureGroups = [
+                [
+                    'date' => '30 MARCH, 2026',
+                    'matches' => [
+                        [
+                            'type' => 'ODI',
+                            'title' => '1st ODI',
+                            'venue' => 'KENSINGTON OVAL, BERBADOS',
+                            'team1' => 'PCI',
+                            'team1_score' => '179 (48.3)',
+                            'team1_logo' => 'https://placehold.co/20x20',
+                            'team2' => 'PCI',
+                            'team2_score' => '179 (48.3)',
+                            'team2_logo' => 'https://placehold.co/20x20',
+                            'result' => 'Logo Ipsum won by 7 wickets (with 15 balls remaining)',
+                        ],
+                        [
+                            'type' => 'ODI',
+                            'title' => '1st ODI',
+                            'venue' => 'KENSINGTON OVAL, BERBADOS',
+                            'team1' => 'PCI',
+                            'team1_score' => '179 (48.3)',
+                            'team1_logo' => 'https://placehold.co/20x20',
+                            'team2' => 'PCI',
+                            'team2_score' => '179 (48.3)',
+                            'team2_logo' => 'https://placehold.co/20x20',
+                            'result' => 'Logo Ipsum won by 7 wickets (with 15 balls remaining)',
+                        ],
+                    ],
+                ],
+                [
+                    'date' => '29 MARCH, 2026',
+                    'matches' => [
+                        [
+                            'type' => 'ODI',
+                            'title' => '1st ODI',
+                            'venue' => 'KENSINGTON OVAL, BERBADOS',
+                            'team1' => 'PCI',
+                            'team1_score' => '179 (48.3)',
+                            'team1_logo' => 'https://placehold.co/20x20',
+                            'team2' => 'PCI',
+                            'team2_score' => '179 (48.3)',
+                            'team2_logo' => 'https://placehold.co/20x20',
+                            'result' => 'Logo Ipsum won by 7 wickets (with 15 balls remaining)',
+                        ],
+                    ],
+                ],
+                [
+                    'date' => '28 MARCH, 2026',
+                    'matches' => [
+                        [
+                            'type' => 'ODI',
+                            'title' => '1st ODI',
+                            'venue' => 'KENSINGTON OVAL, BERBADOS',
+                            'team1' => 'PCI',
+                            'team1_score' => '179 (48.3)',
+                            'team1_logo' => 'https://placehold.co/20x20',
+                            'team2' => 'PCI',
+                            'team2_score' => '179 (48.3)',
+                            'team2_logo' => 'https://placehold.co/20x20',
+                            'result' => 'Logo Ipsum won by 7 wickets (with 15 balls remaining)',
+                        ],
+                        [
+                            'type' => 'ODI',
+                            'title' => '1st ODI',
+                            'venue' => 'KENSINGTON OVAL, BERBADOS',
+                            'team1' => 'PCI',
+                            'team1_score' => '179 (48.3)',
+                            'team1_logo' => 'https://placehold.co/20x20',
+                            'team2' => 'PCI',
+                            'team2_score' => '179 (48.3)',
+                            'team2_logo' => 'https://placehold.co/20x20',
+                            'result' => 'Logo Ipsum won by 7 wickets (with 15 balls remaining)',
+                        ],
+                        [
+                            'type' => 'ODI',
+                            'title' => '1st ODI',
+                            'venue' => 'KENSINGTON OVAL, BERBADOS',
+                            'team1' => 'PCI',
+                            'team1_score' => '179 (48.3)',
+                            'team1_logo' => 'https://placehold.co/20x20',
+                            'team2' => 'PCI',
+                            'team2_score' => '179 (48.3)',
+                            'team2_logo' => 'https://placehold.co/20x20',
+                            'result' => 'Logo Ipsum won by 7 wickets (with 15 balls remaining)',
+                        ],
+                    ],
+                ],
+            ];
 
-        {{-- MATCHES --}}
-        <div class="border-b border-[#EDF1F6] px-2.5 py-5">
-            <div class="flex gap-x-4">
-                <div class="flex flex-col gap-y-2">
-                    <div>
-                        <span class="text-xs font-medium text-[#718096]">ODI</span>
-                    </div>
-                    <div>
-                        <h1 class="text-[15px] font-medium text-[#121212]">1st ODI</h1>
-                    </div>
-                    <div>
-                        <p class="text-xs font-medium text-[#A0AEC0]">KENSINGTON OVAL, BERBADOS</p>
-                    </div>
-                </div>
-                <div class="gap-2.25 flex flex-col py-2.5">
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-x-2">
-                            <img src="https://placehold.co/20x20" alt="dummy logo"
-                                class="h-5 w-5 rounded-full object-cover">
-                            <h2 class="text-xs text-[#A2A6A9]">PCI</h2>
-                        </div>
-                        <div>
-                            <p class="text-xs text-[#A2A6A9]">
-                                179 (48.3)
-                            </p>
-                        </div>
-                    </div>
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-x-2">
-                            <img src="https://placehold.co/20x20" alt="dummy logo"
-                                class="h-5 w-5 rounded-full object-cover">
-                            <h2 class="text-xs text-[#48494A]">PCI</h2>
-                        </div>
-                        <div>
-                            <p class="text-xs text-[#48494A]">
-                                179 (48.3)
-                            </p>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="text-[8.5px] italic text-[#A0AEC0]">Logo Ipsum won by 7 wickets (with 15 balls
-                            remaining)</p>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-2.5 border-[#EFEFEF] dark:border-[#DEDEDE]" />
-            <div>
-                <button
-                    class="flex w-full items-center justify-center gap-x-1.5 rounded-[3px] border border-[#EC0226] py-2 text-sm font-medium text-[#EC0226] transition-colors hover:bg-[#EC0226] hover:text-white dark:hover:bg-[#EC0226] dark:hover:text-white">
-                    Shortcut <x-ionicon-play-sharp class="h-4 w-4" />
-                </button>
-            </div>
-        </div>
-        {{-- MATCHES --}}
-        <div class="border-b border-[#EDF1F6] px-2.5 py-5">
-            <div class="flex gap-x-4">
-                <div class="flex flex-col gap-y-2">
-                    <div>
-                        <span class="text-xs font-medium text-[#718096]">ODI</span>
-                    </div>
-                    <div>
-                        <h1 class="text-[15px] font-medium text-[#121212]">1st ODI</h1>
-                    </div>
-                    <div>
-                        <p class="text-xs font-medium text-[#A0AEC0]">KENSINGTON OVAL, BERBADOS</p>
-                    </div>
-                </div>
-                <div class="gap-2.25 flex flex-col py-2.5">
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-x-2">
-                            <img src="https://placehold.co/20x20" alt="dummy logo"
-                                class="h-5 w-5 rounded-full object-cover">
-                            <h2 class="text-xs text-[#A2A6A9]">PCI</h2>
-                        </div>
-                        <div>
-                            <p class="text-xs text-[#A2A6A9]">
-                                179 (48.3)
-                            </p>
-                        </div>
-                    </div>
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-x-2">
-                            <img src="https://placehold.co/20x20" alt="dummy logo"
-                                class="h-5 w-5 rounded-full object-cover">
-                            <h2 class="text-xs text-[#48494A]">PCI</h2>
-                        </div>
-                        <div>
-                            <p class="text-xs text-[#48494A]">
-                                179 (48.3)
-                            </p>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="text-[8.5px] italic text-[#A0AEC0]">Logo Ipsum won by 7 wickets (with 15 balls
-                            remaining)</p>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-2.5 border-[#EFEFEF] dark:border-[#DEDEDE]" />
-            <div>
-                <button
-                    class="flex w-full items-center justify-center gap-x-1.5 rounded-[3px] border border-[#EC0226] py-2 text-sm font-medium text-[#EC0226] transition-colors hover:bg-[#EC0226] hover:text-white dark:hover:bg-[#EC0226] dark:hover:text-white">
-                    Shortcut <x-ionicon-play-sharp class="h-4 w-4" />
-                </button>
-            </div>
-        </div>
+            // Counter global lintas semua grup tanggal — bukan reset tiap grup.
+            // Asumsi: striping alternating berlanjut terus dari atas ke bawah halaman,
+            // TIDAK mulai ulang tiap ganti tanggal. Kalau maunya reset per-tanggal, kasih tau.
+            $matchCounter = 0;
+        @endphp
 
-        {{-- DATE --}}
-        <div class="bg-linear-to-r py-1.25 from-[#1A56DB] from-0% to-[#0E2E75] to-100% px-2.5">
-            <p class="text-sm font-semibold text-white">29 MARCH, 2026</p>
-        </div>
+        @foreach ($fixtureGroups as $group)
+            {{-- DATE --}}
+            <div
+                class="md:px-9.5 bg-linear-to-r py-1.25 from-[#1A56DB] from-0% to-[#0E2E75] to-100% px-2.5 dark:bg-[#1F1F1F] dark:bg-none">
+                <p class="text-sm font-semibold text-white lg:text-lg">{{ $group['date'] }}</p>
+            </div>
 
-        {{-- MATCHES --}}
-        <div class="border-b border-[#EDF1F6] px-2.5 py-5">
-            <div class="flex gap-x-4">
-                <div class="flex flex-col gap-y-2">
-                    <div>
-                        <span class="text-xs font-medium text-[#718096]">ODI</span>
-                    </div>
-                    <div>
-                        <h1 class="text-[15px] font-medium text-[#121212]">1st ODI</h1>
-                    </div>
-                    <div>
-                        <p class="text-xs font-medium text-[#A0AEC0]">KENSINGTON OVAL, BERBADOS</p>
-                    </div>
-                </div>
-                <div class="gap-2.25 flex flex-col py-2.5">
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-x-2">
-                            <img src="https://placehold.co/20x20" alt="dummy logo"
-                                class="h-5 w-5 rounded-full object-cover">
-                            <h2 class="text-xs text-[#A2A6A9]">PCI</h2>
-                        </div>
-                        <div>
-                            <p class="text-xs text-[#A2A6A9]">
-                                179 (48.3)
-                            </p>
-                        </div>
-                    </div>
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-x-2">
-                            <img src="https://placehold.co/20x20" alt="dummy logo"
-                                class="h-5 w-5 rounded-full object-cover">
-                            <h2 class="text-xs text-[#48494A]">PCI</h2>
-                        </div>
-                        <div>
-                            <p class="text-xs text-[#48494A]">
-                                179 (48.3)
-                            </p>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="text-[8.5px] italic text-[#A0AEC0]">Logo Ipsum won by 7 wickets (with 15 balls
-                            remaining)</p>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-2.5 border-[#EFEFEF] dark:border-[#DEDEDE]" />
-            <div>
-                <button
-                    class="flex w-full items-center justify-center gap-x-1.5 rounded-[3px] border border-[#EC0226] py-2 text-sm font-medium text-[#EC0226] transition-colors hover:bg-[#EC0226] hover:text-white dark:hover:bg-[#EC0226] dark:hover:text-white">
-                    Shortcut <x-ionicon-play-sharp class="h-4 w-4" />
-                </button>
-            </div>
-        </div>
+            @foreach ($group['matches'] as $match)
+                @php
+                    $matchCounter++;
+                    $darkBg = $matchCounter % 2 === 1 ? 'dark:bg-[#515050]' : 'dark:bg-[#5B5A5A]';
+                @endphp
 
-        {{-- DATE --}}
-        <div class="bg-linear-to-r py-1.25 from-[#1A56DB] from-0% to-[#0E2E75] to-100% px-2.5">
-            <p class="text-sm font-semibold text-white">28 MARCH, 2026</p>
-        </div>
-
-        {{-- MATCHES --}}
-        <div class="border-b border-[#EDF1F6] px-2.5 py-5">
-            <div class="flex gap-x-4">
-                <div class="flex flex-col gap-y-2">
-                    <div>
-                        <span class="text-xs font-medium text-[#718096]">ODI</span>
+                {{-- MATCHES --}}
+                <div
+                    class="md:px-9.5 {{ $darkBg }} border-b border-[#EDF1F6] px-2.5 py-5 md:flex dark:border-none">
+                    <div class="flex gap-x-4 md:gap-x-0 2xl:w-full">
+                        <div class="flex flex-col gap-y-2">
+                            <div>
+                                <span
+                                    class="text-xs font-medium text-[#718096] lg:text-[14px] dark:text-[#D8D8D8]">{{ $match['type'] }}</span>
+                            </div>
+                            <div>
+                                <h1 class="text-[15px] font-medium text-[#121212] lg:text-xl dark:text-white">
+                                    {{ $match['title'] }}</h1>
+                            </div>
+                            <div>
+                                <p
+                                    class="text-xs font-medium text-[#A0AEC0] md:text-sm lg:text-[14px] dark:text-[#D8D8D8]">
+                                    {{ $match['venue'] }}</p>
+                            </div>
+                        </div>
+                        <div class="my-3.75 mx-5.75 lg:mx-8.25 hidden w-px bg-[#EDF1F6] md:block lg:my-0"></div>
+                        <div class="gap-2.25 flex flex-col py-2.5 md:flex-1">
+                            <div class="flex justify-between">
+                                <div class="flex items-center gap-x-2">
+                                    <img src="{{ $match['team1_logo'] }}" alt="dummy logo"
+                                        class="h-5 w-5 rounded-full object-cover">
+                                    <h2 class="text-xs text-[#A2A6A9] md:text-xl dark:text-[#D8D8D8]">
+                                        {{ $match['team1'] }}</h2>
+                                </div>
+                                <p class="text-xs text-[#A2A6A9] md:text-xl dark:text-[#D8D8D8]">
+                                    {{ $match['team1_score'] }}</p>
+                            </div>
+                            <div class="flex justify-between">
+                                <div class="flex items-center gap-x-2">
+                                    <img src="{{ $match['team2_logo'] }}" alt="dummy logo"
+                                        class="h-5 w-5 rounded-full object-cover">
+                                    <h2 class="text-xs text-[#48494A] md:text-xl dark:text-white">{{ $match['team2'] }}
+                                    </h2>
+                                </div>
+                                <p class="text-xs text-[#48494A] md:text-xl dark:text-white">
+                                    {{ $match['team2_score'] }}</p>
+                            </div>
+                            <p class="text-[8.5px] italic text-[#A0AEC0] md:text-sm dark:text-[#D8D8D8]">
+                                {{ $match['result'] }}</p>
+                        </div>
                     </div>
-                    <div>
-                        <h1 class="text-[15px] font-medium text-[#121212]">1st ODI</h1>
-                    </div>
-                    <div>
-                        <p class="text-xs font-medium text-[#A0AEC0]">KENSINGTON OVAL, BERBADOS</p>
+                    <hr class="my-2.5 border-[#EFEFEF] md:hidden dark:border-[#DEDEDE]" />
+                    <div class="my-3.75 mx-5.75 lg:mx-8.25 hidden w-px bg-[#EDF1F6] md:block lg:my-0"></div>
+                    <div class="md:flex md:items-center">
+                        <button
+                            class="flex w-full items-center justify-center gap-x-1.5 rounded-[7px] border border-[#EC0226] py-2 text-sm font-medium text-[#EC0226] transition-colors hover:bg-[#EC0226] hover:text-white md:w-auto md:px-4 dark:hover:bg-[#EC0226] dark:hover:text-white">
+                            Shortcut <x-ionicon-play-sharp class="h-4 w-4" />
+                        </button>
                     </div>
                 </div>
-                <div class="gap-2.25 flex flex-col py-2.5">
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-x-2">
-                            <img src="https://placehold.co/20x20" alt="dummy logo"
-                                class="h-5 w-5 rounded-full object-cover">
-                            <h2 class="text-xs text-[#A2A6A9]">PCI</h2>
-                        </div>
-                        <div>
-                            <p class="text-xs text-[#A2A6A9]">
-                                179 (48.3)
-                            </p>
-                        </div>
-                    </div>
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-x-2">
-                            <img src="https://placehold.co/20x20" alt="dummy logo"
-                                class="h-5 w-5 rounded-full object-cover">
-                            <h2 class="text-xs text-[#48494A]">PCI</h2>
-                        </div>
-                        <div>
-                            <p class="text-xs text-[#48494A]">
-                                179 (48.3)
-                            </p>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="text-[8.5px] italic text-[#A0AEC0]">Logo Ipsum won by 7 wickets (with 15 balls
-                            remaining)</p>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-2.5 border-[#EFEFEF] dark:border-[#DEDEDE]" />
-            <div>
-                <button
-                    class="flex w-full items-center justify-center gap-x-1.5 rounded-[3px] border border-[#EC0226] py-2 text-sm font-medium text-[#EC0226] transition-colors hover:bg-[#EC0226] hover:text-white dark:hover:bg-[#EC0226] dark:hover:text-white">
-                    Shortcut <x-ionicon-play-sharp class="h-4 w-4" />
-                </button>
-            </div>
-        </div>
-        {{-- MATCHES --}}
-        <div class="border-b border-[#EDF1F6] px-2.5 py-5">
-            <div class="flex gap-x-4">
-                <div class="flex flex-col gap-y-2">
-                    <div>
-                        <span class="text-xs font-medium text-[#718096]">ODI</span>
-                    </div>
-                    <div>
-                        <h1 class="text-[15px] font-medium text-[#121212]">1st ODI</h1>
-                    </div>
-                    <div>
-                        <p class="text-xs font-medium text-[#A0AEC0]">KENSINGTON OVAL, BERBADOS</p>
-                    </div>
-                </div>
-                <div class="gap-2.25 flex flex-col py-2.5">
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-x-2">
-                            <img src="https://placehold.co/20x20" alt="dummy logo"
-                                class="h-5 w-5 rounded-full object-cover">
-                            <h2 class="text-xs text-[#A2A6A9]">PCI</h2>
-                        </div>
-                        <div>
-                            <p class="text-xs text-[#A2A6A9]">
-                                179 (48.3)
-                            </p>
-                        </div>
-                    </div>
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-x-2">
-                            <img src="https://placehold.co/20x20" alt="dummy logo"
-                                class="h-5 w-5 rounded-full object-cover">
-                            <h2 class="text-xs text-[#48494A]">PCI</h2>
-                        </div>
-                        <div>
-                            <p class="text-xs text-[#48494A]">
-                                179 (48.3)
-                            </p>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="text-[8.5px] italic text-[#A0AEC0]">Logo Ipsum won by 7 wickets (with 15 balls
-                            remaining)</p>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-2.5 border-[#EFEFEF] dark:border-[#DEDEDE]" />
-            <div>
-                <button
-                    class="flex w-full items-center justify-center gap-x-1.5 rounded-[3px] border border-[#EC0226] py-2 text-sm font-medium text-[#EC0226] transition-colors hover:bg-[#EC0226] hover:text-white dark:hover:bg-[#EC0226] dark:hover:text-white">
-                    Shortcut <x-ionicon-play-sharp class="h-4 w-4" />
-                </button>
-            </div>
-        </div>
-        {{-- MATCHES --}}
-        <div class="border-b border-[#EDF1F6] px-2.5 py-5">
-            <div class="flex gap-x-4">
-                <div class="flex flex-col gap-y-2">
-                    <div>
-                        <span class="text-xs font-medium text-[#718096]">ODI</span>
-                    </div>
-                    <div>
-                        <h1 class="text-[15px] font-medium text-[#121212]">1st ODI</h1>
-                    </div>
-                    <div>
-                        <p class="text-xs font-medium text-[#A0AEC0]">KENSINGTON OVAL, BERBADOS</p>
-                    </div>
-                </div>
-                <div class="gap-2.25 flex flex-col py-2.5">
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-x-2">
-                            <img src="https://placehold.co/20x20" alt="dummy logo"
-                                class="h-5 w-5 rounded-full object-cover">
-                            <h2 class="text-xs text-[#A2A6A9]">PCI</h2>
-                        </div>
-                        <div>
-                            <p class="text-xs text-[#A2A6A9]">
-                                179 (48.3)
-                            </p>
-                        </div>
-                    </div>
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-x-2">
-                            <img src="https://placehold.co/20x20" alt="dummy logo"
-                                class="h-5 w-5 rounded-full object-cover">
-                            <h2 class="text-xs text-[#48494A]">PCI</h2>
-                        </div>
-                        <div>
-                            <p class="text-xs text-[#48494A]">
-                                179 (48.3)
-                            </p>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="text-[8.5px] italic text-[#A0AEC0]">Logo Ipsum won by 7 wickets (with 15 balls
-                            remaining)</p>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-2.5 border-[#EFEFEF] dark:border-[#DEDEDE]" />
-            <div>
-                <button
-                    class="flex w-full items-center justify-center gap-x-1.5 rounded-[3px] border border-[#EC0226] py-2 text-sm font-medium text-[#EC0226] transition-colors hover:bg-[#EC0226] hover:text-white dark:hover:bg-[#EC0226] dark:hover:text-white">
-                    Shortcut <x-ionicon-play-sharp class="h-4 w-4" />
-                </button>
-            </div>
+            @endforeach
+        @endforeach
+        <div class="mx-10 pb-4 md:flex md:justify-center md:py-4">
+            <x-pagination.pagination :paginator="$dummyFixturesPaginator" />
         </div>
     </div>
 </div>

@@ -130,6 +130,13 @@ document.addEventListener("DOMContentLoaded", () => {
         grabCursor: true,
     });
 
+    new Swiper(".points-table-filters-swiper", {
+        slidesPerView: "auto",
+        spaceBetween: 10,
+        freeMode: true,
+        grabCursor: true,
+    });
+
     // Fixtures Filters Swiper (Year, Formats, Teams)
     new Swiper(".fixtures-filters-swiper", {
         slidesPerView: "auto",
