@@ -4,6 +4,7 @@ import Swiper from "swiper";
 import { FreeMode, Navigation, Autoplay, Pagination } from "swiper/modules";
 import { initInterviewVideosSwiper } from "./interview-videos";
 import flatpickr from "flatpickr";
+import initScoreCardTournamentSwiper from "./ScoreCardTournament";
 
 // Dark Mode Store dengan localStorage persistence
 Alpine.store("darkMode", {
@@ -129,6 +130,13 @@ document.addEventListener("DOMContentLoaded", () => {
         grabCursor: true,
     });
 
+    new Swiper(".points-table-filters-swiper", {
+        slidesPerView: "auto",
+        spaceBetween: 10,
+        freeMode: true,
+        grabCursor: true,
+    });
+
     // Fixtures Filters Swiper (Year, Formats, Teams)
     new Swiper(".fixtures-filters-swiper", {
         slidesPerView: "auto",
@@ -167,6 +175,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Interview Videos Swiper
     initInterviewVideosSwiper();
+
+    // Score Card Tournament Swiper\
+    initScoreCardTournamentSwiper();
 
     // Featured Video Carousel
     new Swiper(".featured-video-swiper", {
