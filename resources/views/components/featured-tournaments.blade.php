@@ -1,9 +1,9 @@
 <div>
     {{-- HEADER --}}
-    <h1 class="text-[22px] font-semibold text-[#121212]">Featured Tournaments</h1>
+    <h1 class="text-[22px] font-semibold text-[#121212] dark:text-white">Featured Tournaments</h1>
 
     {{-- SHORT DESCRIPTION --}}
-    <p class="text-[13px] font-semibold text-[#666] dark:text-[#ccc]">Discover the most exciting tournaments happening
+    <p class="text-[13px] font-semibold text-[#666] dark:text-white">Discover the most exciting tournaments happening
         around the world.</p>
     <div class="my-5 flex">
         <div class="w-48.5 h-px bg-[#EC0226]"></div>
