@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MagazineGallery\MagazineController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\TournamentsController;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +30,7 @@ Route::get('/tournaments', [TournamentsController::class, 'index'])->name('tourn
 Route::get('/ping', function () {
     return response('pong', 200);
 });
+
+Route::get('/magazines/load-more', [MagazineController::class, 'loadMore'])->name('magazines.load-more');
+
+Route::get('/gallery/load-more', [GalleryController::class, 'loadMore'])->name('gallery.load-more');
