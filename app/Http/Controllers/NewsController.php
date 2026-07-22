@@ -91,26 +91,30 @@ class NewsController extends Controller
         $categoryOptions = Category::whereHas('articles')->orderBy('name')->get(['name', 'slug']);
         $tagOptions = Tag::whereHas('articles')->orderBy('name')->get(['name', 'slug']);
 
-
         $sortOptions = [
             'newest_first' => 'Newest First',
             'oldest_first' => 'Oldest First',
             'most_popular' => 'Most Popular',
-            'most_viewed' => 'Most Viewed',
-            'a_z' => 'Alphabetical A-Z',
-            'z_a' => 'Alphabetical Z-A',
+            'most_viewed'  => 'Most Viewed',
+            'a_z'          => 'Alphabetical A-Z',
+            'z_a'          => 'Alphabetical Z-A',
         ];
 
         $timeFrameOptions = [
-            'all_time' => 'All Time',
-            'today' => 'Today',
-            'this_week' => 'This Week',
+            'all_time'   => 'All Time',
+            'today'      => 'Today',
+            'this_week'  => 'This Week',
             'this_month' => 'This Month',
-            'this_year' => 'This Year',
+            'this_year'  => 'This Year',
         ];
 
         $popularityOptions = [
             'most_viewed' => 'Most Viewed',
+        ];
+
+        $regionOptions = [
+            'Indonesia' => 'Indonesia',
+            'Global'    => 'Global',
         ];
 
         $filters = array_merge(
@@ -122,6 +126,7 @@ class NewsController extends Controller
                 'sort',
                 'time_frame',
                 'popularity',
+                'region', 
             ], null),
             $request->only([
                 'category',
@@ -131,20 +136,22 @@ class NewsController extends Controller
                 'sort',
                 'time_frame',
                 'popularity',
+                'region', 
             ])
         );
 
         return view('news', [
-            'news' => $news,
-            'matches' => $matchesData['data'] ?? [],
-            'hasError' => ! $matchesData['success'],
-            'error' => $matchesData['error'] ?? null,
-            'categories' => $categoryOptions,
-            'tags' => $tagOptions,
-            'sortOptions' => $sortOptions,
-            'timeFrames' => $timeFrameOptions,
+            'news'              => $news,
+            'matches'           => $matchesData['data'] ?? [],
+            'hasError'          => ! $matchesData['success'],
+            'error'             => $matchesData['error'] ?? null,
+            'categories'        => $categoryOptions,
+            'tags'              => $tagOptions,
+            'sortOptions'       => $sortOptions,
+            'timeFrames'        => $timeFrameOptions,
             'popularityOptions' => $popularityOptions,
-            'filters' => $filters,
+            'regionOptions'     => $regionOptions,
+            'filters'           => $filters,
         ]);
     }
 
@@ -153,10 +160,8 @@ class NewsController extends Controller
      */
     public function show($slug)
     {
-        // Mencari artikel berdasarkan slug, jika tidak ketemu akan menampilkan error 404
         $article = Article::query()->where('slug', '=', $slug)->firstOrFail();
 
-        // Mengirim data ke view 'single-news'
         return view('single-news', compact('article'));
     }
 }

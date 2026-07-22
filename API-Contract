@@ -1,285 +1,103 @@
-Region Filter:
+BLADE VIEW DATA CONTRACT (FRONTEND DOCUMENTATION)
 
-/news?region=Indonesia
-/news?region=Global
+--------------------------------------------------
+1. NEWS PAGE (/news)
+Controller: NewsController@index
+View: resources/views/news.blade.php (atau sesuai kesepakatan)
 
-API Contract untuk News
+Variabel yang dikirim ke View:
+- $news (Paginator) : Koleksi data berita (10 item/halaman).
+- $categories (Collection) : Daftar kategori untuk filter.
+- $tags (Collection) : Daftar tag untuk filter.
+- $regionOptions (Array) : Opsi Region ['Indonesia' => 'Indonesia', 'Global' => 'Global'].
+- $sortOptions (Array) : Opsi urutan (Newest, Oldest, Popular, dll).
+- $timeFrames (Array) : Opsi waktu (Today, This Week, dll).
+- $filters (Array) : Menyimpan query parameter yang sedang aktif.
+- $matches (Array) : Data Live Score pertandingan.
+- $hasError (Boolean) : true jika Live Score gagal dimuat.
 
-1. List artikel
-- Method: GET
-- Endpoint: /news
+Cara Looping & Properti Item ($news):
+@foreach($news as $item)
+  - URL Detail: {{ route('news.show', $item->slug) }}
+  - Judul: {{ $item->title }}
+  - Gambar Utama: {{ asset($item->thumbnail) }}
+  - Gambar Ekstra: {{ asset($item->foto1) }} & {{ asset($item->foto2) }}
+  - Deskripsi: {{ $item->description }}
+  - Region: {{ $item->region }}
+  - Tanggal: {{ $item->published_at->format('d M Y') }}
+  - Kategori: {{ $item->category->name ?? 'Uncategorized' }}
+  - Status Editor Choice: {{ $item->is_editor_choice ? 'Ya' : 'Tidak' }}
+  - Status Trending: {{ $item->is_trending_manual ? 'Ya' : 'Tidak' }}
+@endforeach
 
-Query params:
-- category
-- tag
-- sort
-- time_frame
-- popularity
-- region
-- status
+Menampilkan Pagination (Otomatis membawa query parameters):
+{{ $news->links() }}
 
-Response contoh:
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "title": "Judul Artikel",
-      "slug": "judul-artikel",
-      "thumbnail": "/storage/news/xxx.jpg",
-      "description": "Deskripsi singkat",
-      "published_at": "2026-07-22T10:00:00Z",
-      "region": "Indonesia",
-      "category": {
-        "name": "News",
-        "slug": "news"
-      },
-      "tags": [
-        {
-          "name": "Cricket",
-          "slug": "cricket"
-        }
-      ]
-    }
-  ],
-  "current_page": 1,
-  "total": 20
-}
-```
+Contoh Form Filter (Region, Category, dll):
+<form action="{{ route('news.index') }}" method="GET">
+  <!-- Looping filter lama agar tidak hilang -->
+  @foreach(request()->except('region', 'page') as $key => $value)
+      <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+  @endforeach
 
-2. Detail artikel
-- Method: GET
-- Endpoint: /news/{slug}
+  <!-- Dropdown Region -->
+  <select name="region" onchange="this.form.submit()">
+      <option value="">Semua Region</option>
+      @foreach($regionOptions as $key => $label)
+          <option value="{{ $key }}" {{ ($filters['region'] ?? '') == $key ? 'selected' : '' }}>
+              {{ $label }}
+          </option>
+      @endforeach
+  </select>
+</form>
 
-Response contoh:
-```json
-{
-  "id": 1,
-  "title": "Judul Artikel",
-  "slug": "judul-artikel",
-  "thumbnail": "/storage/news/xxx.jpg",
-  "description": "Deskripsi singkat",
-  "content": "Isi artikel lengkap",
-  "published_at": "2026-07-22T10:00:00Z",
-  "region": "Indonesia",
-  "status": "published",
-  "is_editor_choice": true,
-  "is_trending_manual": false,
-  "category": {
-    "id": 1,
-    "name": "News",
-    "slug": "news"
-  },
-  "tags": [
-    {
-      "id": 1,
-      "name": "Cricket",
-      "slug": "cricket"
-    }
-  ],
-  "uploader": {
-    "id": 2,
-    "name": "Admin"
-  }
-}
-```
-API Contract — Matches
-1. Matches article list
-- Method: GET
-- Endpoint: /matches
+--------------------------------------------------
+2. SINGLE NEWS PAGE (/news/{slug})
+Controller: NewsController@show
 
-Response contoh:
-```json
-{
-  "data": [
-    {
-      "id": 17,
-      "title": "Judul Matches",
-      "slug": "judul-matches",
-      "thumbnail": "/storage/news/xxx.jpg",
-      "description": "Deskripsi singkat",
-      "published_at": "2026-07-22T10:00:00Z",
-      "region": "Indonesia",
-      "category": {
-        "name": "Matches",
-        "slug": "matches"
-      }
-    }
-  ]
-}
-```
+Variabel: $article (Object)
+Properti yang bisa dipanggil:
+- Judul: {{ $article->title }}
+- Gambar: {{ asset($article->thumbnail) }}
+- Isi HTML: {!! $article->content !!}
+- Region: {{ $article->region }}
+- Uploader: {{ $article->uploader->name ?? 'Admin' }}
+- Tags: @foreach($article->tags as $tag) {{ $tag->name }} @endforeach
 
-2. Matches article detail
-- Method: GET
-- Endpoint: /matches/{id}
+--------------------------------------------------
+3. MATCHES (/match-centre)
+Otomatis terfilter hanya category_id = 5.
 
-Response contoh:
-```json
-{
-  "id": 17,
-  "title": "Judul Matches",
-  "slug": "judul-matches",
-  "thumbnail": "/storage/news/xxx.jpg",
-  "description": "Deskripsi singkat",
-  "content": "Isi artikel lengkap",
-  "region": "Indonesia",
-  "published_at": "2026-07-22T10:00:00Z",
-  "category": {
-    "name": "Matches",
-    "slug": "matches"
-  }
-}
+List View (/match-centre):
+- Variabel: $matches (Paginator)
+- Properti Tambahan: {{ $match->match_date }}
+- URL Detail: {{ route('matches.show', $match->slug) }}
+- Pagination: {{ $matches->links() }}
 
-```
+Detail View (/match-centre/{slug}):
+- Variabel: $article (Object)
 
-API Contract — Tournaments
+--------------------------------------------------
+4. TOURNAMENTS (/tournaments)
+Otomatis terfilter hanya category_id = 2.
 
-1. List tournaments
-- Method: GET
-- Endpoint: /api/tournaments
+List View (/tournaments):
+- Variabel: $tournaments (Paginator)
+- Properti Tambahan: {{ $tournament->match_date }}
+- URL Detail: {{ route('tournaments.show', $tournament->slug) }}
+- Pagination: {{ $tournaments->links() }}
 
-Response contoh:
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "title": "Tournament Title",
-      "slug": "tournament-title",
-      "thumbnail": "http://localhost/storage/tournaments/xxx.jpg",
-      "description": "Deskripsi singkat",
-      "content": "Isi artikel lengkap",
-      "published_at": "2026-07-22T10:00:00.000000Z",
-      "match_date": "2026-07-24T10:00:00.000000Z",
-      "region": "Indonesia",
-      "status": "published",
-      "category": {
-        "id": 3,
-        "name": "Tournament",
-        "slug": "tournament"
-      },
-      "tags": [
-        {
-          "id": 1,
-          "name": "Cricket",
-          "slug": "cricket"
-        }
-      ]
-    }
-  ]
-}
-```
+Detail View (/tournaments/{slug}):
+- Variabel: $article (Object)
 
-2. Detail tournament
-- Method: GET
-- Endpoint: /api/tournaments/{slug}
+--------------------------------------------------
+5. INTERVIEWS (/interview)
+Otomatis terfilter hanya category_id = 6.
 
-Response contoh:
-```json
-{
-  "id": 1,
-  "title": "Tournament Title",
-  "slug": "tournament-title",
-  "thumbnail": "http://localhost/storage/tournaments/xxx.jpg",
-  "description": "Deskripsi singkat",
-  "content": "Isi artikel lengkap",
-  "published_at": "2026-07-22T10:00:00.000000Z",
-  "match_date": "2026-07-24T10:00:00.000000Z",
-  "region": "Indonesia",
-  "status": "published",
-  "category": {
-    "id": 3,
-    "name": "Tournament",
-    "slug": "tournament"
-  },
-  "tags": [
-    {
-      "id": 1,
-      "name": "Cricket",
-      "slug": "cricket"
-    }
-  ],
-  "uploader": {
-    "id": 2,
-    "name": "Admin"
-  }
-}
-```
+List View (/interview):
+- Variabel: $interviews (Paginator)
+- URL Detail: {{ route('interviews.show', $interview->slug) }}
+- Pagination: {{ $interviews->links() }}
 
-API Contract — Interviews
-
-1. List interviews articles
-- Method: GET
-- Endpoint: /interviews
-
-Response:
-```json
-{
-  "data": [
-    {
-      "id": 18,
-      "title": "Judul Interview",
-      "slug": "judul-interview",
-      "thumbnail": "/storage/news/xxx.jpg",
-      "description": "Deskripsi singkat",
-      "published_at": "2026-07-22T10:00:00Z",
-      "region": "Indonesia",
-      "category": {
-        "id": 6,
-        "name": "Interviews",
-        "slug": "interviews"
-      }
-    }
-  ]
-}
-```
-
-2. Detail interviews article
-- Method: GET
-- Endpoint: /interviews/{id}
-
-Response:
-```json
-{
-  "id": 18,
-  "title": "Judul Interview",
-  "slug": "judul-interview",
-  "thumbnail": "/storage/news/xxx.jpg",
-  "description": "Deskripsi singkat",
-  "content": "Isi artikel lengkap",
-  "published_at": "2026-07-22T10:00:00Z",
-  "region": "Indonesia",
-  "status": "published",
-  "is_editor_choice": true,
-  "is_trending_manual": false,
-  "category": {
-    "id": 6,
-    "name": "Interviews",
-    "slug": "interviews"
-  },
-  "tags": [],
-  "uploader": {
-    "id": 2,
-    "name": "Admin"
-  }
-}
-```
-
-3. Filter interviews by category
-- Method: GET
-- Endpoint: /interviews?category_id=6
-
-Response:
-```json
-{
-  "data": [
-    {
-      "id": 18,
-      "title": "Judul Interview",
-      "slug": "judul-interview",
-      "thumbnail": "/storage/news/xxx.jpg",
-      "region": "Indonesia"
-    }
-  ]
-}
-```
+Detail View (/interview/{slug}):
+- Variabel: $article (Object)

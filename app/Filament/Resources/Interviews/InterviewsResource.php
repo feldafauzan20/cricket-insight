@@ -115,7 +115,7 @@ class InterviewsResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where('category_id', 5);
+        return parent::getEloquentQuery()->where('category_id', 6);
     }
 
     public static function getPages(): array
