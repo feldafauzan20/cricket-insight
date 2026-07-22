@@ -7,6 +7,7 @@ use App\Models\Article;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
@@ -27,7 +28,12 @@ class TournamentResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('title')->required(),
+            TextInput::make('title')
+                ->required()
+                ->live(onBlur: true)
+                ->afterStateUpdated(fn (string $operation, ?string $state, $set) =>
+                    $operation === 'create' ? $set('slug', Str::slug($state)) : null
+                ),
             TextInput::make('slug')->required(),
             FileUpload::make('thumbnail')->image()->disk('public')->directory('tournaments'),
             RichEditor::make('content')->required(),

@@ -1,0 +1,285 @@
+Region Filter:
+
+/news?region=Indonesia
+/news?region=Global
+
+API Contract untuk News
+
+1. List artikel
+- Method: GET
+- Endpoint: /news
+
+Query params:
+- category
+- tag
+- sort
+- time_frame
+- popularity
+- region
+- status
+
+Response contoh:
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Judul Artikel",
+      "slug": "judul-artikel",
+      "thumbnail": "/storage/news/xxx.jpg",
+      "description": "Deskripsi singkat",
+      "published_at": "2026-07-22T10:00:00Z",
+      "region": "Indonesia",
+      "category": {
+        "name": "News",
+        "slug": "news"
+      },
+      "tags": [
+        {
+          "name": "Cricket",
+          "slug": "cricket"
+        }
+      ]
+    }
+  ],
+  "current_page": 1,
+  "total": 20
+}
+```
+
+2. Detail artikel
+- Method: GET
+- Endpoint: /news/{slug}
+
+Response contoh:
+```json
+{
+  "id": 1,
+  "title": "Judul Artikel",
+  "slug": "judul-artikel",
+  "thumbnail": "/storage/news/xxx.jpg",
+  "description": "Deskripsi singkat",
+  "content": "Isi artikel lengkap",
+  "published_at": "2026-07-22T10:00:00Z",
+  "region": "Indonesia",
+  "status": "published",
+  "is_editor_choice": true,
+  "is_trending_manual": false,
+  "category": {
+    "id": 1,
+    "name": "News",
+    "slug": "news"
+  },
+  "tags": [
+    {
+      "id": 1,
+      "name": "Cricket",
+      "slug": "cricket"
+    }
+  ],
+  "uploader": {
+    "id": 2,
+    "name": "Admin"
+  }
+}
+```
+API Contract — Matches
+1. Matches article list
+- Method: GET
+- Endpoint: /matches
+
+Response contoh:
+```json
+{
+  "data": [
+    {
+      "id": 17,
+      "title": "Judul Matches",
+      "slug": "judul-matches",
+      "thumbnail": "/storage/news/xxx.jpg",
+      "description": "Deskripsi singkat",
+      "published_at": "2026-07-22T10:00:00Z",
+      "region": "Indonesia",
+      "category": {
+        "name": "Matches",
+        "slug": "matches"
+      }
+    }
+  ]
+}
+```
+
+2. Matches article detail
+- Method: GET
+- Endpoint: /matches/{id}
+
+Response contoh:
+```json
+{
+  "id": 17,
+  "title": "Judul Matches",
+  "slug": "judul-matches",
+  "thumbnail": "/storage/news/xxx.jpg",
+  "description": "Deskripsi singkat",
+  "content": "Isi artikel lengkap",
+  "region": "Indonesia",
+  "published_at": "2026-07-22T10:00:00Z",
+  "category": {
+    "name": "Matches",
+    "slug": "matches"
+  }
+}
+
+```
+
+API Contract — Tournaments
+
+1. List tournaments
+- Method: GET
+- Endpoint: /api/tournaments
+
+Response contoh:
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Tournament Title",
+      "slug": "tournament-title",
+      "thumbnail": "http://localhost/storage/tournaments/xxx.jpg",
+      "description": "Deskripsi singkat",
+      "content": "Isi artikel lengkap",
+      "published_at": "2026-07-22T10:00:00.000000Z",
+      "match_date": "2026-07-24T10:00:00.000000Z",
+      "region": "Indonesia",
+      "status": "published",
+      "category": {
+        "id": 3,
+        "name": "Tournament",
+        "slug": "tournament"
+      },
+      "tags": [
+        {
+          "id": 1,
+          "name": "Cricket",
+          "slug": "cricket"
+        }
+      ]
+    }
+  ]
+}
+```
+
+2. Detail tournament
+- Method: GET
+- Endpoint: /api/tournaments/{slug}
+
+Response contoh:
+```json
+{
+  "id": 1,
+  "title": "Tournament Title",
+  "slug": "tournament-title",
+  "thumbnail": "http://localhost/storage/tournaments/xxx.jpg",
+  "description": "Deskripsi singkat",
+  "content": "Isi artikel lengkap",
+  "published_at": "2026-07-22T10:00:00.000000Z",
+  "match_date": "2026-07-24T10:00:00.000000Z",
+  "region": "Indonesia",
+  "status": "published",
+  "category": {
+    "id": 3,
+    "name": "Tournament",
+    "slug": "tournament"
+  },
+  "tags": [
+    {
+      "id": 1,
+      "name": "Cricket",
+      "slug": "cricket"
+    }
+  ],
+  "uploader": {
+    "id": 2,
+    "name": "Admin"
+  }
+}
+```
+
+API Contract — Interviews
+
+1. List interviews articles
+- Method: GET
+- Endpoint: /interviews
+
+Response:
+```json
+{
+  "data": [
+    {
+      "id": 18,
+      "title": "Judul Interview",
+      "slug": "judul-interview",
+      "thumbnail": "/storage/news/xxx.jpg",
+      "description": "Deskripsi singkat",
+      "published_at": "2026-07-22T10:00:00Z",
+      "region": "Indonesia",
+      "category": {
+        "id": 6,
+        "name": "Interviews",
+        "slug": "interviews"
+      }
+    }
+  ]
+}
+```
+
+2. Detail interviews article
+- Method: GET
+- Endpoint: /interviews/{id}
+
+Response:
+```json
+{
+  "id": 18,
+  "title": "Judul Interview",
+  "slug": "judul-interview",
+  "thumbnail": "/storage/news/xxx.jpg",
+  "description": "Deskripsi singkat",
+  "content": "Isi artikel lengkap",
+  "published_at": "2026-07-22T10:00:00Z",
+  "region": "Indonesia",
+  "status": "published",
+  "is_editor_choice": true,
+  "is_trending_manual": false,
+  "category": {
+    "id": 6,
+    "name": "Interviews",
+    "slug": "interviews"
+  },
+  "tags": [],
+  "uploader": {
+    "id": 2,
+    "name": "Admin"
+  }
+}
+```
+
+3. Filter interviews by category
+- Method: GET
+- Endpoint: /interviews?category_id=6
+
+Response:
+```json
+{
+  "data": [
+    {
+      "id": 18,
+      "title": "Judul Interview",
+      "slug": "judul-interview",
+      "thumbnail": "/storage/news/xxx.jpg",
+      "region": "Indonesia"
+    }
+  ]
+}
+```

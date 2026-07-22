@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Tag;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
 
 class NewsController extends Controller
 {
@@ -21,7 +19,7 @@ class NewsController extends Controller
         $liveScoreController = new LiveScoreController();
         $matchesData = $liveScoreController->getMatches(10);
 
-        $query = Article::with(['category', 'uploader', 'tags']);
+        $query = Article::with(['category', 'tags']);
 
         if (! $request->filled('status')) {
             $query->where('status', 'published');
@@ -31,10 +29,6 @@ class NewsController extends Controller
             $query->whereHas('category', function ($query) use ($request) {
                 $query->where('slug', $request->query('category'));
             });
-        }
-
-        if ($request->filled('uploader')) {
-            $query->where('user_id', $request->query('uploader'));
         }
 
         if ($request->filled('tag')) {
@@ -97,27 +91,6 @@ class NewsController extends Controller
         $categoryOptions = Category::whereHas('articles')->orderBy('name')->get(['name', 'slug']);
         $tagOptions = Tag::whereHas('articles')->orderBy('name')->get(['name', 'slug']);
 
-        $uploaderIds = Article::whereNotNull('user_id')->distinct()->pluck('user_id')->filter();
-        $uploaderOptions = User::whereIn('id', $uploaderIds)->orderBy('name')->get(['id', 'name']);
-
-        $statusOptions = Article::select('status')->distinct()->orderBy('status')->pluck('status');
-
-        $regionOptions = [];
-        if (Schema::hasColumn('articles', 'region')) {
-            $regionOptions = Article::select('region')
-                ->whereNotNull('region')
-                ->distinct()
-                ->orderBy('region')
-                ->pluck('region')
-                ->mapWithKeys(fn ($region) => [$region => Str::title(str_replace(['-', '_'], ' ', $region))]);
-        } else {
-            $regionOptions = [
-                'global' => 'Global',
-                'asia' => 'Asia',
-                'indonesia' => 'Indonesia',
-                'europe' => 'Europe',
-            ];
-        }
 
         $sortOptions = [
             'newest_first' => 'Newest First',
@@ -143,27 +116,21 @@ class NewsController extends Controller
         $filters = array_merge(
             array_fill_keys([
                 'category',
-                'uploader',
                 'tag',
                 'editor_choice',
                 'trending',
-                'region',
                 'sort',
                 'time_frame',
                 'popularity',
-                'status',
             ], null),
             $request->only([
                 'category',
-                'uploader',
                 'tag',
                 'editor_choice',
                 'trending',
-                'region',
                 'sort',
                 'time_frame',
                 'popularity',
-                'status',
             ])
         );
 
@@ -173,10 +140,7 @@ class NewsController extends Controller
             'hasError' => ! $matchesData['success'],
             'error' => $matchesData['error'] ?? null,
             'categories' => $categoryOptions,
-            'uploaders' => $uploaderOptions,
             'tags' => $tagOptions,
-            'statuses' => $statusOptions,
-            'regionOptions' => $regionOptions,
             'sortOptions' => $sortOptions,
             'timeFrames' => $timeFrameOptions,
             'popularityOptions' => $popularityOptions,
@@ -190,8 +154,8 @@ class NewsController extends Controller
     public function show($slug)
     {
         // Mencari artikel berdasarkan slug, jika tidak ketemu akan menampilkan error 404
-        $article = Article::where('slug', $slug)->firstOrFail();
-        
+        $article = Article::query()->where('slug', '=', $slug)->firstOrFail();
+
         // Mengirim data ke view 'single-news'
         return view('single-news', compact('article'));
     }

@@ -1,15 +1,11 @@
 <?php
 
-namespace App\Filament\Resources\News;
+namespace App\Filament\Resources\Interviews;
 
-use App\Filament\Resources\News\Pages;
+use App\Filament\Resources\Interviews\Pages\CreateInterviews;
+use App\Filament\Resources\Interviews\Pages\EditInterviews;
+use App\Filament\Resources\Interviews\Pages\ListInterviews;
 use App\Models\Article;
-use Filament\Resources\Resource;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
@@ -17,17 +13,22 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Illuminate\Support\Str;
+use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
-class NewsResource extends Resource
+class InterviewsResource extends Resource
 {
     protected static ?string $model = Article::class;
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-newspaper';
-    protected static ?string $navigationLabel = 'Berita Utama';
-    protected static ?string $slug = 'news';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+    protected static ?string $navigationLabel = 'Interviews';
+    protected static ?string $slug = 'interviews';
     protected static string|\UnitEnum|null $navigationGroup = 'Content Library';
 
     public static function form(Schema $schema): Schema
@@ -37,20 +38,15 @@ class NewsResource extends Resource
                 TextInput::make('title')
                     ->required()
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (string $operation, ?string $state, $set) => 
+                    ->afterStateUpdated(fn (string $operation, ?string $state, $set) =>
                         $operation === 'create' ? $set('slug', Str::slug($state)) : null
                     ),
-                
+
                 TextInput::make('slug')
                     ->required()
                     ->unique(ignoreRecord: true),
-                    
+
                 FileUpload::make('thumbnail')->image()->disk('public')->directory('news'),
-                
-                // Tambahan Foto 1 dan 2
-                FileUpload::make('foto1')->image()->disk('public')->directory('news'),
-                FileUpload::make('foto2')->image()->disk('public')->directory('news'),
-                
                 Textarea::make('description'),
                 RichEditor::make('content')->required(),
             ])->columnSpan(2),
@@ -69,27 +65,9 @@ class NewsResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
-                    
-                Select::make('tags')
-                    ->relationship('tags', 'name')
-                    ->multiple()
-                    ->preload()
-                    ->searchable()
-                    ->createOptionForm([
-                        \Filament\Forms\Components\TextInput::make('name')
-                            ->label('Nama Tag Baru')
-                            ->required()
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(fn (string $operation, ?string $state, $set) => 
-                                $set('slug', Str::slug($state))
-                            ),
-                        \Filament\Forms\Components\TextInput::make('slug')
-                            ->required()
-                            ->unique('tags', 'slug'),
-                    ]),
 
                 Toggle::make('is_editor_choice')->label("Editor's Choice"),
-                Toggle::make('is_trending_manual')->label("Jadikan Trending"),
+                Toggle::make('is_trending_manual')->label('Jadikan Trending'),
                 Select::make('region')
                     ->label('Region')
                     ->options([
@@ -98,7 +76,6 @@ class NewsResource extends Resource
                     ])
                     ->default('Global')
                     ->required(),
-
                 Select::make('status')
                     ->options(['draft' => 'Draft', 'published' => 'Published'])
                     ->default('draft')
@@ -138,17 +115,15 @@ class NewsResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->whereHas('category', function ($query) {
-            $query->whereIn('slug', ['news', 'commentaries']);
-        });
+        return parent::getEloquentQuery()->where('category_id', 5);
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListNews::route('/'),
-            'create' => Pages\CreateNews::route('/create'),
-            'edit' => Pages\EditNews::route('/{record}/edit'),
+            'index' => ListInterviews::route('/'),
+            'create' => CreateInterviews::route('/create'),
+            'edit' => EditInterviews::route('/{record}/edit'),
         ];
     }
 }

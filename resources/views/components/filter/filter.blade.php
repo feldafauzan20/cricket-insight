@@ -17,10 +17,7 @@
         x-transition:leave-end="opacity-0 scale-95" class="mt-3.75">
         <x-filter.filter-menu
             :categories="$categories"
-            :uploaders="$uploaders"
             :tags="$tags"
-            :statuses="$statuses"
-            :region-options="$regionOptions"
             :sort-options="$sortOptions"
             :time-frames="$timeFrames"
             :popularity-options="$popularityOptions"
