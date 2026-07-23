@@ -1,9 +1,12 @@
 @extends('layout.app')
 
 @section('body')
-    <header>
-        @include('components.navbar.navbar')
-    </header>
+    @hasSection('navbar')
+        <header>
+            @yield('navbar')
+        </header>
+    @endif
+
     <main>
         @yield('content')
     </main>

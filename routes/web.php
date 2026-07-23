@@ -27,8 +27,8 @@ Route::get('/match-centre', function () {
 
 Route::get('/tournaments', [TournamentsController::class, 'index'])->name('tournaments.index');
 
-Route::get('/ping', function () {
-    return response('pong', 200);
+Route::get('/bbi-wbbi', function () {
+    return view('bbi-wbbi');
 });
 
 Route::get('/magazines/load-more', [MagazineController::class, 'loadMore'])->name('magazines.load-more');
