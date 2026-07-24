@@ -89,6 +89,35 @@
     font-display: swap;
 }
 
+/* Font Face For Barlow Semi Condensed */
+/* bold font */
+@font-face {
+    font-family: "Barlow Semi Condensed";
+    src: url("../fonts/BarlowSemiCondensed-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Font Face For Figtree */
+/* semibold font */
+@font-face {
+    font-family: "Figtree";
+    src: url("../fonts/Figtree-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* medium font */
+@font-face {
+    font-family: "Playfair Display";
+    src: url("../fonts/Figtree-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* Custom breakpoints */
 @custom-media --xs (width >= 430px);
 
@@ -105,6 +134,8 @@
         "Granjon", ui-serif, Georgia, Cambria, "Times New Roman", serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
+    --font-barlow-semi-condensed: "Barlow Semi Condensed";
+    --font-figtree: "Figtree";
 }
 
 /* Flatpickr Custom Styling */
@@ -178,4 +209,13 @@
 .flatpickr-day.today:hover {
     background: #007dfc10;
     border-color: #007dfc;
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
 }

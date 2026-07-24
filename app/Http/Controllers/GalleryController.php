@@ -2,37 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
+use App\Data\DummyGalleryData;
+use App\Http\Controllers\MagazineGallery\MagazineController;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class GalleryController extends Controller
 {
-    public function index(Request $request): View
+    private const PER_PAGE = 6;
+
+    public static function initialData(): array
     {
-        $galleries = Article::with('category')
-            ->whereHas('category', function ($query) {
-                $query->where('slug', 'gallery');
-            })
-            ->where('status', 'published')
-            ->orderBy('published_at', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->get()
-            ->map(function ($article) {
-                return [
-                    'id' => $article->id,
-                    'title' => $article->title,
-                    'description' => $article->description ?? '',
-                    'image_url' => $article->thumbnail,
-                    'year' => $article->visual_year ?? ($article->published_at ? $article->published_at->format('Y') : date('Y')),
-                    'views' => $article->views_count ?? 0,
-                    'source_link' => $article->source_link,
-                ];
-            })
-            ->toArray();
+        $all = DummyGalleryData::all();
+        $slice = array_slice($all, 0, self::PER_PAGE);
+
+        return [
+            'galleries' => $slice,
+            'hasMore' => count($all) > self::PER_PAGE,
+        ];
+    }
+
+    public function loadMore(Request $request): JsonResponse
+    {
+        $page = max((int) $request->query('page', 2), 1);
+        $all = DummyGalleryData::all();
+
+        $offset = ($page - 1) * self::PER_PAGE;
+        $slice = array_slice($all, $offset, self::PER_PAGE);
+
+        return response()->json([
+            'data' => $slice,
+            'has_more_pages' => ($offset + self::PER_PAGE) < count($all),
+        ]);
+    }
+
+    public function index(): View {
+        $galleryData = self::initialData();
+        $magazineGalleryData = MagazineController::initialData();
 
         return view('gallery', [
-            'galleries' => $galleries,
+            'galleries' => $galleryData['galleries'],
+            'galleriesHasMore' => $galleryData['hasMore'],
+            'magazines' => $magazineGalleryData['magazines'],
+            'magazinesHasMore' => $magazineGalleryData['hasMore'],
         ]);
     }
 }

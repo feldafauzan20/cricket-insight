@@ -6,6 +6,113 @@ import { initInterviewVideosSwiper } from "./interview-videos";
 import flatpickr from "flatpickr";
 import initScoreCardTournamentSwiper from "./ScoreCardTournament";
 
+document.addEventListener("alpine:init", () => {
+    Alpine.data("heroCarousel", (slides) => ({
+        slides,
+        active: 0,
+        playing: false,
+        players: {},
+        ytApiLoading: false,
+
+        next() {
+            this.pauseCurrent();
+            this.active = (this.active + 1) % this.slides.length;
+        },
+        prev() {
+            this.pauseCurrent();
+            this.active =
+                (this.active - 1 + this.slides.length) % this.slides.length;
+        },
+        goTo(index) {
+            if (index === this.active) return;
+            this.pauseCurrent();
+            this.active = index;
+        },
+        pauseCurrent() {
+            if (this.playing) this.pauseVideo(this.active);
+        },
+        togglePlay() {
+            this.playing
+                ? this.pauseVideo(this.active)
+                : this.playVideo(this.active);
+        },
+        playVideo(index) {
+            const slide = this.slides[index];
+            if (slide.video.type === "youtube") {
+                this.loadYouTubeApi().then(() => this.playYouTube(index));
+            } else if (slide.video.type === "mp4") {
+                const el = document.getElementById("video-" + index);
+                if (el) {
+                    el.play();
+                    this.playing = true;
+                }
+            }
+        },
+        pauseVideo(index) {
+            const slide = this.slides[index];
+            if (slide.video.type === "youtube") {
+                const player = this.players[index];
+                if (player && player.pauseVideo) player.pauseVideo();
+            } else if (slide.video.type === "mp4") {
+                const el = document.getElementById("video-" + index);
+                if (el) el.pause();
+            }
+            this.playing = false;
+        },
+        playYouTube(index) {
+            const slide = this.slides[index];
+            if (this.players[index]) {
+                this.players[index].playVideo();
+                return;
+            }
+            this.players[index] = new YT.Player("yt-player-" + index, {
+                videoId: slide.video.id,
+                playerVars: {
+                    autoplay: 1,
+                    controls: 0,
+                    modestbranding: 1,
+                    rel: 0,
+                    playsinline: 1,
+                },
+                events: {
+                    onReady: (e) => {
+                        e.target.playVideo();
+                        this.playing = true;
+                    },
+                    onStateChange: (e) => {
+                        if (e.data === YT.PlayerState.PLAYING)
+                            this.playing = true;
+                        if (e.data === YT.PlayerState.PAUSED)
+                            this.playing = false;
+                        if (e.data === YT.PlayerState.ENDED)
+                            this.playing = false;
+                    },
+                },
+            });
+        },
+        loadYouTubeApi() {
+            if (window.YT && window.YT.Player) return Promise.resolve();
+            if (this.ytApiLoading) {
+                return new Promise((resolve) => {
+                    const check = setInterval(() => {
+                        if (window.YT && window.YT.Player) {
+                            clearInterval(check);
+                            resolve();
+                        }
+                    }, 50);
+                });
+            }
+            this.ytApiLoading = true;
+            return new Promise((resolve) => {
+                window.onYouTubeIframeAPIReady = () => resolve();
+                const tag = document.createElement("script");
+                tag.src = "https://www.youtube.com/iframe_api";
+                document.head.appendChild(tag);
+            });
+        },
+    }));
+});
+
 // Dark Mode Store dengan localStorage persistence
 Alpine.store("darkMode", {
     // Initialize dari localStorage atau system preference

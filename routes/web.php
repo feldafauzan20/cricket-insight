@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MagazineGallery\MagazineController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\TournamentsController;
 use Illuminate\Support\Facades\Route;
@@ -24,9 +25,13 @@ Route::get('/match-centre', function () {
 
 Route::get('/tournaments', [TournamentsController::class, 'index'])->name('tournaments.index');
 
-Route::get('/ping', function () {
-    return response('pong', 200);
+Route::get('/bbi-wbbi', function () {
+    return view('bbi-wbbi');
 });
+
+Route::get('/magazines/load-more', [MagazineController::class, 'loadMore'])->name('magazines.load-more');
+
+Route::get('/gallery/load-more', [GalleryController::class, 'loadMore'])->name('gallery.load-more');
 
 // Route::get('/interview', [InterviewsController::class, 'index'])->name('interviews.index');
 // Route::get('/interview/{slug}', [InterviewsController::class, 'show'])->name('interviews.show');
