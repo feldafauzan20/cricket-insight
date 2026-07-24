@@ -3,13 +3,13 @@
         <div class="md:mb-15 mb-5">
             <a href="/" class="mr-11 text-xl font-bold">
                 {{-- Light mode logo --}}
-                {{-- <img src="{{ asset('images/logo/cricket-insight-logo-blue.webp') }}" alt="cricket insight logo"
-                    class="w-36.75 mb-5 h-auto object-cover md:mb-10 dark:hidden" loading="lazy"> --}}
+                <img src="{{ asset('images/logo/cricket-insight-logo-blue.webp') }}" alt="cricket insight logo"
+                    class="w-36.75 mb-5 h-auto object-cover md:mb-10 dark:hidden" loading="lazy">
                 {{-- Dark mode logo --}}
-                {{-- <img src="{{ asset('images/logo/cricket-insight-logo-white.webp') }}" alt="cricket insight logo"
-                    class="w-36.75 mb-5 hidden h-auto object-cover md:mb-10 dark:block" loading="lazy"> --}}
-                <img src="https://placehold.co/150x40" alt="cricket insight logo"
-                    class="w-36.75 mb-5 h-auto object-cover md:mb-10" loading="lazy">
+                <img src="{{ asset('images/logo/cricket-insight-logo-white.webp') }}" alt="cricket insight logo"
+                    class="w-36.75 mb-5 hidden h-auto object-cover md:mb-10 dark:block" loading="lazy">
+                {{-- <img src="https://placehold.co/150x40" alt="cricket insight logo"
+                    class="w-36.75 mb-5 h-auto object-cover md:mb-10" loading="lazy"> --}}
             </a>
             <div class="md:w-92.25">
                 <p class="leading-[130%] text-[#121212] dark:text-[#EEEEEE]">Home of Indonesian cricket, where talent
@@ -62,16 +62,16 @@
                 </div>
                 <div class="flex gap-x-5">
                     <a href="YOUR_APP_STORE_URL" target="_blank" rel="noopener">
-                        {{-- <img src="{{ asset('images/badges/app-store-badge.svg') }}" alt="Download on App Store"
-                            loading="lazy" class="h-10"> --}}
-                        <img src="https://placehold.co/135x40" alt="Download on App Store" loading="lazy"
-                            class="h-10">
+                        <img src="{{ asset('images/badges/app-store-badge.svg') }}" alt="Download on App Store"
+                            loading="lazy" class="h-10">
+                        {{-- <img src="https://placehold.co/135x40" alt="Download on App Store" loading="lazy"
+                            class="h-10"> --}}
                     </a>
                     <a href="YOUR_PLAY_STORE_URL" target="_blank" rel="noopener">
-                        {{-- <img src="{{ asset('images/badges/google-play-store-badge.svg') }}" alt="Get it on Google Play"
-                            loading="lazy" class="h-10"> --}}
-                        <img src="https://placehold.co/135x40" alt="Get it on Google Play" loading="lazy"
-                            class="h-10">
+                        <img src="{{ asset('images/badges/google-play-store-badge.svg') }}" alt="Get it on Google Play"
+                            loading="lazy" class="h-10">
+                        {{-- <img src="https://placehold.co/135x40" alt="Get it on Google Play" loading="lazy"
+                            class="h-10"> --}}
                     </a>
                 </div>
             </div>
