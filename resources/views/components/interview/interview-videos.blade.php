@@ -3,12 +3,15 @@
         description="Watch the most insightful interviews with cricket players and experts." />
     <div class="md:mb-7.5 mb-5 2xl:container lg:flex lg:flex-row-reverse lg:items-stretch 2xl:mx-auto">
         <div class="h-63.5 lg:w-150 2xl:w-11/20 overflow-hidden rounded-t-[3px] lg:h-auto">
-            <img src="{{ asset('images/dummy/editor-choices/dummy-bg-hero-editor-choices.webp') }}"
-                alt=" Editor's Choices Hero Image" class="h-full w-full object-cover">
+            {{-- <img src="{{ asset('images/dummy/editor-choices/dummy-bg-hero-editor-choices.webp') }}"
+                alt=" Editor's Choices Hero Image" class="h-full w-full object-cover"> --}}
+            <img src="https://placehold.co/1200x600" alt=" Editor's Choices Hero Image" class="h-full w-full object-cover">
         </div>
         <div class="2xl:w-9/20 relative overflow-hidden rounded-b-[3px] 2xl:flex 2xl:flex-col 2xl:justify-center">
             {{-- Background Image --}}
-            <img src="{{ asset('images/dummy/dummy-editor-choices.webp') }}" alt="Editor's Choices Background"
+            {{-- <img src="{{ asset('images/dummy/dummy-editor-choices.webp') }}" alt="Editor's Choices Background"
+                class="absolute inset-0 z-20 h-full w-full object-cover opacity-40"> --}}
+            <img src="https://placehold.co/1200x800" alt="Editor's Choices Background"
                 class="absolute inset-0 z-20 h-full w-full object-cover opacity-40">
 
             {{-- Gradient Overlay --}}

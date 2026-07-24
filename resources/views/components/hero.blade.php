@@ -55,46 +55,52 @@
             @foreach ($heroSlides as $slide)
                 <div class="swiper-slide relative">
                     {{-- Background Image --}}
-                    <img src="{{ asset($slide['image']) }}" alt="Hero Image {{ $slide['id'] }}" width="1920"
-                        height="1080" fetchpriority="high" class="absolute inset-0 w-full h-full object-cover">
+                    {{-- <img src="{{ asset($slide['image']) }}" alt="Hero Image {{ $slide['id'] }}" width="1920"
+                        height="1080" loading="eager" fetchpriority="high"
+                        class="absolute inset-0 h-full w-full object-cover"> --}}
+                    <img src="https://placehold.co/1920x1080" alt="Hero Image {{ $slide['id'] }}" width="1920"
+                        height="1080" loading="eager" fetchpriority="high"
+                        class="absolute inset-0 h-full w-full object-cover">
 
                     {{-- Overlay gradient --}}
-                    <div class="absolute inset-0 bg-linear-to-b from-black/0 to-black/50 w-full"></div>
+                    <div class="bg-linear-to-b absolute inset-0 w-full from-black/0 to-black/50"></div>
 
                     {{-- Slide Content --}}
                     <div
-                        class="relative mx-7.5 pt-18 md:pt-8 lg:pt-28 pb-8.5 md:pb-12 lg:pb-80 lg:mx-10 2xl:container 2xl:mx-auto h-full">
+                        class="mx-7.5 pt-18 pb-8.5 relative h-full 2xl:container md:pb-12 md:pt-8 lg:mx-10 lg:pb-80 lg:pt-28 2xl:mx-auto">
 
                         {{-- Category Badge --}}
                         <div class="mb-1 lg:mb-4">
-                            <div class="bg-[#D6111A] w-fit py-1.5 px-5 rounded-[3px]">
-                                <p class="text-white font-medium text-[11px]">{{ $slide['category'] }}</p>
+                            <div class="w-fit rounded-[3px] bg-[#D6111A] px-5 py-1.5">
+                                <p class="text-[11px] font-medium text-white">{{ $slide['category'] }}</p>
                             </div>
                         </div>
 
                         {{-- Hero Title --}}
                         <div class="lg:w-153.5 mb-2.5 md:mb-3.5 lg:mb-4">
-                            <h1 class="font-semibold text-white text-2xl md:text-4xl">
+                            <h1 class="text-2xl font-semibold text-white md:text-4xl">
                                 {{ Str::words($slide['title'], 8, '...') }}</h1>
                         </div>
 
                         {{-- Hero Description --}}
-                        <div class="md:w-180 mb-2.5 md:mb-3.5 lg:mb-6 lg:w-153.5">
-                            <p class="font-playfair-display text-xs md:text-[14px] font-medium text-white">
+                        <div class="md:w-180 lg:w-153.5 mb-2.5 md:mb-3.5 lg:mb-6">
+                            <p class="font-playfair-display text-xs font-medium text-white md:text-[14px]">
                                 {{ Str::words($slide['description'], 47, '...') }}
                             </p>
                         </div>
 
                         {{-- Author Info --}}
                         <div class="text-white lg:flex lg:items-end">
-                            <div class="w-57 lg:h-fit flex justify-between items-center">
-                                <div class="w-9 h-9 rounded-full overflow-hidden">
-                                    <img src="{{ asset($slide['author_image']) }}" alt="Profile Picture"
-                                        class="w-full h-full object-cover">
+                            <div class="w-57 flex items-center justify-between lg:h-fit">
+                                <div class="h-9 w-9 overflow-hidden rounded-full">
+                                    {{-- <img src="{{ asset($slide['author_image']) }}" alt="Profile Picture"
+                                        class="h-full w-full object-cover"> --}}
+                                    <img src="https://placehold.co/36x36" alt="Profile Picture"
+                                        class="h-full w-full object-cover">
                                 </div>
-                                <p class="font-semibold text-[10px]">BY {{ $slide['author_name'] }}</p>
-                                <div class="w-2.5 h-2.5 bg-[#EC0226] rounded-full"></div>
-                                <span class="font-semibold text-[10px]">{{ $slide['date'] }}</span>
+                                <p class="text-[10px] font-semibold">BY {{ $slide['author_name'] }}</p>
+                                <div class="h-2.5 w-2.5 rounded-full bg-[#EC0226]"></div>
+                                <span class="text-[10px] font-semibold">{{ $slide['date'] }}</span>
                             </div>
                         </div>
                     </div>
@@ -104,8 +110,8 @@
     </div>
 
     {{-- Autoplay Progress Indicator --}}
-    <div class="absolute top-18 right-7.5 md:top-8 md:right-7.5 lg:top-28 2xl:top-12 lg:right-10 2xl:right-10 z-20">
-        <svg class="w-10 h-10 -rotate-90" viewBox="0 0 40 40">
+    <div class="top-18 right-7.5 md:right-7.5 absolute z-20 md:top-8 lg:right-10 lg:top-28 2xl:right-10 2xl:top-12">
+        <svg class="h-10 w-10 -rotate-90" viewBox="0 0 40 40">
             <!-- Background circle -->
             <circle cx="20" cy="20" r="18" stroke="#48494A" stroke-width="2" fill="none" />
             <!-- Progress circle -->
@@ -116,47 +122,49 @@
     </div>
 
     {{-- Next and Previous Buttons (Mobile & Tablet) --}}
-    <div class="absolute bottom-8.5 left-7.5 md:bottom-12 md:left-7.5 flex gap-x-4 lg:hidden z-20">
+    <div class="bottom-8.5 left-7.5 md:left-7.5 absolute z-20 flex gap-x-4 md:bottom-12 lg:hidden">
         <x-buttons.previous-button class="hero-carousel-button-prev" />
         <x-buttons.next-button class="hero-carousel-button-next" />
     </div>
 
     {{-- Next and Previous Buttons (Desktop) --}}
     <div
-        class="hidden lg:flex lg:absolute lg:top-1/2 2xl:top-68.75 lg:-translate-y-1/2 lg:right-10 2xl:right-10 lg:flex-col lg:gap-y-2 z-20">
+        class="2xl:top-68.75 z-20 hidden lg:absolute lg:right-10 lg:top-1/2 lg:flex lg:-translate-y-1/2 lg:flex-col lg:gap-y-2 2xl:right-10">
         <x-buttons.next-button class="hero-carousel-button-next" />
         <x-buttons.previous-button class="hero-carousel-button-prev" />
     </div>
 
     {{-- Indicator Dots (Large screens) --}}
-    <div class="hidden lg:block lg:absolute lg:bottom-50 lg:left-0 lg:right-0 z-20">
-        <div class="lg:mx-10 2xl:container 2xl:mx-auto">
-            <div class="lg:flex lg:gap-x-2 hero-carousel-pagination"></div>
+    <div class="lg:bottom-50 z-20 hidden lg:absolute lg:left-0 lg:right-0 lg:block">
+        <div class="2xl:container lg:mx-10 2xl:mx-auto">
+            <div class="hero-carousel-pagination lg:flex lg:gap-x-2"></div>
         </div>
     </div>
 
     {{-- News Cards as Navigation (Large screens) --}}
-    <div class="hidden lg:block lg:absolute lg:bottom-0 lg:left-0 lg:right-0 z-20 lg:pb-7.5 2xl:pb-10.5">
-        <div class="lg:mx-10 2xl:container 2xl:mx-auto lg:flex lg:gap-x-7.5 2xl:gap-x-10">
+    <div class="lg:pb-7.5 2xl:pb-10.5 z-20 hidden lg:absolute lg:bottom-0 lg:left-0 lg:right-0 lg:block">
+        <div class="lg:gap-x-7.5 2xl:container lg:mx-10 lg:flex 2xl:mx-auto 2xl:gap-x-10">
             @foreach ($heroSlides as $index => $slide)
-                <div class="flex-1 cursor-pointer hero-news-card" data-slide-index="{{ $index }}">
+                <div class="hero-news-card flex-1 cursor-pointer" data-slide-index="{{ $index }}">
                     <div
-                        class="border-t {{ $index === 0 ? 'border-t-[#EC0226]' : 'border-t-white' }} transition-colors duration-300">
-                        <div class="flex pt-7 gap-x-7">
+                        class="{{ $index === 0 ? 'border-t-[#EC0226]' : 'border-t-white' }} border-t transition-colors duration-300">
+                        <div class="flex gap-x-7 pt-7">
                             <div class="w-25 h-17.5 rounded-xs overflow-hidden">
-                                <img src="{{ asset($slide['thumbnail']) }}" alt="News Card Image"
-                                    class="w-full h-full object-cover">
+                                {{-- <img src="{{ asset($slide['thumbnail']) }}" alt="News Card Image"
+                                    class="h-full w-full object-cover" fetchpriority="high" loading="eager"> --}}
+                                <img src="https://placehold.co/400x280" alt="News Card Image"
+                                    class="h-full w-full object-cover" fetchpriority="high" loading="eager">
                             </div>
 
                             <div>
                                 <div class="2xl:w-40">
-                                    <h1 class="font-semibold text-xs text-white mb-1.5">
+                                    <h1 class="mb-1.5 text-xs font-semibold text-white">
                                         {{ Str::words($slide['thumbnail_title'], 4, '...') }}
                                     </h1>
                                 </div>
                                 <div class="flex items-center gap-x-2">
-                                    <x-letsicon-time-atack class="w-2.5 h-2.5 text-[#EC0226]" />
-                                    <span class="font-semibold text-[10px] text-white">{{ $slide['date'] }}</span>
+                                    <x-letsicon-time-atack class="h-2.5 w-2.5 text-[#EC0226]" />
+                                    <span class="text-[10px] font-semibold text-white">{{ $slide['date'] }}</span>
                                 </div>
                             </div>
                         </div>

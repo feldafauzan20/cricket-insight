@@ -90,6 +90,15 @@ class NewsResource extends Resource
 
                 Toggle::make('is_editor_choice')->label("Editor's Choice"),
                 Toggle::make('is_trending_manual')->label("Jadikan Trending"),
+                Select::make('region')
+                    ->label('Region')
+                    ->options([
+                        'Indonesia' => 'Indonesia',
+                        'Global' => 'Global',
+                    ])
+                    ->default('Global')
+                    ->required(),
+
                 Select::make('status')
                     ->options(['draft' => 'Draft', 'published' => 'Published'])
                     ->default('draft')
@@ -111,6 +120,9 @@ class NewsResource extends Resource
                 ->limit(30),
             TextColumn::make('category.name')
                 ->label('Kategori')
+                ->sortable(),
+            TextColumn::make('region')
+                ->label('Region')
                 ->sortable(),
             IconColumn::make('is_editor_choice')
                 ->boolean()

@@ -47,10 +47,7 @@
         <div>
             <x-filter.filter
                 :categories="$categories"
-                :uploaders="$uploaders"
                 :tags="$tags"
-                :statuses="$statuses"
-                :region-options="$regionOptions"
                 :sort-options="$sortOptions"
                 :time-frames="$timeFrames"
                 :popularity-options="$popularityOptions"

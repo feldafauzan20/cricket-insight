@@ -18,9 +18,11 @@
         {{-- Team 1 --}}
         <div class="mb-2 flex justify-between">
             <div class="flex items-center gap-x-2">
-                <img src="{{ $match['team1']['logo'] }}" alt="{{ $match['team1']['name'] }} logo"
+                {{-- <img src="{{ $match['team1']['logo'] }}" alt="{{ $match['team1']['name'] }} logo"
                     class="h-5 w-5 rounded-full object-cover"
-                    onerror="this.src='{{ asset('images/dummy/live-score-card/dummy-logo-live-score-1.webp') }}'">
+                    onerror="this.src='{{ asset('images/dummy/live-score-card/dummy-logo-live-score-1.webp') }}'"> --}}
+                <img src="https://placehold.co/20x20" alt="{{ $match['team1']['name'] }} logo"
+                    class="h-5 w-5 rounded-full object-cover">
                 <h1
                     class="{{ $match['isComplete'] && !empty($match['result']) && str_contains($match['result'], $match['team1']['name'])
                         ? 'text-[#48494A] dark:text-white'
@@ -39,9 +41,11 @@
         {{-- Team 2 --}}
         <div class="mb-3 flex justify-between">
             <div class="flex items-center gap-x-2">
-                <img src="{{ $match['team2']['logo'] }}" alt="{{ $match['team2']['name'] }} logo"
+                {{-- <img src="{{ $match['team2']['logo'] }}" alt="{{ $match['team2']['name'] }} logo"
                     class="h-5 w-5 rounded-full object-cover"
-                    onerror="this.src='{{ asset('images/dummy/live-score-card/dummy-logo-live-score-2.webp') }}'">
+                    onerror="this.src='{{ asset('images/dummy/live-score-card/dummy-logo-live-score-2.webp') }}'"> --}}
+                <img src="https://placehold.co/20x20" alt="{{ $match['team2']['name'] }} logo"
+                    class="h-5 w-5 rounded-full object-cover">
                 <h1
                     class="{{ $match['isComplete'] && !empty($match['result']) && str_contains($match['result'], $match['team2']['name'])
                         ? 'text-[#48494A] dark:text-white'

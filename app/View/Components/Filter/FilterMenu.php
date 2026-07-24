@@ -9,10 +9,7 @@ use Illuminate\View\Component;
 class FilterMenu extends Component
 {
     public iterable $categories;
-    public iterable $uploaders;
     public iterable $tags;
-    public iterable $statuses;
-    public iterable $regionOptions;
     public iterable $sortOptions;
     public iterable $timeFrames;
     public iterable $popularityOptions;
@@ -23,20 +20,14 @@ class FilterMenu extends Component
      */
     public function __construct(
         iterable $categories = [],
-        iterable $uploaders = [],
         iterable $tags = [],
-        iterable $statuses = [],
-        iterable $regionOptions = [],
         iterable $sortOptions = [],
         iterable $timeFrames = [],
         iterable $popularityOptions = [],
         array $filters = []
     ) {
         $this->categories = $categories;
-        $this->uploaders = $uploaders;
         $this->tags = $tags;
-        $this->statuses = $statuses;
-        $this->regionOptions = $regionOptions;
         $this->sortOptions = $sortOptions;
         $this->timeFrames = $timeFrames;
         $this->popularityOptions = $popularityOptions;

@@ -61,6 +61,10 @@ class PageSlotResource extends Resource
                                 ")
                                 ->label('Pilih Video (Do not use this for Carousel slots)')
                                 ->helperText('Isi ini jika slot membutuhkan Video. Kosongkan jika slot untuk Artikel.'),
+
+                            TextInput::make('embed_link')
+                                ->label('Embed Link YouTube')
+                                ->helperText('Masukkan URL video YouTube yang ingin ditampilkan di slot ini.'),
                         ])->columns(2),
                 ]);
     }
@@ -72,6 +76,10 @@ class PageSlotResource extends Resource
                 TextColumn::make('label')->label('Nama Etalase/Slot')->searchable()->weight('bold'),
                 TextColumn::make('article.title')->label('Artikel yang Tampil')->limit(30),
                 TextColumn::make('video.title')->label('Video yang Tampil')->limit(30),
+                TextColumn::make('embed_link')
+                    ->label('Embed Link')
+                    ->limit(20)
+                    ->wrap(),
             ])
             // Fitur Grouping agar rapi per Halaman!
             ->groups([

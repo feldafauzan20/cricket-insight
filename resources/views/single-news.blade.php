@@ -16,7 +16,7 @@
             <x-slot name="main">
                 {{-- BREADCRUMB AND CATEGORY SECTION --}}
                 <section
-                    class="pt-30 md:pt-34 lg:pt-38 2xl:pt-0 mx-6 md:mx-8 lg:mx-10 2xl:container 2xl:mx-auto mb-3.25 md:mb-3.75">
+                    class="pt-30 md:pt-34 lg:pt-38 mb-3.25 md:mb-3.75 mx-6 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto 2xl:pt-0">
                     <div class="mb-3.75">
                         <x-bread-crumb :items="[
                             ['title' => 'Home', 'url' => '/'],
@@ -34,31 +34,31 @@
                 </section>
 
                 {{-- NEWS CONTENT SECTION --}}
-                <section class="mx-6 md:mx-8 lg:mx-10 2xl:container 2xl:mx-auto mb-7.5">
+                <section class="mb-7.5 mx-6 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
 
                     {{-- TITLE --}}
-                    <h1 class="text-[#121212] dark:text-white font-medium text-[22px] md:text-[32px] leading-tight">
+                    <h1 class="text-[22px] font-medium leading-tight text-[#121212] md:text-[32px] dark:text-white">
                         {{ $article->title }}
                     </h1>
 
-                    <div class="flex mt-2.5 mb-3.75">
+                    <div class="mb-3.75 mt-2.5 flex">
                         <div class="w-58 h-px bg-[#EC0226]"></div>
-                        <div class="w-full h-px bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>
+                        <div class="h-px w-full bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>
                     </div>
 
                     {{-- INTRO --}}
-                    <p class="text-[#121212] dark:text-white text-[15px] mb-3.75 leading-relaxed italic">
+                    <p class="mb-3.75 text-[15px] italic leading-relaxed text-[#121212] dark:text-white">
                         {{ $article->description }}
                     </p>
 
                     {{-- AUTHOR INFO --}}
-                    <div class="flex items-center gap-x-2.5 md:gap-x-3 mb-7.5">
-                        <div class="w-9 md:w-11.25 h-9 md:h-11.25 rounded-full overflow-hidden shrink-0">
+                    <div class="mb-7.5 flex items-center gap-x-2.5 md:gap-x-3">
+                        <div class="md:w-11.25 md:h-11.25 h-9 w-9 shrink-0 overflow-hidden rounded-full">
                             <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}" alt="Author"
-                                class="w-full h-full object-cover">
+                                class="h-full w-full object-cover">
                         </div>
                         <div>
-                            <p class="font-medium text-[13px] mb-0.5 text-[#48494A] dark:text-white">
+                            <p class="mb-0.5 text-[13px] font-medium text-[#48494A] dark:text-white">
                                 {{ $article->uploader->name ?? 'Admin' }}</p>
                             <div class="flex items-center gap-x-3 text-[13px] text-[#48494A] dark:text-white">
                                 <span>{{ $article->published_at ? $article->published_at->format('M d, Y') : $article->created_at->format('M d, Y') }}</span>
@@ -71,16 +71,16 @@
                     {{-- CONTENT BODY --}}
                     <div class="space-y-6">
                         {{-- HERO / THUMBNAIL --}}
-                        <div class="rounded-[5px] md:rounded-[10px] overflow-hidden h-58.5 md:h-109 lg:h-137 mb-7.5">
+                        <div class="h-58.5 md:h-109 lg:h-137 mb-7.5 overflow-hidden rounded-[5px] md:rounded-[10px]">
                             @if ($article->thumbnail)
                                 <img src="{{ asset('storage/' . $article->thumbnail) }}" alt="{{ $article->title }}"
-                                    class="w-full h-full object-cover">
+                                    class="h-full w-full object-cover">
                             @elseif($article->foto1)
                                 <img src="{{ asset('storage/' . $article->foto1) }}" alt="{{ $article->title }}"
-                                    class="w-full h-full object-cover">
+                                    class="h-full w-full object-cover">
                             @else
                                 <img src="{{ asset('images/dummy/hero-home/bg-hero-home.webp') }}" alt="Dummy News Image"
-                                    class="w-full h-full object-cover">
+                                    class="h-full w-full object-cover">
                             @endif
                         </div>
                         @php
@@ -102,7 +102,7 @@
 
                         {{-- BAGIAN TEKS PERTAMA --}}
                         <div
-                            class="prose dark:prose-invert max-w-none text-[#121212] dark:text-[#EEEEEE] text-[15px] leading-[170%]">
+                            class="prose dark:prose-invert max-w-none text-[15px] leading-[170%] text-[#121212] dark:text-[#EEEEEE]">
                             @foreach ($part1 as $p)
                                 {!! $p !!}</p>
                             @endforeach
@@ -112,16 +112,16 @@
                         @if ($article->foto1)
                             <div class="my-8">
                                 <div
-                                    class="rounded-[5px] md:rounded-[15px] overflow-hidden h-54.5 md:h-98.25 lg:h-136.75 shadow-lg">
+                                    class="h-54.5 md:h-98.25 lg:h-136.75 overflow-hidden rounded-[5px] shadow-lg md:rounded-[15px]">
                                     <img src="{{ asset('storage/' . $article->foto1) }}" alt="Foto Tengah"
-                                        class="w-full h-full object-cover">
+                                        class="h-full w-full object-cover">
                                 </div>
                             </div>
                         @endif
 
                         {{-- BAGIAN TEKS KEDUA --}}
                         <div
-                            class="prose dark:prose-invert max-w-none text-[#121212] dark:text-[#EEEEEE] text-[15px] leading-[170%]">
+                            class="prose dark:prose-invert max-w-none text-[15px] leading-[170%] text-[#121212] dark:text-[#EEEEEE]">
                             @foreach ($part2 as $p)
                                 {!! $p !!}</p>
                             @endforeach
@@ -129,11 +129,11 @@
 
                         {{-- FOTO 2 (Paling Bawah) --}}
                         @if ($article->foto2)
-                            <div class="mt-8 mb-7.5">
+                            <div class="mb-7.5 mt-8">
                                 <div
-                                    class="rounded-[5px] md:rounded-[15px] overflow-hidden h-54.5 md:h-98.25 lg:h-136.75 shadow-lg">
+                                    class="h-54.5 md:h-98.25 lg:h-136.75 overflow-hidden rounded-[5px] shadow-lg md:rounded-[15px]">
                                     <img src="{{ asset('storage/' . $article->foto2) }}" alt="Foto Bawah"
-                                        class="w-full h-full object-cover">
+                                        class="h-full w-full object-cover">
                                 </div>
                             </div>
                         @endif
@@ -191,7 +191,7 @@
             </x-slot>
 
             <x-slot name="sidebar">
-                <section class="mx-6 md:mx-8 2xl:mx-0 mb-7">
+                <section class="mx-6 mb-7 md:mx-8 2xl:mx-0">
                     <x-popular-recent-news />
                 </section>
             </x-slot>
@@ -224,7 +224,6 @@
         </div>
     </section>
     {{-- FOOTER SECTION END --}}
-
 
     <script>
         function copyToClipboard() {

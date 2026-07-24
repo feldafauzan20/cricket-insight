@@ -13,42 +13,47 @@
         ->first();
 @endphp
 
-<a href="{{ url('/news/' . $latestCommentary->slug) }}" class="block group">
-    <div class="py-5 border-b border-b-[#DEDEDE] 2xl:mr-15 transition-colors hover:bg-gray-50 dark:hover:bg-[#1a1a1a] rounded-md px-2 -mx-2">
-        <div class="flex gap-x-10 items-stretch">
-            
+<a href="{{ url('/news/' . $latestCommentary->slug) }}" class="group block">
+    <div
+        class="2xl:mr-15 -mx-2 rounded-md border-b border-b-[#DEDEDE] px-2 py-5 transition-colors hover:bg-gray-50 dark:hover:bg-[#1a1a1a]">
+        <div class="flex items-stretch gap-x-10">
+
             {{-- Thumbnail Kecil --}}
-            <div class="w-25 h-25 overflow-hidden rounded-[3px] shrink-0">
+            <div class="w-25 h-25 shrink-0 overflow-hidden rounded-[3px]">
                 <img src="{{ $latestCommentary->thumbnail ? asset('storage/' . $latestCommentary->thumbnail) : asset('images/dummy/commentaries/dummy-commentaries-small-card.webp') }}"
-                    alt="{{ $latestCommentary->title }}" loading="lazy" 
-                    class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110">
+                    alt="{{ $latestCommentary->title }}" loading="lazy"
+                    class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110">
             </div>
-            
-            <div class="w-full flex flex-col justify-center">
+
+            <div class="flex w-full flex-col justify-center">
                 {{-- Tanggal --}}
-                <div class="flex items-center gap-x-2 text-[#666666] dark:text-[#B2B2B2] mb-1">
-                    <x-letsicon-time-atack class="w-5 h-5" />
-                    <span class="font-medium text-[10px] md:text-sm">
+                <div class="mb-1 flex items-center gap-x-2 text-[#666666] dark:text-[#B2B2B2]">
+                    <x-letsicon-time-atack class="h-5 w-5" />
+                    <span class="text-[10px] font-medium md:text-sm">
                         {{ strtoupper($latestCommentary->published_at ? $latestCommentary->published_at->format('d M Y') : $latestCommentary->created_at->format('d M Y')) }}
                     </span>
                 </div>
-                
+
                 {{-- Judul --}}
-                <h1 class="text-[#121212] dark:text-white font-semibold text-[16px] md:text-[15px] leading-[130%] mb-1 2xl:mb-3.5 group-hover:text-[#EC0226] transition-colors">
+                <h1
+                    class="mb-1 text-[16px] font-semibold leading-[130%] text-[#121212] transition-colors group-hover:text-[#EC0226] md:text-[15px] 2xl:mb-3.5 dark:text-white">
                     {{ Str::words($latestCommentary->title, 8, '...') }}
                 </h1>
-                
+
                 {{-- Profil Penulis --}}
-                <div class="flex items-center text-[#666] dark:text-[#B2B2B2] gap-x-2.5 mt-auto">
-                    <div class="w-5 h-5 rounded-full overflow-hidden shrink-0 border border-gray-200 dark:border-gray-600">
-                        <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}" alt="Profile Picture" class="w-full h-full object-cover">
+                <div class="mt-auto flex items-center gap-x-2.5 text-[#666] dark:text-[#B2B2B2]">
+                    <div
+                        class="h-5 w-5 shrink-0 overflow-hidden rounded-full border border-gray-200 dark:border-gray-600">
+                        <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}"
+                            alt="Profile Picture" class="h-full w-full object-cover">
                     </div>
-                    <p class="font-semibold text-[10px] md:text-sm line-clamp-1">
-                        <span class="font-normal">By </span>{{ $latestCommentary->uploader ? $latestCommentary->uploader->name : 'Admin' }}
+                    <p class="line-clamp-1 text-[10px] font-semibold md:text-sm">
+                        <span class="font-normal">By
+                        </span>{{ $latestCommentary->uploader ? $latestCommentary->uploader->name : 'Admin' }}
                     </p>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </a>

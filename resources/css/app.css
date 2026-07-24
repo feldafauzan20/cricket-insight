@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "swiper/css";
+@import "flatpickr/dist/flatpickr.min.css";
 
 /* Alpine.js x-cloak directive - hide elements until Alpine is ready */
 [x-cloak] {
@@ -88,6 +89,35 @@
     font-display: swap;
 }
 
+/* Font Face For Barlow Semi Condensed */
+/* bold font */
+@font-face {
+    font-family: "Barlow Semi Condensed";
+    src: url("../fonts/BarlowSemiCondensed-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Font Face For Figtree */
+/* semibold font */
+@font-face {
+    font-family: "Figtree";
+    src: url("../fonts/Figtree-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* medium font */
+@font-face {
+    font-family: "Playfair Display";
+    src: url("../fonts/Figtree-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* Custom breakpoints */
 @custom-media --xs (width >= 430px);
 
@@ -104,4 +134,88 @@
         "Granjon", ui-serif, Georgia, Cambria, "Times New Roman", serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
+    --font-barlow-semi-condensed: "Barlow Semi Condensed";
+    --font-figtree: "Figtree";
+}
+
+/* Flatpickr Custom Styling */
+.flatpickr-calendar {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    box-shadow:
+        0 4px 6px -1px rgb(0 0 0 / 0.1),
+        0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.dark .flatpickr-calendar {
+    background: #353434;
+    border-color: #171717;
+}
+
+.flatpickr-months {
+    background: #0a1628;
+    border-radius: 3px 3px 0 0;
+}
+
+.flatpickr-current-month {
+    color: white;
+}
+
+.flatpickr-monthDropdown-months,
+.flatpickr-current-month .numInputWrapper input {
+    color: white;
+    background: transparent;
+}
+
+.flatpickr-monthDropdown-months option {
+    background: #0a1628;
+    color: white;
+}
+
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+    fill: white;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover,
+.flatpickr-months .flatpickr-next-month:hover {
+    fill: #ec0226;
+}
+
+.flatpickr-day {
+    color: #121212;
+}
+
+.dark .flatpickr-day {
+    color: white;
+}
+
+.flatpickr-day:hover {
+    background: #ec022610;
+    border-color: #ec0226;
+}
+
+.flatpickr-day.selected {
+    background: #ec0226;
+    border-color: #ec0226;
+    color: white;
+}
+
+.flatpickr-day.today {
+    border-color: #007dfc;
+}
+
+.flatpickr-day.today:hover {
+    background: #007dfc10;
+    border-color: #007dfc;
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
 }

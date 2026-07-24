@@ -1,14 +1,28 @@
 @props([
     'title' => 'Gallery Title',
     'description' => 'Description',
-    'imageUrl' => 'images/dummy/gallery/dummy-gallery.webp',
+    'imageUrl' => null,
     'year' => '2023',
     'views' => 0,
 ])
 
+@php
+    $src = asset('images/dummy/gallery/dummy-gallery.webp');
+    if (!empty($imageUrl)) {
+        if (str_starts_with($imageUrl, 'http://') || str_starts_with($imageUrl, 'https://')) {
+            $src = $imageUrl;
+        } elseif (str_starts_with($imageUrl, 'images/')) {
+            $src = asset($imageUrl);
+        } else {
+            $src = asset('storage/' . $imageUrl);
+        }
+    }
+@endphp
+
 <div class="flex h-full flex-col">
     <div class="h-54.75 lg:h-86.75 overflow-hidden rounded-t-[5px]">
-        <img src="{{ asset($imageUrl) }}" alt="{{ $title }}" class="h-full w-full object-cover">
+        {{-- <img src="{{ asset($imageUrl) }}" alt="{{ $title }}" class="h-full w-full object-cover"> --}}
+        <img src="https://placehold.co/600x500" alt="{{ $title }}" class="h-full w-full object-cover">
     </div>
     <div class="py-6.25 px-7.5 flex flex-1 flex-col rounded-b-[5px] border-x border-b border-[#EFEFEF]">
         <h1 class="mb-2 font-semibold text-[#121212] dark:text-white">{{ $title }}</h1>

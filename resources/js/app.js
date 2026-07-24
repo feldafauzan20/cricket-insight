@@ -1,5 +1,117 @@
 import "./bootstrap";
 import Alpine from "alpinejs";
+import Swiper from "swiper";
+import { FreeMode, Navigation, Autoplay, Pagination } from "swiper/modules";
+import { initInterviewVideosSwiper } from "./interview-videos";
+import flatpickr from "flatpickr";
+import initScoreCardTournamentSwiper from "./ScoreCardTournament";
+
+document.addEventListener("alpine:init", () => {
+    Alpine.data("heroCarousel", (slides) => ({
+        slides,
+        active: 0,
+        playing: false,
+        players: {},
+        ytApiLoading: false,
+
+        next() {
+            this.pauseCurrent();
+            this.active = (this.active + 1) % this.slides.length;
+        },
+        prev() {
+            this.pauseCurrent();
+            this.active =
+                (this.active - 1 + this.slides.length) % this.slides.length;
+        },
+        goTo(index) {
+            if (index === this.active) return;
+            this.pauseCurrent();
+            this.active = index;
+        },
+        pauseCurrent() {
+            if (this.playing) this.pauseVideo(this.active);
+        },
+        togglePlay() {
+            this.playing
+                ? this.pauseVideo(this.active)
+                : this.playVideo(this.active);
+        },
+        playVideo(index) {
+            const slide = this.slides[index];
+            if (slide.video.type === "youtube") {
+                this.loadYouTubeApi().then(() => this.playYouTube(index));
+            } else if (slide.video.type === "mp4") {
+                const el = document.getElementById("video-" + index);
+                if (el) {
+                    el.play();
+                    this.playing = true;
+                }
+            }
+        },
+        pauseVideo(index) {
+            const slide = this.slides[index];
+            if (slide.video.type === "youtube") {
+                const player = this.players[index];
+                if (player && player.pauseVideo) player.pauseVideo();
+            } else if (slide.video.type === "mp4") {
+                const el = document.getElementById("video-" + index);
+                if (el) el.pause();
+            }
+            this.playing = false;
+        },
+        playYouTube(index) {
+            const slide = this.slides[index];
+            if (this.players[index]) {
+                this.players[index].playVideo();
+                return;
+            }
+            this.players[index] = new YT.Player("yt-player-" + index, {
+                videoId: slide.video.id,
+                playerVars: {
+                    autoplay: 1,
+                    controls: 0,
+                    modestbranding: 1,
+                    rel: 0,
+                    playsinline: 1,
+                },
+                events: {
+                    onReady: (e) => {
+                        e.target.playVideo();
+                        this.playing = true;
+                    },
+                    onStateChange: (e) => {
+                        if (e.data === YT.PlayerState.PLAYING)
+                            this.playing = true;
+                        if (e.data === YT.PlayerState.PAUSED)
+                            this.playing = false;
+                        if (e.data === YT.PlayerState.ENDED)
+                            this.playing = false;
+                    },
+                },
+            });
+        },
+        loadYouTubeApi() {
+            if (window.YT && window.YT.Player) return Promise.resolve();
+            if (this.ytApiLoading) {
+                return new Promise((resolve) => {
+                    const check = setInterval(() => {
+                        if (window.YT && window.YT.Player) {
+                            clearInterval(check);
+                            resolve();
+                        }
+                    }, 50);
+                });
+            }
+            this.ytApiLoading = true;
+            return new Promise((resolve) => {
+                window.onYouTubeIframeAPIReady = () => resolve();
+                const tag = document.createElement("script");
+                tag.src = "https://www.youtube.com/iframe_api";
+                document.head.appendChild(tag);
+            });
+        },
+    }));
+});
 
 // Dark Mode Store dengan localStorage persistence
 Alpine.store("darkMode", {
@@ -39,15 +151,112 @@ Alpine.store("darkMode", {
 });
 
 window.Alpine = Alpine;
+
+// Alpine.js Component for Fixtures Filters
+Alpine.data("fixturesFilters", () => ({
+    activeTab: "women",
+    selectedYear: new Date().getFullYear(),
+    selectedFormat: "ODI",
+    selectedTeam: "",
+    openYear: false,
+    // yearPicker: null,
+
+    get yearList() {
+        const current = new Date().getFullYear();
+        const years = [];
+        for (let y = current; y >= 2016; y--) years.push(y);
+        return years;
+    },
+
+    // init() {
+    //     // Initialize Flatpickr for year picker
+    //     this.yearPicker = flatpickr(this.$refs.yearPicker, {
+    //         mode: "single",
+    //         dateFormat: "Y",
+    //         defaultDate: new Date().getFullYear().toString(),
+    //         minDate: "2016",
+    //         maxDate: new Date().getFullYear().toString(),
+    //         onChange: (selectedDates, dateStr) => {
+    //             this.selectedYear = parseInt(dateStr);
+    //         },
+    //         onOpen: function (selectedDates, dateStr, instance) {
+    //             // Switch to year mode when calendar opens
+    //             instance.currentYear = instance.selectedDates[0]
+    //                 ? instance.selectedDates[0].getFullYear()
+    //                 : new Date().getFullYear();
+    //             instance.redraw();
+    //         },
+    //         plugins: [
+    //             function (fp) {
+    //                 return {
+    //                     onReady: function () {
+    //                         // Custom year picker functionality
+    //                         const yearSelect = fp.currentYearElement;
+    //                         if (yearSelect) {
+    //                             yearSelect.removeAttribute("disabled");
+    //                         }
+    //                     },
+    //                 };
+    //             },
+    //         ],
+    //     });
+    // },
+
+    previousYear() {
+        if (this.selectedYear > 2016) {
+            this.selectedYear--;
+            this.openYear = false; // Close the year picker after selection
+        }
+    },
+
+    nextYear() {
+        const currentYear = new Date().getFullYear();
+        if (this.selectedYear < currentYear) {
+            this.selectedYear++;
+            this.openYear = false; // Close the year picker after selection
+        }
+    },
+
+    selectFormat(format) {
+        this.selectedFormat = format;
+    },
+
+    selectTeam(team) {
+        this.selectedTeam = team;
+    },
+}));
+
 Alpine.start();
 
-import Swiper from "swiper";
-import { FreeMode, Navigation, Autoplay, Pagination } from "swiper/modules";
-import { initInterviewVideosSwiper } from "./interview-videos";
-
 document.addEventListener("DOMContentLoaded", () => {
+    // Fixtures Tabs Swiper
+    new Swiper(".fixtures-tabs-swiper", {
+        slidesPerView: "auto",
+        spaceBetween: 0,
+        freeMode: true,
+        grabCursor: true,
+    });
+
+    new Swiper(".points-table-filters-swiper", {
+        slidesPerView: "auto",
+        spaceBetween: 10,
+        freeMode: true,
+        grabCursor: true,
+    });
+
+    // Fixtures Filters Swiper (Year, Formats, Teams)
+    new Swiper(".fixtures-filters-swiper", {
+        slidesPerView: "auto",
+        spaceBetween: 12,
+        freeMode: true,
+        grabCursor: true,
+        preventClicks: false,
+        preventClicksPropagation: false,
+        slideToClickedSlide: false,
+    });
+
     new Swiper(".live-score-swiper", {
-        modules: [FreeMode],
+        // modules: [FreeMode],
         slidesPerView: "auto",
         spaceBetween: 15,
         freeMode: true,
@@ -64,8 +273,18 @@ document.addEventListener("DOMContentLoaded", () => {
         grabCursor: true,
     });
 
+    // Ongoing Tournament Swiper
+    new Swiper(".ongoing-tournament-swiper", {
+        slidesPerView: "auto",
+        spaceBetween: 29,
+        grabCursor: true,
+    });
+
     // Interview Videos Swiper
     initInterviewVideosSwiper();
+
+    // Score Card Tournament Swiper\
+    initScoreCardTournamentSwiper();
 
     // Featured Video Carousel
     new Swiper(".featured-video-swiper", {
