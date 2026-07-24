@@ -14,6 +14,7 @@ class CategoryTagSeeder extends Seeder
         // 1. Buat Kategori Wajib (Slug TIDAK BOLEH diubah karena dipakai di Resource)
         $categories = [
             ['name' => 'Berita Utama', 'slug' => 'news'],
+            ['name' => 'Commentary', 'slug' => 'commentaries'],
             ['name' => 'Turnamen', 'slug' => 'tournament'],
             ['name' => 'Visual Story', 'slug' => 'visual-story'],
             ['name' => 'Gallery', 'slug' => 'gallery'],
