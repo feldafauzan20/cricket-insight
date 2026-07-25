@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\DebugController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MagazineGallery\MagazineController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\TournamentsController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/dd', [DebugController::class, 'index'])->name('debug.dd');
+Route::get('/debug-data', [DebugController::class, 'index'])->name('debug.data');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 

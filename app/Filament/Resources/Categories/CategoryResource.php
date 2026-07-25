@@ -10,6 +10,7 @@ use Filament\Tables\Table;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
 {
@@ -23,7 +24,11 @@ class CategoryResource extends Resource
         return $schema->components([
             TextInput::make('name')
                 ->label('Nama Kategori')
-                ->required(),
+                ->required()
+                ->live(onBlur: true)
+                ->afterStateUpdated(fn (string $operation, ?string $state, $set) =>
+                    $operation === 'create' ? $set('slug', Str::slug($state)) : null
+                ),
                 
             TextInput::make('slug')
                 ->required()
