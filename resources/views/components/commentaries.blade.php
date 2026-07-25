@@ -1,8 +1,9 @@
 <div>
     <div>
-        <h1 class="text-2xl font-semibold text-[#121212] md:text-[22px] 2xl:text-[35px] dark:text-white">Commentaries
+        <h1 class="text-2xl font-semibold text-[#121212] md:text-[22px] 2xl:text-[35px] dark:text-white">
+            {{ __('home.commentaries_header') }}
         </h1>
-        <p class="text-[13px] font-semibold text-[#666] dark:text-[#B2B2B2]">Don't miss daily news</p>
+        <p class="text-[13px] font-semibold text-[#666] dark:text-[#B2B2B2]">{{ __('home.latest_news_subheader') }}</p>
         <div class="my-4 flex md:my-0 md:mb-8 md:mt-4">
             <div class="w-48.5 md:w-88.5 2xl:w-91 h-px bg-[#EC0226]"></div>
             <div class="h-px w-full bg-[#C7C7C7]"></div>
