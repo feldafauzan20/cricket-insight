@@ -1,5 +1,5 @@
 <nav class="fixed left-0 top-0 z-50 w-full transition-colors duration-200" x-data="{ open: false, searchOpen: false, lang: 'ENG' }" x-init="$store.darkMode.init()">
-    <div class="mx-2.25 md:mx-12.5 h-16.75 2xl:h-35 flex bg-red-500 2xl:container md:h-fit lg:mx-10 2xl:mx-auto">
+    <div class="h-16.75 2xl:h-35 flex 2xl:container md:h-fit lg:mx-10 2xl:mx-auto">
 
         {{-- Logo — stretch full height, nyambung dari atas ke bawah --}}
         <div

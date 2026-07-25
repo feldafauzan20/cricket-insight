@@ -14,10 +14,10 @@ class DummyContentSeeder extends Seeder
 {
     public function run(): void
     {
-        // --- 1. DUMMY ARTICLES (Berita & Turnamen) ---
-$newsCategory = Category::query()->where('slug', 'news')->value('id');
-$tournamentCategory = Category::query()->where('slug', 'tournament')->value('id');
-        
+        $newsCategory = Category::query()->where('slug', 'news')->value('id');
+        $tournamentCategory = Category::query()->where('slug', 'tournament')->value('id');
+        $commentaryCategory = Category::query()->where('slug', 'commentaries')->value('id');
+
         Article::create([
             'category_id' => $newsCategory,
             'title' => 'Timnas Cricket Indonesia Siap Hadapi Kualifikasi Piala Dunia',
@@ -30,6 +30,16 @@ $tournamentCategory = Category::query()->where('slug', 'tournament')->value('id'
         ]);
 
         Article::create([
+            'category_id' => $commentaryCategory,
+            'title' => 'Commentary: Indonesia Siap Tampil di Ajang Internasional',
+            'slug' => 'commentary-indonesia-siap-tampil-di-ajang-internasional',
+            'description' => 'Komentar singkat tentang performa tim Indonesia.',
+            'content' => '<p>Ini adalah contoh commentary.</p>',
+            'status' => 'published',
+            'published_at' => now(),
+        ]);
+
+        Article::create([
             'category_id' => $tournamentCategory,
             'title' => 'ICC T20 World Cup 2026',
             'slug' => 'icc-t20-world-cup-2026',
@@ -38,7 +48,6 @@ $tournamentCategory = Category::query()->where('slug', 'tournament')->value('id'
             'status' => 'published',
         ]);
 
-        // --- 2. DUMMY VIDEOS ---
         Video::create([
             'title' => 'Highlight: Final Mendebarkan T20',
             'video_type' => 'featured',
@@ -47,24 +56,22 @@ $tournamentCategory = Category::query()->where('slug', 'tournament')->value('id'
             'is_active' => true,
         ]);
 
-        // --- 3. DUMMY NATION RANKINGS ---
         $rankings = [
             ['rank' => 1, 'country_name' => 'India'],
             ['rank' => 2, 'country_name' => 'Australia'],
             ['rank' => 3, 'country_name' => 'England'],
             ['rank' => 56, 'country_name' => 'Indonesia'],
         ];
+
         foreach ($rankings as $rank) {
             NationRanking::firstOrCreate(['rank' => $rank['rank']], $rank);
         }
 
-        // --- 4. DUMMY NEWS FLASH ---
         NewsFlash::create([
             'title' => 'BREAKING: Rekor dunia baru tercipta di pertandingan hari ini!',
             'is_active' => true,
         ]);
 
-        // --- 5. DUMMY SOCIAL MEDIA ---
         SocialMedia::create([
             'platform_name' => 'Instagram',
             'embed_url' => '<blockquote class="instagram-media" data-instgrm-permalink="..."></blockquote>',
