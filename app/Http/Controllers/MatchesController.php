@@ -8,33 +8,36 @@ use Illuminate\Http\Request;
 class MatchesController extends Controller
 {
     /**
-     * Menampilkan daftar semua matches ke file Blade (matches.index)
+     * Menampilkan daftar semua matches ke file Blade (match-centre.blade.php)
      */
     public function index()
     {
         $matches = Article::query()
-            ->with(['category', 'tags']) 
-            // Langsung filter menggunakan category_id nomor 5 (Matches)
-            ->where('category_id', 5)
+            ->with(['category', 'tags'])
+            ->whereHas('category', function ($query) {
+                $query->where('slug', 'Matches')->orWhere('categories.id', 5);
+            })
             ->where('status', 'published')
             ->orderByDesc('published_at')
-            ->paginate(12); 
+            ->paginate(12);
 
-        return view('matches.index', compact('matches'));
+        return view('match-centre', compact('matches'));
     }
 
     /**
-     * Menampilkan detail satu match berdasarkan slug ke file Blade (matches.show)
+     * Menampilkan detail satu match berdasarkan slug ke file Blade (match-centre.blade.php)
      */
     public function show(string $slug)
     {
         $article = Article::query()
             ->with(['category', 'tags', 'uploader'])
-            ->where('category_id', 5)
+            ->whereHas('category', function ($query) {
+                $query->where('slug', 'Matches')->orWhere('categories.id', 5);
+            })
             ->where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
 
-        return view('matches.show', compact('article'));
+        return view('match-centre', compact('article'));
     }
 }
