@@ -1,11 +1,16 @@
-<nav class="fixed left-0 top-0 z-50 w-full transition-colors duration-200" x-data="{ open: false, searchOpen: false, lang: 'ENG' }" x-init="$store.darkMode.init()">
+<nav class="fixed left-0 top-0 z-50 w-full transition-colors duration-200" x-data="{ open: false, searchOpen: false }" x-init="$store.darkMode.init()">
+
+    @php
+        $currentRoute = Route::currentRouteName();
+        $params = array_merge(request()->route()->parameters(), request()->query());
+    @endphp
 
     <div class="md:py-5.5 border-b border-gray-100 bg-white py-4 dark:border-[#343434] dark:bg-[#121212]">
         <div class="mx-6 flex items-center justify-between 2xl:container lg:mx-10 2xl:mx-auto">
 
             <div class="flex">
                 {{-- Logo --}}
-                <a href="/" class="mr-11 text-xl font-bold">
+                <a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="mr-11 text-xl font-bold">
                     {{-- Light mode logo --}}
                     <img x-show="!$store.darkMode.on" x-cloak
                         src="{{ asset('images/logo/cricket-insight-logo-blue.webp') }}" alt="cricket insight logo"
@@ -18,27 +23,25 @@
 
                 {{-- Desktop Menu --}}
                 <ul class="hidden items-center gap-x-11 text-sm font-medium text-[#B8B8B8] 2xl:flex dark:text-gray-400">
-                    <li><a href="/"
-                            class="{{ request()->is('/') ? 'text-[#EC0226]' : '' }} transition hover:text-[#EC0226]">Home</a>
-                    </li>
-                    <li><a href="/news"
-                            class="{{ request()->is('news*') ? 'text-[#EC0226]' : '' }} transition hover:text-[#EC0226]">News</a>
-                    </li>
-                    <li><a href="/interview"
-                            class="{{ request()->is('interview') ? 'text-[#EC0226]' : '' }} transition hover:text-[#EC0226]">Interview</a>
-                    </li>
-                    <li><a href="/tournaments"
-                            class="{{ request()->is('tournaments') ? 'text-[#EC0226]' : '' }} transition hover:text-[#EC0226]">Tournaments</a>
-                    </li>
-                    <li><a href="/match-centre"
-                            class="{{ request()->is('match-centre') ? 'text-[#EC0226]' : '' }} transition hover:text-[#EC0226]">Match
-                            Centre</a></li>
-                    <li><a href="/bbi-wbbi"
-                            class="{{ request()->is('bbi-wbbi') ? 'text-[#EC0226]' : '' }} transition hover:text-[#EC0226]">BBI/WBBI</a>
-                    </li>
-                    <li><a href="/archive"
-                            class="{{ request()->is('archive*') ? 'text-[#EC0226]' : '' }} transition hover:text-[#EC0226]">Archive</a>
-                    </li>
+                    @php
+                        $menu = [
+                            ['route' => 'home', 'label' => __('navbar.home')],
+                            ['route' => 'news.index', 'label' => __('navbar.news')],
+                            ['route' => 'interviews.index', 'label' => __('navbar.interview')],
+                            ['route' => 'tournaments.index', 'label' => __('navbar.tournaments')],
+                            ['route' => 'matches.index', 'label' => __('navbar.match_centre')],
+                            ['route' => 'bbi-wbbi', 'label' => __('navbar.bbi_wbbi')],
+                            ['route' => 'gallery.index', 'label' => __('navbar.archive')],
+                        ];
+                    @endphp
+                    @foreach ($menu as $item)
+                        <li>
+                            <a href="{{ route($item['route'], ['locale' => app()->getLocale()]) }}"
+                                class="{{ $currentRoute === $item['route'] ? 'text-[#EC0226]' : '' }} transition hover:text-[#EC0226]">
+                                {{ $item['label'] }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
 
@@ -47,12 +50,19 @@
                 <div
                     class="hidden rounded-full bg-[#F7F7F7] p-2 transition-colors duration-200 lg:flex dark:bg-[#343434]">
 
-                    {{-- Translate Feature --}}
-                    <div class="h-15 hidden cursor-pointer select-none items-center gap-2 rounded-full px-4 md:h-12 lg:flex"
-                        @click="lang = (lang === 'ENG') ? 'IND' : 'ENG'">
-                        <img :src="lang === 'ENG' ? 'https://flagcdn.com/16x12/gb.webp' : 'https://flagcdn.com/16x12/id.webp'"
-                            :alt="lang === 'ENG' ? 'English' : 'Indonesia'" class="h-auto w-6 rounded-sm">
-                        <span class="text-sm font-semibold text-gray-700 dark:text-gray-200" x-text="lang"></span>
+                    {{-- Language Switcher — real link, bukan Alpine toggle --}}
+                    <div class="h-15 hidden select-none items-center gap-2 rounded-full px-4 md:h-12 lg:flex">
+                        @foreach (config('app.available_locales') as $code)
+                            @continue($code === app()->getLocale())
+                            <a href="{{ route($currentRoute, array_merge($params, ['locale' => $code])) }}"
+                                class="flex cursor-pointer items-center gap-2">
+                                <img src="https://flagcdn.com/16x12/{{ $code === 'en' ? 'gb' : 'id' }}.webp"
+                                    alt="{{ $code }}" class="h-auto w-6 rounded-sm">
+                                <span class="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                                    {{ strtoupper($code) }}
+                                </span>
+                            </a>
+                        @endforeach
                     </div>
 
                     {{-- Search input --}}
@@ -128,48 +138,11 @@
         {{-- Menu items --}}
         <ul
             class="flex flex-1 flex-col gap-2 overflow-y-auto px-4 py-4 text-base font-semibold text-gray-800 dark:text-gray-200">
-            @php
-                $menu = [
-                    ['label' => 'Home', 'url' => '/', 'icon' => 'home-simple', 'active' => request()->is('/')],
-                    ['label' => 'News', 'url' => '/news', 'icon' => 'page', 'active' => request()->is('news*')],
-                    [
-                        'label' => 'Interview',
-                        'url' => '/interview',
-                        'icon' => 'microphone',
-                        'active' => request()->is('interview'),
-                    ],
-                    [
-                        'label' => 'Tournaments',
-                        'url' => '/tournaments',
-                        'icon' => 'trophy',
-                        'active' => request()->is('tournaments'),
-                    ],
-                    [
-                        'label' => 'Match Centre',
-                        'url' => '/match-centre',
-                        'icon' => 'calendar',
-                        'active' => request()->is('match-centre'),
-                    ],
-                    [
-                        'label' => 'BBI/WBBI',
-                        'url' => '/bbi-wbbi',
-                        'icon' => 'group',
-                        'active' => request()->is('bbi-wbbi'),
-                    ],
-                    [
-                        'label' => 'Archive',
-                        'url' => '/archive',
-                        'icon' => 'archive',
-                        'active' => request()->is('archive*'),
-                    ],
-                ];
-            @endphp
-
             @foreach ($menu as $item)
-                <li class="{{ $item['active'] ? 'border-[#EC0226]' : 'border-transparent' }} border-l-4">
-                    <a href="{{ $item['url'] }}"
-                        class="{{ $item['active'] ? 'text-[#EC0226]' : '' }} flex items-center gap-3 px-4 py-3 transition hover:text-[#EC0226]">
-                        <x-dynamic-component :component="'iconoir-' . $item['icon']" class="h-6 w-6" />
+                <li
+                    class="{{ $currentRoute === $item['route'] ? 'border-[#EC0226]' : 'border-transparent' }} border-l-4">
+                    <a href="{{ route($item['route'], ['locale' => app()->getLocale()]) }}"
+                        class="{{ $currentRoute === $item['route'] ? 'text-[#EC0226]' : '' }} flex items-center gap-3 px-4 py-3 transition hover:text-[#EC0226]">
                         {{ $item['label'] }}
                     </a>
                 </li>
@@ -179,15 +152,17 @@
         {{-- Footer: lang + dark mode + copyright --}}
         <div class="border-t border-gray-100 px-6 py-4 dark:border-[#343434]">
             {{-- Language --}}
-            <button @click="lang = (lang === 'ENG') ? 'IND' : 'ENG'"
-                class="flex w-full items-center justify-between py-3 text-base font-semibold text-gray-800 dark:text-gray-200">
-                <span class="flex items-center gap-2">
-                    <img :src="lang === 'ENG' ? 'https://flagcdn.com/24x18/gb.webp' : 'https://flagcdn.com/24x18/id.webp'"
-                        :alt="lang === 'ENG' ? 'English' : 'Indonesia'" class="h-4.5 w-6 rounded-sm">
-                    <span x-text="lang"></span>
-                </span>
-                <x-iconoir-nav-arrow-down class="h-5 w-5 text-gray-400" />
-            </button>
+            @foreach (config('app.available_locales') as $code)
+                @continue($code === app()->getLocale())
+                <a href="{{ route($currentRoute, array_merge($params, ['locale' => $code])) }}"
+                    class="flex w-full items-center justify-between py-3 text-base font-semibold text-gray-800 dark:text-gray-200">
+                    <span class="flex items-center gap-2">
+                        <img src="https://flagcdn.com/24x18/{{ $code === 'en' ? 'gb' : 'id' }}.webp"
+                            alt="{{ $code }}" class="h-4.5 w-6 rounded-sm">
+                        <span>{{ strtoupper($code) }}</span>
+                    </span>
+                </a>
+            @endforeach
 
             {{-- Dark mode toggle --}}
             <div
