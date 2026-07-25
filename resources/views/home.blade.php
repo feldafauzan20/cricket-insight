@@ -44,8 +44,9 @@
     {{-- LATEST NEWS SECTION END --}}
 
     <section class="hidden 2xl:container 2xl:mx-auto 2xl:block 2xl:pt-6">
-        <h1 class="text-[24px] font-semibold text-[#121212] md:text-[22px] 2xl:text-4xl dark:text-[#EEEEEE]">Trending</h1>
-        <p class="mb-4 text-[13px] font-semibold text-[#666] dark:text-[#B2B2B2]">Don't miss daily news</p>
+        <h1 class="text-[24px] font-semibold text-[#121212] md:text-[22px] 2xl:text-4xl dark:text-[#EEEEEE]">
+            {{ __('home.trending_header') }}</h1>
+        <p class="mb-4 text-[13px] font-semibold text-[#666] dark:text-[#B2B2B2]">{{ __('home.latest_news_subheader') }}</p>
         <div class="my-4 flex md:my-0 md:mb-8 md:mt-4">
             <div class="w-48.5 2xl:w-88.5 h-px bg-[#EC0226]"></div>
             <div class="h-px w-full bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>
@@ -64,8 +65,9 @@
             </section>
             {{-- EDITOR CHOICES END --}}
             {{-- ADS SECTION START --}}
-            <section class="lg:mt-7.5 md:mx-7.5 lg:mb-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 2xl:mx-auto 2xl:mb-6">
-                
+            <section
+                class="lg:mt-7.5 md:mx-7.5 lg:mb-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 2xl:mx-auto 2xl:mb-6">
+
                 {{-- Panggil Iklan Atas --}}
                 <x-ads position="home_top" />
 
@@ -99,8 +101,9 @@
             </section>
             {{-- SOCIAL MEDIA SECTION END --}}
             {{-- ADS SECTION START --}}
-            <section class="lg:mt-7.5 md:mx-7.5 lg:mb-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 2xl:mx-auto 2xl:mb-6">
-                
+            <section
+                class="lg:mt-7.5 md:mx-7.5 lg:mb-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 2xl:mx-auto 2xl:mb-6">
+
                 {{-- Panggil Iklan Atas --}}
                 <x-ads position="home_middle" />
 
@@ -114,10 +117,8 @@
     <section class="md:mx-7.5 hidden 2xl:container md:mb-6 md:block lg:mx-10 lg:mb-10 2xl:mx-auto">
         @php
             use App\Models\NewsFlash;
-            $newsFlash = NewsFlash::where('is_active', true)
-                ->orderByDesc('updated_at')
-                ->first();
-            $newsText = $newsFlash?->description ?? $newsFlash?->title ?? 'No news at the moment.';
+            $newsFlash = NewsFlash::where('is_active', true)->orderByDesc('updated_at')->first();
+            $newsText = $newsFlash?->description ?? ($newsFlash?->title ?? 'No news at the moment.');
         @endphp
         <x-news-flash>{{ $newsText }}</x-news-flash>
     </section>
@@ -127,9 +128,7 @@
     <section class="mb-7 md:mb-6 lg:mb-10">
         @php
             use App\Models\PageSlot;
-            $featuredSlot = PageSlot::where('page_key', 'homepage')
-                ->where('section_key', 'featured_video')
-                ->first();
+            $featuredSlot = PageSlot::where('page_key', 'homepage')->where('section_key', 'featured_video')->first();
         @endphp
 
         <x-featured-video :slot-id="$featuredSlot?->id" />
