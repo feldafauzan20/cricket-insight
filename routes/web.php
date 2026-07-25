@@ -2,42 +2,53 @@
 
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InterviewsController;
 use App\Http\Controllers\MagazineGallery\MagazineController;
+use App\Http\Controllers\MatchesController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\TournamentsController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::prefix('{locale}')
+    ->whereIn('locale', config('app.available_locales'))
+    ->middleware('setlocale')
+    ->group(function () {
+        Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+        Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 
-Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
+        Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
 
-Route::get('/archive', [GalleryController::class, 'index'])->name('gallery.index');
+        Route::get('/archive', [GalleryController::class, 'index'])->name('gallery.index');
 
-Route::get('/interview', function () {
-    return view('interview');
-});
+        // Route::get('/interview', function () {
+        //     return view('interview');
+        // })->name('interview');
 
-Route::get('/match-centre', function () {
-    return view('match-centre');
-});
+        // Route::get('/match-centre', function () {
+        //     return view('match-centre');
+        // })->name('match-centre');
 
-Route::get('/tournaments', [TournamentsController::class, 'index'])->name('tournaments.index');
+        // Route::get('/tournaments', [TournamentsController::class, 'index'])->name('tournaments.index');
 
-Route::get('/bbi-wbbi', function () {
-    return view('bbi-wbbi');
-});
+        Route::get('/bbi-wbbi', function () {
+            return view('bbi-wbbi');
+        })->name('bbi-wbbi');
 
-Route::get('/magazines/load-more', [MagazineController::class, 'loadMore'])->name('magazines.load-more');
+        Route::get('/magazines/load-more', [MagazineController::class, 'loadMore'])->name('magazines.load-more');
 
-Route::get('/gallery/load-more', [GalleryController::class, 'loadMore'])->name('gallery.load-more');
+        Route::get('/gallery/load-more', [GalleryController::class, 'loadMore'])->name('gallery.load-more');
 
-// Route::get('/interview', [InterviewsController::class, 'index'])->name('interviews.index');
-// Route::get('/interview/{slug}', [InterviewsController::class, 'show'])->name('interviews.show');
+        Route::get('/test-locale', function () {
+            dd(app()->getLocale(), __('navbar.home'));
+        });
 
-// Route::get('/match-centre', [MatchesController::class, 'index'])->name('matches.index');
-// Route::get('/match-centre/{slug}', [MatchesController::class, 'show'])->name('matches.show');
+        Route::get('/interview', [InterviewsController::class, 'index'])->name('interviews.index');
+        Route::get('/interview/{slug}', [InterviewsController::class, 'show'])->name('interviews.show');
 
-// Route::get('/tournaments', [TournamentsController::class, 'index'])->name('tournaments.index');
-// Route::get('/tournaments/{slug}', [TournamentsController::class, 'show'])->name('tournaments.show');
+        Route::get('/match-centre', [MatchesController::class, 'index'])->name('matches.index');
+        Route::get('/match-centre/{slug}', [MatchesController::class, 'show'])->name('matches.show');
+
+        Route::get('/tournaments', [TournamentsController::class, 'index'])->name('tournaments.index');
+        Route::get('/tournaments/{slug}', [TournamentsController::class, 'show'])->name('tournaments.show');
+    });

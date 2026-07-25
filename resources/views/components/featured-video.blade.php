@@ -17,8 +17,8 @@
 
         <div class="py-17.5 relative z-30 px-10 2xl:px-0 2xl:py-0">
             <div class="mb-2.5 h-0.5 w-10 bg-white md:mb-5"></div>
-            <h1 class="mb-1 text-[20px] font-semibold text-white">Featured Video</h1>
-            <p class="mb-12.5 text-[11px] leading-[217%] text-white">Don’t Miss And Stay Up-to-date. Top pic for you.</p>
+            <h1 class="mb-1 text-[20px] font-semibold text-white">{{ __('home.featured_video_header') }}</h1>
+            <p class="mb-12.5 text-[11px] leading-[217%] text-white">{{ __('home.featured_video_subheader') }}</p>
             <div class="flex items-center gap-x-9">
                 <div class="h-px w-full bg-white/20"></div>
                 <div class="flex items-center gap-x-1">
