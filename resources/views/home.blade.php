@@ -131,7 +131,7 @@
             $featuredSlot = PageSlot::where('page_key', 'homepage')->where('section_key', 'featured_video')->first();
         @endphp
 
-        <x-featured-video :slot-id="$featuredSlot?->id" />
+        <x-featured-video :slot-id="$featuredSlot?->id" :featured-videos="$featuredVideos" />
     </section>
     {{-- FEATURED VIDEO SECTION END --}}
 

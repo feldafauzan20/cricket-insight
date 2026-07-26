@@ -6,6 +6,7 @@ use App\Http\Controllers\MagazineGallery\MagazineController;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class DebugController extends Controller
@@ -28,10 +29,18 @@ class DebugController extends Controller
         // 3. HomeController Data
         $liveScoreController = new LiveScoreController();
         $homeMatchesData = $liveScoreController->getMatches(10);
+        
+        $featuredVideos = Video::with(['uploader', 'category'])
+            ->where('is_active', true)
+            ->latest()
+            ->limit(8)
+            ->get();
+
         $homeData = [
             'matches' => $homeMatchesData['data'] ?? [],
             'hasError' => !$homeMatchesData['success'],
             'error' => $homeMatchesData['error'] ?? null,
+            'featuredVideos' => $featuredVideos->toArray(),
         ];
 
         // 4. NewsController Data
