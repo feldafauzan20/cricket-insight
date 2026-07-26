@@ -18,6 +18,8 @@ class CategoryTagSeeder extends Seeder
             ['name' => 'Turnamen', 'slug' => 'tournament'],
             ['name' => 'Visual Story', 'slug' => 'visual-story'],
             ['name' => 'Gallery', 'slug' => 'gallery'],
+            ['name' => 'Matches', 'slug' => 'Matches'],
+            ['name' => 'Interviews', 'slug' => 'Interviews'],
         ];
 
         foreach ($categories as $cat) {
