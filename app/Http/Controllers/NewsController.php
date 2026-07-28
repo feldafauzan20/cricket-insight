@@ -140,7 +140,7 @@ class NewsController extends Controller
             ])
         );
 
-        return view('news', [
+        $data = [
             'news'              => $news,
             'matches'           => $matchesData['data'] ?? [],
             'hasError'          => ! $matchesData['success'],
@@ -152,7 +152,11 @@ class NewsController extends Controller
             'popularityOptions' => $popularityOptions,
             'regionOptions'     => $regionOptions,
             'filters'           => $filters,
-        ]);
+        ];
+
+        dd($data);
+
+        return view('news', $data);
     }
 
     /**
@@ -161,6 +165,8 @@ class NewsController extends Controller
     public function show($slug)
     {
         $article = Article::query()->where('slug', '=', $slug)->firstOrFail();
+
+        dd(['article' => $article]);
 
         return view('single-news', compact('article'));
     }

@@ -48,10 +48,14 @@ class GalleryController extends Controller
 
         $slice = $articles->map(fn ($article) => self::formatArticle($article))->toArray();
 
-        return response()->json([
+        $responseData = [
             'data' => $slice,
             'has_more_pages' => ($offset + self::PER_PAGE) < $total,
-        ]);
+        ];
+
+        dd($responseData);
+
+        return response()->json($responseData);
     }
 
     private static function formatArticle(Article $article): array
@@ -78,11 +82,15 @@ class GalleryController extends Controller
         $galleryData = self::initialData();
         $magazineGalleryData = MagazineController::initialData();
 
-        return view('gallery', [
+        $data = [
             'galleries' => $galleryData['galleries'],
             'galleriesHasMore' => $galleryData['hasMore'],
             'magazines' => $magazineGalleryData['magazines'],
             'magazinesHasMore' => $magazineGalleryData['hasMore'],
-        ]);
+        ];
+
+        dd($data);
+
+        return view('gallery', $data);
     }
 }

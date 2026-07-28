@@ -17,10 +17,14 @@ class HomeController extends Controller
         $liveScoreController = new LiveScoreController();
         $matchesData = $liveScoreController->getMatches(10);
 
-        return view('home', [
+        $data = [
             'matches' => $matchesData['data'] ?? [],
             'hasError' => !$matchesData['success'],
             'error' => $matchesData['error'] ?? null
-        ]);
+        ];
+
+        dd($data);
+
+        return view('home', $data);
     }
 }

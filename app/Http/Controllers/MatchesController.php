@@ -21,6 +21,8 @@ class MatchesController extends Controller
             ->orderByDesc('published_at')
             ->paginate(12);
 
+        dd(['matches' => $matches]);
+
         return view('match-centre', compact('matches'));
     }
 
@@ -37,6 +39,8 @@ class MatchesController extends Controller
             ->where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
+
+        dd(['article' => $article]);
 
         return view('match-centre', compact('article'));
     }

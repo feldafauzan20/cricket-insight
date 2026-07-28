@@ -306,9 +306,13 @@ class LiveScoreController extends Controller
                 ]);
             }
 
-            return view('components.cards.live-score-card', [
+            $scorecardData = [
                 'scorecard' => $data['data'] ?? null
-            ]);
+            ];
+
+            dd($scorecardData);
+
+            return view('components.cards.live-score-card', $scorecardData);
 
         } catch (\Exception $e) {
             Log::error('Exception while fetching scorecard', [
