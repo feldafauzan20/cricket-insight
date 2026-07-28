@@ -1,13 +1,3 @@
-@php
-    use App\Models\Video;
-
-    $featuredVideos = Video::with(['uploader', 'category'])
-        ->where('is_active', true)
-        ->latest()
-        ->limit(8)
-        ->get();
-@endphp
-
 <div class="2xl:flex">
     {{-- Header Section --}}
     <div class="2xl:w-107.25 2xl:h-131.25 relative w-full 2xl:flex 2xl:shrink-0 2xl:items-center 2xl:justify-center">

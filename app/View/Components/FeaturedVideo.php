@@ -10,26 +10,34 @@ use Illuminate\View\Component;
 
 class FeaturedVideo extends Component
 {
+    public $slotId;
+    public $featuredVideos;
+
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($slotId = null, $featuredVideos = null)
     {
-        //
+        $this->slotId = $slotId;
+        $this->featuredVideos = $featuredVideos;
     }
 
     /**
      * Get the view / contents that represent the component.
      */
-public function render(): View|Closure|string
-{
-    // Ambil langsung 8 video aktif terbaru
-    $featuredVideos = \App\Models\Video::with(['uploader', 'category'])
-        ->where('is_active', true)
-        ->latest()
-        ->limit(8)
-        ->get();
+    public function render(): View|Closure|string
+    {
+        if (is_null($this->featuredVideos)) {
+            $this->featuredVideos = Video::with(['uploader', 'category'])
+                ->where('is_active', true)
+                ->latest()
+                ->limit(8)
+                ->get();
+        }
 
-    return view('components.featured-video', compact('featuredVideos'));
-}
+        return view('components.featured-video', [
+            'featuredVideos' => $this->featuredVideos,
+            'slotId' => $this->slotId
+        ]);
+    }
 }

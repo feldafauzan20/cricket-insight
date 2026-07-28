@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\LiveScoreController;
+use App\Models\Video;
 
 class HomeController extends Controller
 {
@@ -17,14 +18,16 @@ class HomeController extends Controller
         $liveScoreController = new LiveScoreController();
         $matchesData = $liveScoreController->getMatches(10);
 
+        $featuredVideos = Video::with(['uploader', 'category'])
+            ->where('is_active', true)
+            ->latest()
+            ->limit(8)
+            ->get();
+
         $data = [
             'matches' => $matchesData['data'] ?? [],
             'hasError' => !$matchesData['success'],
             'error' => $matchesData['error'] ?? null
-        ];
-
-        dd($data);
-
-        return view('home', $data);
+        ]);
     }
 }
