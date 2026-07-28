@@ -27,7 +27,12 @@ class HomeController extends Controller
         $data = [
             'matches' => $matchesData['data'] ?? [],
             'hasError' => !$matchesData['success'],
-            'error' => $matchesData['error'] ?? null
-        ]);
-    }
+            'error' => $matchesData['error'] ?? null,
+            'featuredVideos' => $featuredVideos,
+        ];
+
+        dd($data);
+
+        return view('home', $data);
+   }
 }
