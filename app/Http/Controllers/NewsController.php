@@ -166,6 +166,9 @@ class NewsController extends Controller
     {
         $article = Article::query()->where('slug', '=', $slug)->firstOrFail();
 
+        // Increment total views in database
+        $article->increment('views_count');
+
         dd(['article' => $article]);
 
         return view('single-news', compact('article'));

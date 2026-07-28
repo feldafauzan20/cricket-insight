@@ -9,11 +9,6 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\TournamentsController;
 use Illuminate\Support\Facades\Route;
 
-// Redirect root URL / to default locale (e.g. /id)
-Route::get('/', function () {
-    return redirect('/' . config('app.locale', 'id'));
-});
-
 Route::prefix('{locale}')
     ->whereIn('locale', config('app.available_locales'))
     ->middleware('setlocale')
