@@ -1,6 +1,7 @@
 @props(['news'])
 
-<a href="{{ url('/news/' . $news->slug) }}" class="h-61.75 md:h-85.25 group relative block overflow-hidden rounded-md">
+<a href="{{ route('news.show', ['locale' => app()->getLocale(), 'slug' => $news->slug]) }}"
+    class="h-61.75 md:h-85.25 group relative block overflow-hidden rounded-md">
 
     <img src="{{ $news->thumbnail ? asset('storage/' . $news->thumbnail) : asset('images/dummy/latest-news-card/dummy-latest-news-card.webp') }}"
         alt="{{ $news->title }}" width="1920" height="1080" loading="lazy"
@@ -36,7 +37,7 @@
 
             <div class="rounded-full bg-white/20 px-3.5 py-1 backdrop-blur-sm">
                 <p class="text-[13px] font-semibold text-white">
-                    {{ $news->category ? $news->category->name : 'Berita Utama' }}
+                    {{ $news->category ? $news->category->name : __('cards.default_category') }}
                 </p>
             </div>
         </div>
