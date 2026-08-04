@@ -6,31 +6,6 @@
 
     <!-- Overlay gradient -->
     <div class="bg-radial absolute inset-0 w-full from-[#000080]/5 from-0% to-[#0A172A]/90 to-100%"></div>
-
-    {{-- content --}}
-    <div class="relative flex h-full flex-col items-center justify-center">
-        <p class="text-[11px] font-semibold text-[#EC0226]">LIVE IN</p>
-        {{-- COUNTDOWN TIMER --}}
-        <div class="flex gap-x-1">
-            {{-- HOUR --}}
-            <div class="flex flex-col items-center">
-                <span class="font-semibold text-white">03</span>
-                <p class="text-[11px] font-semibold text-white">HR</p>
-            </div>
-            <span class="font-semibold text-white">:</span>
-            {{-- MINUTE --}}
-            <div class="flex flex-col items-center">
-                <span class="font-semibold text-white">15</span>
-                <p class="text-[11px] font-semibold text-white">MIN</p>
-            </div>
-            <span class="font-semibold text-white">:</span>
-            {{-- SECOND --}}
-            <div class="flex flex-col items-center">
-                <span class="font-semibold text-white">42</span>
-                <p class="text-[11px] font-semibold text-white">SEC</p>
-            </div>
-        </div>
-    </div>
 </div>
 <div class="px-7.5 pt-6.25 pb-3.75 relative rounded-b-[5px] bg-white shadow-lg dark:bg-[#353434]">
     {{-- Tournament Title --}}

@@ -1,51 +1,66 @@
 @php
     use App\Models\PageSlot;
     use Illuminate\Support\Str;
-    
+
     $slots = PageSlot::with(['article.category', 'article.uploader', 'video'])
         ->where('page_key', 'homepage')
         ->whereIn('section_key', ['hero_carousel_1', 'hero_carousel_2', 'hero_carousel_3'])
         ->orderBy('section_key', 'asc')
         ->get();
 
-    $heroSlides = $slots->map(function ($slot, $index) {
-        $article = $slot->article;
-        $video = $slot->video;
+    $heroSlides = $slots
+        ->map(function ($slot, $index) {
+            $article = $slot->article;
+            $video = $slot->video;
 
-        if (!$article && !$video) {
-            return null;
-        }
+            if (!$article && !$video) {
+                return null;
+            }
 
-        if ($article) {
-            return [
-                'id' => $index + 1,
-                'image' => $article->thumbnail ? asset('storage/' . $article->thumbnail) : asset('images/dummy/hero-home/bg-hero-home.webp'),
-                'category' => $article->category ? $article->category->name : 'Uncategorized',
-                'title' => $article->title,
-                'description' => strip_tags($article->description ?? $article->content),
-                'author_image' => asset('images/dummy/hero-home/profile-picture-dummy.webp'),
-                'author_name' => strtoupper($article->uploader->name ?? 'SUPER ADMIN'),
-                'date' => strtoupper($article->published_at ? $article->published_at->format('d M Y') : $article->created_at->format('d M Y')),
-                'thumbnail' => $article->thumbnail ? asset('storage/' . $article->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp'),
-                'thumbnail_title' => $article->title,
-            ];
-        }
+            if ($article) {
+                return [
+                    'id' => $index + 1,
+                    'image' => $article->thumbnail
+                        ? asset('storage/' . $article->thumbnail)
+                        : asset('images/dummy/hero-home/bg-hero-home.webp'),
+                    'category' => $article->category ? $article->category->name : 'Uncategorized',
+                    'title' => $article->title,
+                    'description' => strip_tags($article->description ?? $article->content),
+                    'author_image' => asset('images/dummy/hero-home/profile-picture-dummy.webp'),
+                    'author_name' => strtoupper($article->uploader->name ?? 'SUPER ADMIN'),
+                    'date' => strtoupper(
+                        $article->published_at
+                            ? $article->published_at->format('d M Y')
+                            : $article->created_at->format('d M Y'),
+                    ),
+                    'thumbnail' => $article->thumbnail
+                        ? asset('storage/' . $article->thumbnail)
+                        : asset('images/dummy/news-card/dummy-news-card.webp'),
+                    'thumbnail_title' => $article->title,
+                ];
+            }
 
-        if ($video) {
-            return [
-                'id' => $index + 1,
-                'image' => $video->thumbnail ? asset('storage/' . $video->thumbnail) : asset('images/dummy/hero-home/bg-hero-home.webp'),
-                'category' => 'Video',
-                'title' => $video->title,
-                'description' => strip_tags($video->description ?? ''),
-                'author_image' => asset('images/dummy/hero-home/profile-picture-dummy.webp'),
-                'author_name' => strtoupper($video->uploader->name ?? 'SUPER ADMIN'),
-                'date' => strtoupper($video->created_at->format('d M Y')),
-                'thumbnail' => $video->thumbnail ? asset('storage/' . $video->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp'),
-                'thumbnail_title' => $video->title,
-            ];
-        }
-    })->filter()->values(); 
+            if ($video) {
+                return [
+                    'id' => $index + 1,
+                    'image' => $video->thumbnail
+                        ? asset('storage/' . $video->thumbnail)
+                        : asset('images/dummy/hero-home/bg-hero-home.webp'),
+                    'category' => 'Video',
+                    'title' => $video->title,
+                    'description' => strip_tags($video->description ?? ''),
+                    'author_image' => asset('images/dummy/hero-home/profile-picture-dummy.webp'),
+                    'author_name' => strtoupper($video->uploader->name ?? 'SUPER ADMIN'),
+                    'date' => strtoupper($video->created_at->format('d M Y')),
+                    'thumbnail' => $video->thumbnail
+                        ? asset('storage/' . $video->thumbnail)
+                        : asset('images/dummy/news-card/dummy-news-card.webp'),
+                    'thumbnail_title' => $video->title,
+                ];
+            }
+        })
+        ->filter()
+        ->values();
 @endphp
 
 <section class="relative overflow-hidden">
@@ -55,12 +70,12 @@
             @foreach ($heroSlides as $slide)
                 <div class="swiper-slide relative">
                     {{-- Background Image --}}
-                    {{-- <img src="{{ asset($slide['image']) }}" alt="Hero Image {{ $slide['id'] }}" width="1920"
-                        height="1080" loading="eager" fetchpriority="high"
-                        class="absolute inset-0 h-full w-full object-cover"> --}}
-                    <img src="https://placehold.co/1920x1080" alt="Hero Image {{ $slide['id'] }}" width="1920"
+                    <img src="{{ asset($slide['image']) }}" alt="Hero Image {{ $slide['id'] }}" width="1920"
                         height="1080" loading="eager" fetchpriority="high"
                         class="absolute inset-0 h-full w-full object-cover">
+                    {{-- <img src="https://placehold.co/1920x1080" alt="Hero Image {{ $slide['id'] }}" width="1920"
+                        height="1080" loading="eager" fetchpriority="high"
+                        class="absolute inset-0 h-full w-full object-cover"> --}}
 
                     {{-- Overlay gradient --}}
                     <div class="bg-linear-to-b absolute inset-0 w-full from-black/0 to-black/50"></div>
@@ -93,10 +108,10 @@
                         <div class="text-white lg:flex lg:items-end">
                             <div class="w-57 flex items-center justify-between lg:h-fit">
                                 <div class="h-9 w-9 overflow-hidden rounded-full">
-                                    {{-- <img src="{{ asset($slide['author_image']) }}" alt="Profile Picture"
-                                        class="h-full w-full object-cover"> --}}
-                                    <img src="https://placehold.co/36x36" alt="Profile Picture"
+                                    <img src="{{ asset($slide['author_image']) }}" alt="Profile Picture"
                                         class="h-full w-full object-cover">
+                                    {{-- <img src="https://placehold.co/36x36" alt="Profile Picture"
+                                        class="h-full w-full object-cover"> --}}
                                 </div>
                                 <p class="text-[10px] font-semibold">BY {{ $slide['author_name'] }}</p>
                                 <div class="h-2.5 w-2.5 rounded-full bg-[#EC0226]"></div>
@@ -150,10 +165,10 @@
                         class="{{ $index === 0 ? 'border-t-[#EC0226]' : 'border-t-white' }} border-t transition-colors duration-300">
                         <div class="flex gap-x-7 pt-7">
                             <div class="w-25 h-17.5 rounded-xs overflow-hidden">
-                                {{-- <img src="{{ asset($slide['thumbnail']) }}" alt="News Card Image"
-                                    class="h-full w-full object-cover" fetchpriority="high" loading="eager"> --}}
-                                <img src="https://placehold.co/400x280" alt="News Card Image"
+                                <img src="{{ asset($slide['thumbnail']) }}" alt="News Card Image"
                                     class="h-full w-full object-cover" fetchpriority="high" loading="eager">
+                                {{-- <img src="https://placehold.co/400x280" alt="News Card Image"
+                                    class="h-full w-full object-cover" fetchpriority="high" loading="eager"> --}}
                             </div>
 
                             <div>

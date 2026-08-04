@@ -10,9 +10,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
 
@@ -27,18 +29,36 @@ class GalleryResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('title')
-                ->required()
-                ->live(onBlur: true)
-                ->afterStateUpdated(fn (string $operation, ?string $state, $set) =>
-                    $operation === 'create' ? $set('slug', Str::slug($state)) : null
-                ),
-            TextInput::make('slug')->required(),
-            FileUpload::make('thumbnail')->image()->disk('public')->directory('gallery'),
-            Textarea::make('description')->label('Description'),
-            TextInput::make('visual_year')->label('Year')->numeric(),
-            TextInput::make('source_link')->label('Link Redirect')->url(),
-        ]);
+            Section::make('Konten Gallery')->schema([
+                TextInput::make('title')
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (string $operation, ?string $state, $set) =>
+                        $operation === 'create' ? $set('slug', Str::slug($state)) : null
+                    ),
+                TextInput::make('slug')->required(),
+                FileUpload::make('thumbnail')->image()->disk('public')->directory('gallery'),
+                Textarea::make('description')->label('Description'),
+                TextInput::make('visual_year')->label('Year')->numeric(),
+                TextInput::make('source_link')->label('Link Redirect')->url(),
+            ])->columnSpan(2),
+
+            Section::make('Pengaturan')->schema([
+                Select::make('category_id')
+                    ->label('Kategori')
+                    ->relationship('category', 'name')
+                    ->required()
+                    ->searchable()
+                    ->preload(),
+
+                Select::make('user_id')
+                    ->label('Uploader / Jurnalis')
+                    ->relationship('uploader', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+            ])->columnSpan(1),
+        ])->columns(3);
     }
 
     public static function table(Table $table): Table

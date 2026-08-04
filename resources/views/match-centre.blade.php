@@ -12,7 +12,7 @@
 
     {{-- FIXTURES AND RESULTS SECTION START --}}
     <section class="lg:mb-17.5 mx-6 mb-7 2xl:container md:mx-8 md:mb-6 lg:mx-10 2xl:mx-auto">
-        <x-fixtures-results />
+        <x-fixtures-results :series-list="$seriesList" :current-year="$currentYear"  />
     </section>
     {{-- FIXTURES AND RESULTS SECTION END --}}
 
@@ -24,7 +24,7 @@
 
     {{-- POINTS TABLE SECTION START --}}
     <section class="md:mx-7.5 mx-6 mb-7 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
-        <x-points-table />
+        <x-points-table :series-list="$seriesList" :current-year="$currentYear" />
     </section>
     {{-- POINTS TABLE SECTION END --}}
 

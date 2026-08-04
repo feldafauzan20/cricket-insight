@@ -219,3 +219,8 @@
         transform: translateX(-50%);
     }
 }
+
+/* .fixtures-filters-swiper {
+    overflow-x: hidden;
+    overflow-y: visible;
+} */

@@ -8,19 +8,28 @@ use Illuminate\Http\Request;
 class TournamentsController extends Controller
 {
     /**
-     * Menampilkan daftar artikel turnamen ke Blade
+     * Menampilkan daftar artikel turnamen ke Blade (tournaments.blade.php)
      */
     public function index()
     {
+        $liveScoreController = new LiveScoreController();
+        $matchesData = $liveScoreController->getMatches(10);
 
         $tournaments = Article::query()
             ->with(['category', 'tags'])
-            ->where('category_id', 2)
+            ->whereHas('category', function ($query) {
+                $query->where('slug', 'tournament')->orWhere('categories.id', 2);
+            })
             ->where('status', 'published')
             ->orderByDesc('published_at')
             ->paginate(12);
 
-        return view('tournaments.index', compact('tournaments'));
+        return view('tournaments', [
+            'tournaments' => $tournaments,
+            'matches' => $matchesData['data'] ?? [],
+            'hasError' => !$matchesData['success'],
+            'error' => $matchesData['error'] ?? null,
+        ]);
     }
 
     /**
@@ -30,12 +39,13 @@ class TournamentsController extends Controller
     {
         $article = Article::query()
             ->with(['category', 'tags', 'uploader'])
-            ->where('category_id', 2)
+            ->whereHas('category', function ($query) {
+                $query->where('slug', 'tournament')->orWhere('categories.id', 2);
+            })
             ->where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
 
-        // Mengirim data ke resources/views/tournaments/show.blade.php
-        return view('tournaments.show', compact('article'));
+        return view('tournaments', compact('article'));
     }
 }
