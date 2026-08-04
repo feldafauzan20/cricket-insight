@@ -14,7 +14,7 @@
 
     {{-- INFORMATION SECTION START --}}
     <section class="border-b border-[#B6B6B6] dark:bg-[#1F2022]">
-        <x-bbi-wbbi-information />
+        <x-bbi-wbbi-information :setting="$setting ?? null" />
     </section>
     {{-- INFORMATION SECTION END --}}
 
@@ -38,24 +38,24 @@
         {{-- BRAND NEW STORIES SECTION END --}}
 
         {{-- HIGHLIGHT SECTION START --}}
-        <x-highlighted-games-bbi-wbbi />
+        <x-highlighted-games-bbi-wbbi :setting="$setting ?? null" />
         {{-- HIGHLIGHT SECTION END --}}
 
         {{-- BBI WBBI ARTICLES SECTION START --}}
-        <x-bbi-wbbi-articles />
+        <x-bbi-wbbi-articles :setting="$setting ?? null" />
         {{-- BBI WBBI ARTICLES SECTION END --}}
 
         {{-- YOUTUBE VIDEO SECTION START --}}
-        <x-youtube-video-bbi-wbbi />
+        <x-youtube-video-bbi-wbbi :setting="$setting ?? null" />
         {{-- YOUTUBE VIDEO SECTION END --}}
 
     </section>
 
-    {{-- BBI WBBI ARTICLES SECTION START --}}
-    <section>
-        <x-bbi-wbbi-articles />
+    {{-- FEATURED VIDEO SECTION START --}}
+    <section class="mb-7 md:mb-6 lg:mb-10">
+        <x-featured-video page-key="bbi_wbbi" />
     </section>
-    {{-- BBI WBBI ARTICLES SECTION END --}}
+    {{-- FEATURED VIDEO SECTION END --}}
 
     {{-- STREAMING PARTNER LOGO MARQUEE SECTION START --}}
     <section>

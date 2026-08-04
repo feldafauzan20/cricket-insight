@@ -126,12 +126,7 @@
 
     {{-- FEATURED VIDEO SECTION START --}}
     <section class="mb-7 md:mb-6 lg:mb-10">
-        @php
-            use App\Models\PageSlot;
-            $featuredSlot = PageSlot::where('page_key', 'homepage')->where('section_key', 'featured_video')->first();
-        @endphp
-
-        <x-featured-video :slot-id="$featuredSlot?->id" />
+        <x-featured-video page-key="home_and_match_centre" />
     </section>
     {{-- FEATURED VIDEO SECTION END --}}
 

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('video_type')->index(); 
             
             $table->boolean('is_active')->default(true)->index();
+            $table->boolean('is_featured')->default(false)->index();
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });

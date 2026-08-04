@@ -24,6 +24,35 @@ class PageSlotSeeder extends Seeder
             ['page_key' => 'tournament', 'section_key' => 'upcoming_match', 'label' => 'Turnamen Utama Terdekat'],
         ];
 
+        $sections = [
+            'home_and_match_centre' => [
+                'prefix' => 'featured_video_home_match_',
+                'slot_title' => 'Home & Match Centre Featured Video Slot',
+            ],
+            'tournament' => [
+                'prefix' => 'featured_video_tournament_',
+                'slot_title' => 'Tournament Featured Video Slot',
+            ],
+            'interview' => [
+                'prefix' => 'featured_video_interview_',
+                'slot_title' => 'Interview Featured Video Slot',
+            ],
+            'bbi_wbbi' => [
+                'prefix' => 'featured_video_bbi_wbbi_',
+                'slot_title' => 'BBI / WBBI Featured Video Slot',
+            ],
+        ];
+
+        foreach ($sections as $pageKey => $config) {
+            for ($i = 1; $i <= 10; $i++) {
+                $slots[] = [
+                    'page_key' => $pageKey,
+                    'section_key' => $config['prefix'] . $i,
+                    'label' => $config['slot_title'] . ' ' . $i,
+                ];
+            }
+        }
+
         foreach ($slots as $slot) {
             PageSlot::firstOrCreate(
                 ['section_key' => $slot['section_key']], 

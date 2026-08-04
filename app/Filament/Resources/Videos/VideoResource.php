@@ -49,6 +49,8 @@ class VideoResource extends Resource
             
             Toggle::make('is_active')
                 ->default(true),
+            Toggle::make('is_featured')
+                ->default(false),
         ]);
     }
 
@@ -59,6 +61,7 @@ class VideoResource extends Resource
             TextColumn::make('title')->searchable(),
             TextColumn::make('video_type')->badge(),
             IconColumn::make('is_active')->boolean(),
+            IconColumn::make('is_featured')->label('Featured')->boolean(),
         ]);
     }
 

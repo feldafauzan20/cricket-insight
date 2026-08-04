@@ -12,6 +12,7 @@
         "php": "^8.2",
         "andreiio/blade-iconoir": "^4.7",
         "andreiio/blade-remix-icon": "^3.9",
+        "bezhansalleh/filament-google-analytics": "^3.3",
         "blade-ui-kit/blade-heroicons": "^2.6",
         "codeat3/blade-teeny-icons": "^1.11",
         "davidhsianturi/blade-bootstrap-icons": "^2.1",

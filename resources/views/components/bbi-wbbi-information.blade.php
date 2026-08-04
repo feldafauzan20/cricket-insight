@@ -1,3 +1,10 @@
+@props(['setting' => null])
+
+@php
+    $link1 = $setting?->latest_bbi_livestream_link_1 ?? '#';
+    $link2 = $setting?->latest_bbi_livestream_link_2 ?? '#';
+@endphp
+
 <div
     class="py-16.25 mx-2.25 gap-7.25 md:mx-12.5 2xl:px-12.5 flex flex-col 2xl:container md:items-center lg:flex-row 2xl:mx-auto 2xl:justify-between">
     <div class="gap-x-3.75 flex items-center">
@@ -10,11 +17,10 @@
                 </svg>
             </div>
         </div>
-        <a href="#" class="w-51 block">
+        <a href="{{ $link1 }}" class="w-51 block">
             <p
                 class="font-barlow-semi-condensed font-semibold leading-[143.8%] tracking-[-0.05em] text-[#434343] dark:text-white">
-                LATEST
-                MATCH</p>
+                LATEST MATCH</p>
             <p class="font-barlow-semi-condensed font-semibold leading-[143.8%] tracking-[-0.05em] text-[#969696]">CLICK
                 HERE TO SEE OUR LATEST MATCH</p>
         </a>
@@ -34,7 +40,7 @@
 
             </div>
         </div>
-        <a href="#" class="w-51 block">
+        <a href="{{ $link2 }}" class="w-51 block">
             <p
                 class="font-barlow-semi-condensed font-semibold leading-[143.8%] tracking-[-0.05em] text-[#434343] dark:text-white">
                 SCHEDULE</p>
@@ -54,11 +60,10 @@
 
             </div>
         </div>
-        <a href="#" class="w-51 block">
+        <a href="{{ $link1 }}" class="w-51 block">
             <p
                 class="font-barlow-semi-condensed font-semibold leading-[143.8%] tracking-[-0.05em] text-[#434343] dark:text-white">
-                LATEST
-                MATCH</p>
+                LATEST MATCH</p>
             <p class="font-barlow-semi-condensed font-semibold leading-[143.8%] tracking-[-0.05em] text-[#969696]">CLICK
                 HERE TO SEE OUR LATEST MATCH</p>
         </a>

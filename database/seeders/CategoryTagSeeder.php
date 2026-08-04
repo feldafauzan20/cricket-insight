@@ -20,6 +20,7 @@ class CategoryTagSeeder extends Seeder
             ['name' => 'Gallery', 'slug' => 'gallery'],
             ['name' => 'Matches', 'slug' => 'Matches'],
             ['name' => 'Interviews', 'slug' => 'Interviews'],
+            ['name' => 'BBI-WBBI', 'slug' => 'bbi-wbbi'],
         ];
 
         foreach ($categories as $cat) {

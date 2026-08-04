@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\DebugController;
+use App\Http\Controllers\BbiWbbiController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InterviewsController;
 use App\Http\Controllers\MagazineGallery\MagazineController;
 use App\Http\Controllers\MatchesController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\OngoingTournamentController;
 use App\Http\Controllers\PointsTableController;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\TeamsController;
@@ -44,13 +45,10 @@ Route::prefix('{locale}')
         Route::get('/gallery/load-more', [GalleryController::class, 'loadMore'])->name('gallery.load-more');
         Route::get('/magazines/load-more', [MagazineController::class, 'loadMore'])->name('magazines.load-more');
 
-        Route::get('/bbi-wbbi', function () {
-            return view('bbi-wbbi');
-        })->name('bbi-wbbi');
+        Route::get('/bbi-wbbi', [BbiWbbiController::class, 'index'])->name('bbi-wbbi');
 
-        Route::get('/magazines/load-more', [MagazineController::class, 'loadMore'])->name('magazines.load-more');
-
-        Route::get('/gallery/load-more', [GalleryController::class, 'loadMore'])->name('gallery.load-more');
+        Route::get('/ongoing-tournaments', [OngoingTournamentController::class, 'index'])->name('ongoing-tournaments.index');
+        Route::get('/ongoing-tournaments/{id}', [OngoingTournamentController::class, 'show'])->name('ongoing-tournaments.show');
 
         Route::get('/test-locale', function () {
             dd(app()->getLocale(), __('navbar.home'));
@@ -64,4 +62,6 @@ Route::prefix('{locale}')
 
         Route::get('/tournaments', [TournamentsController::class, 'index'])->name('tournaments.index');
         Route::get('/tournaments/{slug}', [TournamentsController::class, 'show'])->name('tournaments.show');
+
+        Route::get('/bbi-wbbi', [BbiWbbiController::class, 'index'])->name('bbi-wbbi');
     });

@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             CategoryTagSeeder::class,
             DummyContentSeeder::class,
             PageSlotSeeder::class,
+            OngoingTournamentSeeder::class,
+            BbiWbbiSettingSeeder::class,
         ]);
     }
 }
