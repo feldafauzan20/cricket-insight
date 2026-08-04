@@ -1,10 +1,13 @@
+@props(['setting' => null])
+
 @php
-    $newsCards = [
-        ['title' => 'Title Ipsum', 'description' => 'Description Ipsum', 'url' => '#'],
-        ['title' => 'Title Ipsum', 'description' => 'Description Ipsum', 'url' => '#'],
-        ['title' => 'Title Ipsum', 'description' => 'Description Ipsum', 'url' => '#'],
-        ['title' => 'Title Ipsum', 'description' => 'Description Ipsum', 'url' => '#'],
+    $newsCards = $setting?->highlights ?? [
+        ['title' => 'Title Ipsum 1', 'description' => 'Description Ipsum', 'redirect_link' => '#', 'thumbnail' => null],
+        ['title' => 'Title Ipsum 2', 'description' => 'Description Ipsum', 'redirect_link' => '#', 'thumbnail' => null],
+        ['title' => 'Title Ipsum 3', 'description' => 'Description Ipsum', 'redirect_link' => '#', 'thumbnail' => null],
+        ['title' => 'Title Ipsum 4', 'description' => 'Description Ipsum', 'redirect_link' => '#', 'thumbnail' => null],
     ];
+    $ytLink = $setting?->highlight_youtube_link ?? '#';
 @endphp
 
 <div class="mt-25 mb-12.5 md:mb-8.75 mx-5 md:mx-10">
@@ -16,7 +19,7 @@
             OUR
             HIGHLIGHTED GAMES.
         </h1>
-        <a href="" class="py-4.5 flex w-fit items-center justify-center gap-x-1.5 bg-[#B90F16] px-8 text-white">
+        <a href="{{ $ytLink }}" target="_blank" class="py-4.5 flex w-fit items-center justify-center gap-x-1.5 bg-[#B90F16] px-8 text-white">
             Youtube
             <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1.4 13L0 11.6L9.6 2H1V0H13V12H11V3.4L1.4 13Z" fill="currentColor" />
@@ -27,12 +30,18 @@
 
 <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4">
     @foreach ($newsCards as $card)
-        <a href="{{ $card['url'] }}"
+        @php
+            $thumb = !empty($card['thumbnail']) ? asset('storage/' . $card['thumbnail']) : asset('images/dummy/latest-news-card/dummy-latest-news-card.webp');
+            $url = $card['redirect_link'] ?? '#';
+            $title = $card['title'] ?? 'Highlight Title';
+            $desc = $card['description'] ?? 'Highlight Description';
+        @endphp
+        <a href="{{ $url }}"
             class="h-118.25 md:h-122.75 lg:h-144.5 group relative block w-full overflow-hidden">
 
             {{-- Image --}}
-            <img src="{{ asset('images/dummy/latest-news-card/dummy-latest-news-card.webp') }}"
-                alt="{{ $card['title'] }}"
+            <img src="{{ $thumb }}"
+                alt="{{ $title }}"
                 class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
 
             {{-- Dark overlay --}}
@@ -55,9 +64,9 @@
             <div
                 class="absolute inset-x-0 bottom-0 translate-y-6 bg-white px-6 py-5 text-center opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 dark:bg-[#1D1F20]">
                 <h3 class="font-barlow-semi-condensed text-2xl font-bold uppercase text-[#434343] dark:text-white">
-                    {{ $card['title'] }}</h3>
+                    {{ $title }}</h3>
                 <p class="mt-1.25 font-figtree text-xl font-medium leading-[135%] tracking-[-0.05em] text-[#97775B]">
-                    {{ $card['description'] }}</p>
+                    {{ $desc }}</p>
             </div>
         </a>
     @endforeach
