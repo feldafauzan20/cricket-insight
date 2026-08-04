@@ -4,6 +4,7 @@ import Swiper from "swiper";
 import { FreeMode, Navigation, Autoplay, Pagination } from "swiper/modules";
 import { initInterviewVideosSwiper } from "./interview-videos";
 import flatpickr from "flatpickr";
+import "flatpickr/dist/flatpickr.min.css";
 import initScoreCardTournamentSwiper from "./ScoreCardTournament";
 
 document.addEventListener("alpine:init", () => {
@@ -153,81 +154,584 @@ Alpine.store("darkMode", {
 window.Alpine = Alpine;
 
 // Alpine.js Component for Fixtures Filters
-Alpine.data("fixturesFilters", () => ({
-    activeTab: "women",
-    selectedYear: new Date().getFullYear(),
-    selectedFormat: "ODI",
-    selectedTeam: "",
-    openYear: false,
-    // yearPicker: null,
+Alpine.data(
+    "fixturesFilters",
+    (initialSeriesList = [], initialYear = new Date().getFullYear()) => ({
+        _matchesRequestId: 0,
+        activeTab: "results",
+        selectedYear: new Date().getFullYear(),
+        selectedFormat: "All Series",
+        selectedSeriesId: null,
+        seriesList: initialSeriesList,
+        seriesLoading: false,
+        selectedTeam: "",
+        selectedTeamId: null,
+        selectedTeamName: "",
+        teamsList: [],
+        teamsLoading: false,
+        openYear: false,
+        yearDropdownStyle: {},
+        fromDate: "",
+        toDate: "",
+        fromDatePicker: null,
+        toDatePicker: null,
+        selectedDay: null,
+        allMatches: [],
+        matchesGroups: [],
+        matchesLoading: false,
+        currentPage: 1,
+        perPage: 10,
+        pagination: {
+            current_page: 1,
+            last_page: 1,
+            total: 0,
+            per_page: 10,
+            from: 0,
+            to: 0,
+        },
 
-    get yearList() {
-        const current = new Date().getFullYear();
-        const years = [];
-        for (let y = current; y >= 2016; y--) years.push(y);
-        return years;
-    },
+        get dayList() {
+            return [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday",
+            ];
+        },
 
-    // init() {
-    //     // Initialize Flatpickr for year picker
-    //     this.yearPicker = flatpickr(this.$refs.yearPicker, {
-    //         mode: "single",
-    //         dateFormat: "Y",
-    //         defaultDate: new Date().getFullYear().toString(),
-    //         minDate: "2016",
-    //         maxDate: new Date().getFullYear().toString(),
-    //         onChange: (selectedDates, dateStr) => {
-    //             this.selectedYear = parseInt(dateStr);
-    //         },
-    //         onOpen: function (selectedDates, dateStr, instance) {
-    //             // Switch to year mode when calendar opens
-    //             instance.currentYear = instance.selectedDates[0]
-    //                 ? instance.selectedDates[0].getFullYear()
-    //                 : new Date().getFullYear();
-    //             instance.redraw();
-    //         },
-    //         plugins: [
-    //             function (fp) {
-    //                 return {
-    //                     onReady: function () {
-    //                         // Custom year picker functionality
-    //                         const yearSelect = fp.currentYearElement;
-    //                         if (yearSelect) {
-    //                             yearSelect.removeAttribute("disabled");
-    //                         }
-    //                     },
-    //                 };
-    //             },
-    //         ],
-    //     });
-    // },
+        refreshFiltersSwiper() {
+            this.$nextTick(() => {
+                window.fixturesFiltersSwiper?.update();
+            });
+        },
 
-    previousYear() {
-        if (this.selectedYear > 2016) {
-            this.selectedYear--;
-            this.openYear = false; // Close the year picker after selection
-        }
-    },
+        get yearList() {
+            const current = new Date().getFullYear();
+            const years = [];
+            for (let y = current; y >= 2016; y--) years.push(y);
+            return years;
+        },
 
-    nextYear() {
-        const currentYear = new Date().getFullYear();
-        if (this.selectedYear < currentYear) {
-            this.selectedYear++;
-            this.openYear = false; // Close the year picker after selection
-        }
-    },
+        closeDropdowns() {
+            window.dispatchEvent(new CustomEvent("fixtures-filters-reset"));
+        },
 
-    selectFormat(format) {
-        this.selectedFormat = format;
-    },
+        resetDateFilters() {
+            this.selectedDay = null;
+            this.fromDate = "";
+            this.toDate = "";
 
-    selectTeam(team) {
-        this.selectedTeam = team;
-    },
-}));
+            if (this.fromDatePicker) {
+                this.fromDatePicker.clear();
+                this.fromDatePicker.set("minDate", null);
+            }
+
+            if (this.toDatePicker) {
+                this.toDatePicker.clear();
+                this.toDatePicker.set("maxDate", null);
+            }
+
+            if (this.$refs?.fromDateInput) {
+                this.$refs.fromDateInput.value = "";
+            }
+
+            if (this.$refs?.toDateInput) {
+                this.$refs.toDateInput.value = "";
+            }
+        },
+
+        resetFiltersForYearChange(year = null) {
+            if (year !== null) {
+                this.selectedYear = year;
+            }
+
+            this.selectedFormat = "All Series";
+            this.selectedSeriesId = null;
+            this.selectedTeam = "";
+            this.selectedTeamId = null;
+            this.selectedTeamName = "";
+            this.teamsList = [];
+            this.teamsLoading = false;
+            this.resetDateFilters();
+            this.resetMatchesState();
+            this.closeDropdowns();
+        },
+
+        resetMatchesState() {
+            this.allMatches = [];
+            this.matchesGroups = [];
+            this.pagination = {
+                current_page: 1,
+                last_page: 1,
+                total: 0,
+                per_page: this.perPage,
+                from: 0,
+                to: 0,
+            };
+        },
+
+        buildFixtureGroups(matches) {
+            const grouped = {};
+
+            matches.forEach((match) => {
+                const key = match.date || "Date TBA";
+                if (!grouped[key]) grouped[key] = [];
+                grouped[key].push(match);
+            });
+
+            return Object.entries(grouped).map(([date, items]) => ({
+                date,
+                matches: items,
+            }));
+        },
+
+        get paginationPages() {
+            if (!this.pagination.last_page) return [];
+            const pages = [];
+            const start = Math.max(1, this.currentPage - 2);
+            const end = Math.min(this.pagination.last_page, start + 4);
+
+            for (let i = start; i <= end; i++) {
+                pages.push(i);
+            }
+
+            return pages;
+        },
+
+        get filteredMatchesGroups() {
+            let filtered = this.allMatches;
+
+            if (this.selectedDay) {
+                filtered = filtered.filter((match) => {
+                    // match.date sekarang string "27 JUNE, 2026" (hasil format server)
+                    // butuh raw date buat hitung nama hari — lihat catatan di bawah
+                    const d = new Date(match.rawDate);
+                    const dayName = d.toLocaleDateString("en-US", {
+                        weekday: "long",
+                    });
+                    return dayName === this.selectedDay;
+                });
+            }
+
+            if (this.fromDate) {
+                const from = new Date(this.fromDate);
+                filtered = filtered.filter(
+                    (match) => new Date(match.rawDate) >= from,
+                );
+            }
+
+            if (this.toDate) {
+                const to = new Date(this.toDate);
+                filtered = filtered.filter(
+                    (match) => new Date(match.rawDate) <= to,
+                );
+            }
+
+            return this.buildFixtureGroups(filtered);
+        },
+
+        async fetchMatches(page = 1) {
+            const requestId = ++this._matchesRequestId;
+            this.matchesLoading = true;
+            this.currentPage = page;
+            this.resetMatchesState();
+
+            try {
+                const params = new URLSearchParams();
+
+                if (this.selectedSeriesId) {
+                    params.set("seriesId", this.selectedSeriesId);
+                }
+
+                if (this.selectedTeamId) {
+                    params.set("teamId", this.selectedTeamId);
+                }
+
+                params.set("page", String(page));
+                params.set("limit", String(this.perPage));
+
+                const res = await fetch(`/api/matches?${params.toString()}`);
+                const data = await res.json();
+
+                if (requestId !== this._matchesRequestId) return;
+
+                this.allMatches = data.matches ?? [];
+                this.pagination = data.pagination ?? {
+                    current_page: 1,
+                    last_page: 1,
+                    total: 0,
+                    per_page: this.perPage,
+                    from: 0,
+                    to: 0,
+                };
+                this.matchesGroups = this.buildFixtureGroups(this.allMatches);
+            } catch (error) {
+                if (requestId !== this._matchesRequestId) return;
+                console.error("Failed to fetch matches data", error);
+                this.allMatches = [];
+            } finally {
+                if (requestId === this._matchesRequestId) {
+                    this.matchesLoading = false;
+                }
+            }
+        },
+
+        goToPage(page) {
+            if (page < 1 || page > this.pagination.last_page) return;
+            this.fetchMatches(page);
+        },
+
+        prevPage() {
+            if (this.currentPage > 1) {
+                this.goToPage(this.currentPage - 1);
+            }
+        },
+
+        nextPage() {
+            if (this.currentPage < this.pagination.last_page) {
+                this.goToPage(this.currentPage + 1);
+            }
+        },
+
+        async fetchSeries(year) {
+            this.seriesLoading = true;
+            this.seriesList = [];
+            this.resetFiltersForYearChange(year);
+
+            try {
+                const res = await fetch(`/api/series?year=${year}`);
+                const data = await res.json();
+                this.seriesList = data.seriesList ?? [];
+                this.fetchMatches(1);
+            } catch (error) {
+                console.error("Failed to fetch series data", error);
+                this.seriesList = [];
+            } finally {
+                this.seriesLoading = false;
+            }
+        },
+
+        async fetchTeams(seriesId) {
+            this.teamsList = [];
+
+            if (!seriesId) {
+                this.teamsLoading = false;
+                this.selectedTeamId = null;
+                this.selectedTeamName = "";
+                return;
+            }
+
+            this.teamsLoading = true;
+            try {
+                const res = await fetch(`/api/teams?seriesId=${seriesId}`);
+                const data = await res.json();
+                this.teamsList = data.teamsList ?? [];
+            } catch (error) {
+                console.error("Failed to fetch teams data", error);
+                this.teamsList = [];
+            } finally {
+                this.teamsLoading = false;
+            }
+        },
+
+        selectSeries(series) {
+            this.selectedSeriesId = series ? series.seriesID : null;
+            this.selectedFormat = series ? series.seriesName : "All Series";
+
+            this.selectedTeam = "";
+            this.selectedTeamId = null;
+            this.selectedTeamName = "";
+            this.closeDropdowns();
+            this.fetchTeams(series ? series.seriesID : null);
+            this.fetchMatches(1);
+            this.refreshFiltersSwiper();
+        },
+
+        init() {
+            this.$nextTick(() => this.fetchMatches());
+
+            this.fromDatePicker = flatpickr(this.$refs.fromDateInput, {
+                dateFormat: "d M Y",
+                appendTo: document.body,
+                onChange: (selectedDate, dateStr) => {
+                    ((this.fromDate = dateStr),
+                        this.toDatePicker?.set("minDate", dateStr || null));
+                },
+            });
+
+            this.toDatePicker = flatpickr(this.$refs.toDateInput, {
+                dateFormat: "d M Y",
+                appendTo: document.body,
+                onChange: (selectedDates, dateStr) => {
+                    this.toDate = dateStr;
+                    this.fromDatePicker?.set("maxDate", dateStr || null);
+                },
+            });
+        },
+
+        toggleYearDropdown() {
+            this.openYear = !this.openYear;
+            if (this.openYear) {
+                const rect = this.$refs.yearBtn.getBoundingClientRect();
+                this.yearDropdownStyle = {
+                    top: rect.bottom + window.scrollY + 8 + "px",
+                    left: rect.left + window.scrollX + "px",
+                    width: rect.width + "px",
+                };
+            }
+        },
+
+        previousYear() {
+            if (this.selectedYear > 2016) {
+                this.selectedYear--;
+                this.fetchSeries(this.selectedYear);
+            }
+        },
+
+        nextYear() {
+            const currentYear = new Date().getFullYear();
+            if (this.selectedYear < currentYear) {
+                this.selectedYear++;
+                this.fetchSeries(this.selectedYear);
+            }
+        },
+
+        selectDay(day) {
+            // BARU
+            this.selectedDay = day;
+        },
+
+        selectFormat(format) {
+            this.selectedFormat = format;
+        },
+
+        selectTeam(team) {
+            this.selectedTeam = team ? team.teamName : "";
+            this.selectedTeamId = team ? team.teamID : null;
+            this.selectedTeamName = team ? team.teamName : "";
+            this.fetchMatches(1);
+            this.refreshFiltersSwiper();
+        },
+    }),
+);
+
+// Alpine.js Component for Points Table
+Alpine.data(
+    "pointsTable",
+    (initialSeriesList = [], initialYear = new Date().getFullYear()) => ({
+        _pointsTableRequestId: 0,
+        _playerStatsRequestId: 0,
+        _seriesDetailsRequestId: 0,
+        selectedYear: initialYear,
+        seriesList: initialSeriesList,
+        seriesLoading: false,
+        selectedSeriesId: null,
+        selectedSeriesName: "All Series",
+        openYear: false,
+        yearDropdownStyle: {},
+        groups: [],
+        groupsLoading: false,
+        selectedGroupName: null,
+
+        playerStatsLoading: false,
+        battingStats: [],
+        bowlingStats: [],
+        fieldingStats: [],
+        encryptedSeriesId: null,
+        encryptedClubId: null,
+
+        get yearList() {
+            const current = new Date().getFullYear();
+            const years = [];
+            for (let y = current; y >= 2016; y--) years.push(y);
+            return years;
+        },
+
+        get groupNameList() {
+            const names = this.groups.map((g) => g.groupName);
+            return [...new Set(names)];
+        },
+
+        get filteredGroups() {
+            if (!this.selectedGroupName) return this.groups;
+            return this.groups.filter(
+                (g) => g.groupName === this.selectedGroupName,
+            );
+        },
+
+        buildRecordsUrl(endpoint, filter) {
+            if (!this.selectedSeriesId || !this.encryptedSeriesId || !this.encryptedClubId) return "#";
+
+            const params = new URLSearchParams({
+                filter,
+                leagueId: this.encryptedClubId,
+                matchType: "All",
+                year: this.selectedYear,
+                series: this.encryptedSeriesId,
+                seriesName: this.selectedSeriesName,
+            });
+
+            return `https://cricclubs.com/PCI/statistics/${endpoint}-records?${params}`;
+        },
+
+        get battingSeeAllUrl() {
+            return this.buildRecordsUrl("batting", "Most Runs");
+        },
+
+        get bowlingSeeAllUrl() {
+            return this.buildRecordsUrl("bowling", "Most Wickets");
+        },
+
+        get fieldingSeeAllUrl() {
+            if (!this.selectedSeriesId || !this.encryptedSeriesId || !this.encryptedClubId) return "#";
+
+            return (
+                "https://cricclubs.com/PCI/statistics/fielding-records" +
+                "?filter=Most%20Catches" +
+                `&series=${this.encryptedSeriesId}` +
+                "&division=undefined" +
+                `&leagueId=${this.encryptedClubId}` +
+                "&matchType=All"
+            );
+        },
+
+        toggleYearDropdown() {
+            this.openYear = !this.openYear;
+            if (this.openYear) {
+                const rect = this.$refs.ptYearBtn.getBoundingClientRect();
+                this.yearDropdownStyle = {
+                    top: rect.bottom + window.scrollY + 8 + "px",
+                    left: rect.left + window.scrollX + "px",
+                    width: rect.width + "px",
+                };
+            }
+        },
+
+        async fetchSeries(year) {
+            this.selectedYear = year;
+            this.seriesLoading = true;
+            this.seriesList = [];
+            this.selectSeries(null);
+
+            try {
+                const res = await fetch(`/api/series?year=${year}`);
+                const data = await res.json();
+                this.seriesList = data.seriesList ?? [];
+            } catch (error) {
+                console.error("Failed to fetch series data", error);
+                this.seriesList = [];
+            } finally {
+                this.seriesLoading = false;
+            }
+        },
+
+        selectSeries(series) {
+            this.selectedSeriesId = series ? series.seriesID : null;
+            this.selectedSeriesName = series ? series.seriesName : "All Series";
+            this.selectedGroupName = null;
+            this.fetchPointsTable(series ? series.seriesID : null);
+            this.fetchPlayerStats(series ? series.seriesID : null);
+            this.fetchSeriesDetails(series ? series.seriesID : null);
+        },
+
+        selectGroup(name) {
+            this.selectedGroupName = name;
+        },
+
+        async fetchPointsTable(seriesId) {
+            const requestId = ++this._pointsTableRequestId;
+            this.groups = [];
+
+            if (!seriesId) {
+                this.groupsLoading = false;
+                return;
+            }
+
+            this.groupsLoading = true;
+            try {
+                const res = await fetch(
+                    `/api/points-table?seriesId=${seriesId}`,
+                );
+                const data = await res.json();
+
+                if (requestId !== this._pointsTableRequestId) return;
+
+                this.groups = data.groups ?? [];
+            } catch (error) {
+                if (requestId !== this._pointsTableRequestId) return;
+                console.error("Failed to fetch points table data", error);
+                this.groups = [];
+            } finally {
+                if (requestId === this._pointsTableRequestId) {
+                    this.groupsLoading = false;
+                }
+            }
+        },
+
+        async fetchPlayerStats(seriesId) {
+            const requestId = ++this._playerStatsRequestId;
+            this.battingStats = [];
+            this.bowlingStats = [];
+            this.fieldingStats = [];
+
+            if (!seriesId) {
+                this.playerStatsLoading = false;
+                return;
+            }
+
+            this.playerStatsLoading = true;
+            try {
+                const res = await fetch(
+                    `/api/player-stats?seriesId=${seriesId}`,
+                );
+                const data = await res.json();
+
+                if (requestId !== this._playerStatsRequestId) return;
+
+                this.battingStats = data.batting ?? [];
+                this.bowlingStats = data.bowling ?? [];
+                this.fieldingStats = data.fielding ?? [];
+            } catch (error) {
+                if (requestId !== this._playerStatsRequestId) return;
+                console.error("Failed to fetch player stats data", error);
+            } finally {
+                if (requestId === this._playerStatsRequestId) {
+                    this.playerStatsLoading = false;
+                }
+            }
+        },
+
+        async fetchSeriesDetails(seriesId) {
+            const requestId = ++this._seriesDetailsRequestId;
+            this.encryptedSeriesId = null;
+            this.encryptedClubId = null;
+
+            if (!seriesId) return;
+
+            try {
+                const res = await fetch(
+                    `/api/series-details?seriesId=${seriesId}`,
+                );
+                const data = await res.json();
+
+                if (requestId !== this._seriesDetailsRequestId) return;
+
+                this.encryptedSeriesId = data.encryptedLeagueId ?? null;
+                this.encryptedClubId = data.encryptedClubId ?? null;
+            } catch (error) {
+                if (requestId !== this._seriesDetailsRequestId) return;
+                console.error("Failed to fetch series details data", error);
+            }
+        },
+    }),
+);
 
 Alpine.start();
 
+let fixturesFiltersSwiperInstance = null;
 document.addEventListener("DOMContentLoaded", () => {
     // Fixtures Tabs Swiper
     new Swiper(".fixtures-tabs-swiper", {
@@ -245,15 +749,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Fixtures Filters Swiper (Year, Formats, Teams)
-    new Swiper(".fixtures-filters-swiper", {
+    fixturesFiltersSwiperInstance = new Swiper(".fixtures-filters-swiper", {
+        modules: [FreeMode],
         slidesPerView: "auto",
         spaceBetween: 12,
         freeMode: true,
         grabCursor: true,
+        observer: true,
+        observeParents: true,
         preventClicks: false,
         preventClicksPropagation: false,
         slideToClickedSlide: false,
     });
+
+    window.fixturesFiltersSwiper = fixturesFiltersSwiperInstance;
 
     new Swiper(".live-score-swiper", {
         // modules: [FreeMode],

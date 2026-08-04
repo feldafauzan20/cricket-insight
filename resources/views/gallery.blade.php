@@ -30,7 +30,7 @@
         async loadMore() {
             this.isLoading = true;
             try {
-                const res = await fetch(`{{ route('gallery.load-more') }}?page=${this.nextPage}`);
+                const res = await fetch(`{{ route('gallery.load-more', ['locale' => app()->getLocale()]) }}?page=${this.nextPage}`);
                 const json = await res.json();
                 this.galleries.push(...json.data);
                 this.hasMore = json.has_more_pages;
@@ -124,7 +124,7 @@
         async loadMore() {
             this.isLoading = true;
             try {
-                const res = await fetch(`{{ route('magazines.load-more') }}?page=${this.nextPage}`);
+                const res = await fetch(`{{ route('magazines.load-more', ['locale' => app()->getLocale()]) }}?page=${this.nextPage}`);
                 const json = await res.json();
                 this.magazines.push(...json.data);
                 this.hasMore = json.has_more_pages;

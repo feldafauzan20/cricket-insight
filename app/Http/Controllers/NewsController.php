@@ -126,7 +126,7 @@ class NewsController extends Controller
                 'sort',
                 'time_frame',
                 'popularity',
-                'region', 
+                'region',
             ], null),
             $request->only([
                 'category',
@@ -136,7 +136,7 @@ class NewsController extends Controller
                 'sort',
                 'time_frame',
                 'popularity',
-                'region', 
+                'region',
             ])
         );
 
@@ -162,7 +162,7 @@ class NewsController extends Controller
     /**
      * Menampilkan detail satu berita
      */
-    public function show($slug)
+    public function show($locale, $slug)
     {
         $article = Article::query()->where('slug', '=', $slug)->firstOrFail();
 
