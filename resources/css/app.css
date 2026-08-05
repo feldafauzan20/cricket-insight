@@ -154,7 +154,7 @@
 }
 
 .flatpickr-months {
-    background: #0a1628;
+    background: #ec0226;
     border-radius: 3px 3px 0 0;
 }
 
@@ -180,7 +180,7 @@
 
 .flatpickr-months .flatpickr-prev-month:hover,
 .flatpickr-months .flatpickr-next-month:hover {
-    fill: #ec0226;
+    fill: #0a1628;
 }
 
 .flatpickr-day {
