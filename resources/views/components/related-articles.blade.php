@@ -18,11 +18,13 @@
     </div>
     <div class="swiper latest-news-swiper overflow-hidden">
         <div class="swiper-wrapper">
-            @for ($i = 0; $i < 10; $i++)
+            @forelse ($articles as $article)
                 <div class="swiper-slide w-88.5!">
-                    <x-cards.related-article-card />
+                    <x-cards.related-article-card :article="$article" />
                 </div>
-            @endfor
+            @empty
+                <p class="text-center text-gray-500 dark:text-gray-400">No related articles available.</p>
+            @endforelse
         </div>
     </div>
 </div>
