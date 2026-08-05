@@ -99,9 +99,11 @@
 
                         {{-- Hero Description --}}
                         <div class="md:w-180 lg:w-153.5 mb-2.5 md:mb-3.5 lg:mb-6">
-                            <p class="font-playfair-display text-xs font-medium text-white md:text-[14px]">
-                                {{ Str::words($slide['description'], 47, '...') }}
+                            <p
+                                class="font-playfair-display line-clamp-2 wrap-break-word text-xs font-medium text-white md:line-clamp-3 md:text-[14px]">
+                                {{ $slide['description'] }}
                             </p>
+
                         </div>
 
                         {{-- Author Info --}}
