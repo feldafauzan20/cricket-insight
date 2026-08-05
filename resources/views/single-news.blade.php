@@ -19,8 +19,8 @@
                     class="pt-30 md:pt-34 lg:pt-38 mb-3.25 md:mb-3.75 mx-6 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto 2xl:pt-0">
                     <div class="mb-3.75">
                         <x-bread-crumb :items="[
-                            ['title' => 'Home', 'url' => '/'],
-                            ['title' => 'News', 'url' => '/news'],
+                            ['title' => 'Home', 'url' => route('home', ['locale' => app()->getLocale()])],
+                            ['title' => 'News', 'url' => route('news.index', ['locale' => app()->getLocale()])],
                             ['title' => $article->category->name ?? 'Category', 'url' => '#'],
                             ['title' => Str::words($article->title, 2, '...'), 'url' => '#'],
                         ]" />
@@ -47,7 +47,7 @@
                     </div>
 
                     {{-- INTRO --}}
-                    <p class="mb-3.75 text-[15px] italic leading-relaxed text-[#121212] dark:text-white">
+                    <p class="mb-3.75 text-[15px] wrap-break-word italic leading-relaxed text-[#121212] dark:text-white">
                         {{ $article->description }}
                     </p>
 
@@ -102,7 +102,7 @@
 
                         {{-- BAGIAN TEKS PERTAMA --}}
                         <div
-                            class="prose dark:prose-invert max-w-none text-[15px] leading-[170%] text-[#121212] dark:text-[#EEEEEE]">
+                            class="prose dark:prose-invert max-w-none text-[15px] leading-[170%] text-[#121212] dark:text-[#EEEEEE] wrap-break-word">
                             @foreach ($part1 as $p)
                                 {!! $p !!}</p>
                             @endforeach
@@ -121,7 +121,7 @@
 
                         {{-- BAGIAN TEKS KEDUA --}}
                         <div
-                            class="prose dark:prose-invert max-w-none text-[15px] leading-[170%] text-[#121212] dark:text-[#EEEEEE]">
+                            class="prose dark:prose-invert max-w-none text-[15px] leading-[170%] text-[#121212] dark:text-[#EEEEEE] wrap-break-word">
                             @foreach ($part2 as $p)
                                 {!! $p !!}</p>
                             @endforeach

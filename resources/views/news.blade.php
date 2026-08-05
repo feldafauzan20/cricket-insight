@@ -36,8 +36,8 @@
     <section class="mx-6 md:mx-8 lg:mx-10 2xl:container 2xl:mx-auto">
         <div class="mb-2.5">
             <x-bread-crumb :items="[
-                ['title' => 'Home', 'url' => '/'],
-                ['title' => 'News', 'url' => '/news'],
+                ['title' => 'Home', 'url' => route('home', ['locale' => app()->getLocale()])],
+                ['title' => 'News', 'url' => route('news.index', ['locale' => app()->getLocale()])],
                 ['title' => 'Global'],
             ]" />
         </div>
