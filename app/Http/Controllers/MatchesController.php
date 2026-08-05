@@ -90,6 +90,8 @@ class MatchesController extends Controller
             ->where('status', 'published')
             ->firstOrFail();
 
+        dd(['article' => $article]);
+
         return view('match-centre', compact('article'));
     }
 }

@@ -13,7 +13,7 @@
 
 @if ($latestCommentary)
     <div>
-        <a href="{{ url('/news/' . $latestCommentary->slug) }}" class="group block">
+        <a href="{{ route('news.show', ['locale' => app()->getLocale(), 'slug' => $latestCommentary->slug]) }}" class="group block">
             <div class="h-50 md:h-70 mb-4 w-full overflow-hidden rounded-[3px] md:mb-5 lg:h-80 2xl:h-96">
                 <img src="{{ $latestCommentary->thumbnail ? asset('storage/' . $latestCommentary->thumbnail) : asset('images/dummy/commentaries/dummy-commentaries-1.webp') }}"
                     alt="{{ $latestCommentary->title }}" loading="lazy"
@@ -26,7 +26,7 @@
                 {{ $latestCommentary->category ? $latestCommentary->category->name : 'Commentaries' }}
             </p>
 
-            <a href="{{ url('/news/' . $latestCommentary->slug) }}" class="group block">
+            <a href="{{ route('news.show', ['locale' => app()->getLocale(), 'slug' => $latestCommentary->slug]) }}" class="group block">
                 <h1
                     class="mb-2 line-clamp-2 text-lg font-semibold leading-[130%] text-[#121212] transition-colors group-hover:text-gray-500 md:mb-4 md:text-[20px] dark:text-white">
                     {{ Str::words($latestCommentary->title, 8, '...') }}

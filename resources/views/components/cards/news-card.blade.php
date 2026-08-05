@@ -1,6 +1,6 @@
 @props(['article'])
 
-<div class="md:gap-x-7.5 pb-7.5 border-b border-[#EFEFEF] md:flex dark:border-[#DEDEDE]">
+<a href="{{ route('news.show', ['locale' => app()->getLocale(), 'slug' => $article->slug]) }}" class="md:gap-x-7.5 pb-7.5 border-b border-[#EFEFEF] md:flex dark:border-[#DEDEDE]">
     <div class="h-47.5 sm:w-69.25 lg:w-92.75 2xl:w-158 2xl:h-49 mb-3.75 overflow-hidden rounded-[5px] md:mb-0 md:h-auto">
         <img src="{{ $article->thumbnail ? asset('storage/' . $article->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp') }}"
             class="h-full w-full object-cover" alt="{{ $article->title }}">
@@ -47,4 +47,4 @@
             </div>
         </div>
     </div>
-</div>
+</a>

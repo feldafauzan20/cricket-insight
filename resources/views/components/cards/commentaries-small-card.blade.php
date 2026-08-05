@@ -14,7 +14,7 @@
 @endphp
 
 @if ($latestCommentary)
-    <a href="{{ url('/news/' . $latestCommentary->slug) }}" class="group block">
+    <a href="{{ route('news.show', ['locale' => app()->getLocale(), 'slug' => $latestCommentary->slug]) }}" class="group block">
         <div
             class="2xl:mr-15 -mx-2 rounded-md border-b border-b-[#DEDEDE] px-2 py-5 transition-colors hover:bg-gray-50 dark:hover:bg-[#1a1a1a]">
             <div class="flex items-stretch gap-x-10">

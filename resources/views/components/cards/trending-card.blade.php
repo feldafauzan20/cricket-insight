@@ -14,7 +14,7 @@
     $timeRead = max(1, ceil($wordCount / 200));
 @endphp
 
-<a href="{{ url('/news/' . $news->slug) }}"
+<a href="{{ route('news.show', ['locale' => app()->getLocale(), 'slug' => $news->slug]) }}"
     class="{{ $height }} group relative block w-full overflow-hidden rounded-[3px] p-4">
 
     <!-- Background Image -->

@@ -81,18 +81,25 @@ class PageSlotResource extends Resource
                     ->limit(20)
                     ->wrap(),
             ])
-            // Fitur Grouping agar rapi per Halaman!
+
             ->groups([
                 Group::make('page_key')
                     ->label('Halaman')
+                    ->getTitleFromRecordUsing(fn ($record) => match ($record->page_key) {
+                        'home_and_match_centre' => 'Section 1: Home Page & Match Centre (Featured Videos)',
+                        'tournament' => 'Section 2: Tournament Page (Featured Videos)',
+                        'interview' => 'Section 3: Interview Page (Featured Videos)',
+                        'bbi_wbbi' => 'Section 4: BBI / WBBI Page (Featured Videos)',
+                        'homepage' => 'Homepage Slots',
+                        default => \Illuminate\Support\Str::title(str_replace('_', ' ', $record->page_key)),
+                    })
                     ->collapsible(),
             ])
             ->defaultGroup('page_key')
             ->actions([
-                // Kita hanya izinkan EDIT, tidak boleh DELETE
                 EditAction::make(),
             ])
-            ->bulkActions([]); // Matikan fitur delete massal agar aman
+            ->bulkActions([]);
     }
 
     public static function getPages(): array

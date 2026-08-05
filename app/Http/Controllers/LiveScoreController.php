@@ -49,7 +49,7 @@ class LiveScoreController extends Controller
             // Get current timestamp in milliseconds
             $timestamp = round(microtime(true) * 1000);
 
-            $response = Http::withHeaders([
+            $response = Http::withoutVerifying()->withHeaders([
                 'X-Consumer-Key' => config('app.x_consumer_key'),
                 'X-API-Key' => config('app.x_api_key'),
                 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -278,7 +278,7 @@ class LiveScoreController extends Controller
             // Get current timestamp in milliseconds
             $timestamp = round(microtime(true) * 1000);
 
-            $response = Http::withHeaders([
+            $response = Http::withoutVerifying()->withHeaders([
                 'X-Consumer-Key' => config('app.x_consumer_key'),
                 'X-API-Key' => config('app.x_api_key'),
                 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -306,9 +306,13 @@ class LiveScoreController extends Controller
                 ]);
             }
 
-            return view('components.cards.live-score-card', [
+            $scorecardData = [
                 'scorecard' => $data['data'] ?? null
-            ]);
+            ];
+
+            dd($scorecardData);
+
+            return view('components.cards.live-score-card', $scorecardData);
 
         } catch (\Exception $e) {
             Log::error('Exception while fetching scorecard', [

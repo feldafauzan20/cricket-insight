@@ -21,12 +21,16 @@ class InterviewsController extends Controller
             ->orderByDesc('published_at')
             ->paginate(12);
 
-        return view('interview', [
+        $data = [
             'interviews' => $interviews,
             'matches' => $matchesData['data'] ?? [],
             'hasError' => !$matchesData['success'],
             'error' => $matchesData['error'] ?? null,
-        ]);
+        ];
+
+        // dd($data);
+
+        return view('interview', $data);
     }
 
     public function show(string $slug)
@@ -39,6 +43,8 @@ class InterviewsController extends Controller
             ->where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
+
+        // dd(['article' => $article]);
 
         return view('interview', compact('article'));
     }

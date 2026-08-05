@@ -46,7 +46,7 @@
     <section class="hidden 2xl:container 2xl:mx-auto 2xl:block 2xl:pt-6">
         <h1 class="text-[24px] font-semibold text-[#121212] md:text-[22px] 2xl:text-4xl dark:text-[#EEEEEE]">
             {{ __('home.trending_header') }}</h1>
-        <p class="mb-4 text-[13px] font-semibold text-[#666] dark:text-[#B2B2B2]">{{ __('home.latest_news_subheader') }}</p>
+        <p class="mb-4 text-[13px] font-semibold text-[#666] dark:text-[#B2B2B2]">{{ __('home.trending_sub_header') }}</p>
         <div class="my-4 flex md:my-0 md:mb-8 md:mt-4">
             <div class="w-48.5 2xl:w-88.5 h-px bg-[#EC0226]"></div>
             <div class="h-px w-full bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>
@@ -126,12 +126,7 @@
 
     {{-- FEATURED VIDEO SECTION START --}}
     <section class="mb-7 md:mb-6 lg:mb-10">
-        @php
-            use App\Models\PageSlot;
-            $featuredSlot = PageSlot::where('page_key', 'homepage')->where('section_key', 'featured_video')->first();
-        @endphp
-
-        <x-featured-video :slot-id="$featuredSlot?->id" />
+        <x-featured-video page-key="home_and_match_centre" />
     </section>
     {{-- FEATURED VIDEO SECTION END --}}
 

@@ -563,7 +563,12 @@ Alpine.data(
         },
 
         buildRecordsUrl(endpoint, filter) {
-            if (!this.selectedSeriesId || !this.encryptedSeriesId || !this.encryptedClubId) return "#";
+            if (
+                !this.selectedSeriesId ||
+                !this.encryptedSeriesId ||
+                !this.encryptedClubId
+            )
+                return "#";
 
             const params = new URLSearchParams({
                 filter,
@@ -586,7 +591,12 @@ Alpine.data(
         },
 
         get fieldingSeeAllUrl() {
-            if (!this.selectedSeriesId || !this.encryptedSeriesId || !this.encryptedClubId) return "#";
+            if (
+                !this.selectedSeriesId ||
+                !this.encryptedSeriesId ||
+                !this.encryptedClubId
+            )
+                return "#";
 
             return (
                 "https://cricclubs.com/PCI/statistics/fielding-records" +
@@ -770,6 +780,27 @@ document.addEventListener("DOMContentLoaded", () => {
         spaceBetween: 15,
         freeMode: true,
         grabCursor: true,
+    });
+
+    // Streaming Partner Logos Swiper
+    new Swiper(".streaming-partner-swiper", {
+        modules: [FreeMode],
+        slidesPerView: 2,
+        spaceBetween: 8,
+        freeMode: true,
+        grabCursor: true,
+        centerInsufficientSlides: true,
+        breakpoints: {
+            375: {
+                slidesPerView: 2,
+            },
+            768: {
+                slidesPerView: 3,
+            },
+            1536: {
+                slidesPerView: 6,
+            },
+        },
     });
     new Swiper(".latest-news-swiper", {
         modules: [Navigation],
