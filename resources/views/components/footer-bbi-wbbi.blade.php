@@ -69,13 +69,13 @@
                         App Store</p>
                 </div>
                 <div class="flex gap-x-5">
-                    <a href="YOUR_APP_STORE_URL" target="_blank" rel="noopener">
+                    <a href="https://apps.apple.com/id/app/persatuan-cricket-indonesia/id1535613783" target="_blank" rel="noopener">
                         <img src="{{ asset('images/badges/app-store-badge.svg') }}" alt="Download on App Store"
                             loading="lazy" class="h-10">
                         {{-- <img src="https://placehold.co/135x40" alt="Download on App Store" loading="lazy"
                             class="h-10"> --}}
                     </a>
-                    <a href="YOUR_PLAY_STORE_URL" target="_blank" rel="noopener">
+                    <a href="https://play.google.com/store/apps/details?id=com.cricclubs.pci" target="_blank" rel="noopener">
                         <img src="{{ asset('images/badges/google-play-store-badge.svg') }}" alt="Get it on Google Play"
                             loading="lazy" class="h-10">
                         {{-- <img src="https://placehold.co/135x40" alt="Get it on Google Play" loading="lazy"
