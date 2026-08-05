@@ -1,4 +1,6 @@
-<div class="mx-5 2xl:container md:mx-10 lg:flex lg:flex-col 2xl:mx-auto">
+@props(['id' => "top-stories"])
+
+<div class="mx-5 2xl:container md:mx-10 lg:flex lg:flex-col 2xl:mx-auto" id="{{ $id }}">
     <h1
         class="font-barlow-semi-condensed mb-8.75 md:mb-12.5 md:w-124 text-center text-2xl font-bold text-[#434343] md:mx-auto md:block md:text-[54px] dark:text-white">
         READ

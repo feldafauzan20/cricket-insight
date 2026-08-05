@@ -1,4 +1,4 @@
-@props(['setting' => null])
+@props(['setting' => null, 'id' => 'highlighted-games'])
 
 @php
     $newsCards = $setting?->highlights ?? [
@@ -10,7 +10,7 @@
     $ytLink = $setting?->highlight_youtube_link ?? '#';
 @endphp
 
-<div class="mt-25 mb-12.5 md:mb-8.75 mx-5 md:mx-10">
+<div class="mt-25 mb-12.5 md:mb-8.75 mx-5 md:mx-10" id="{{ $id }}">
     <div
         class="flex flex-col items-center 2xl:container md:flex-row md:items-start lg:items-center lg:justify-between 2xl:mx-auto">
         <h1
@@ -19,7 +19,8 @@
             OUR
             HIGHLIGHTED GAMES.
         </h1>
-        <a href="{{ $ytLink }}" target="_blank" class="py-4.5 flex w-fit items-center justify-center gap-x-1.5 bg-[#B90F16] px-8 text-white">
+        <a href="{{ $ytLink }}" target="_blank"
+            class="py-4.5 flex w-fit items-center justify-center gap-x-1.5 bg-[#B90F16] px-8 text-white">
             Youtube
             <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1.4 13L0 11.6L9.6 2H1V0H13V12H11V3.4L1.4 13Z" fill="currentColor" />
@@ -31,7 +32,9 @@
 <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4">
     @foreach ($newsCards as $card)
         @php
-            $thumb = !empty($card['thumbnail']) ? asset('storage/' . $card['thumbnail']) : asset('images/dummy/latest-news-card/dummy-latest-news-card.webp');
+            $thumb = !empty($card['thumbnail'])
+                ? asset('storage/' . $card['thumbnail'])
+                : asset('images/dummy/latest-news-card/dummy-latest-news-card.webp');
             $url = $card['redirect_link'] ?? '#';
             $title = $card['title'] ?? 'Highlight Title';
             $desc = $card['description'] ?? 'Highlight Description';
@@ -40,8 +43,7 @@
             class="h-118.25 md:h-122.75 lg:h-144.5 group relative block w-full overflow-hidden">
 
             {{-- Image --}}
-            <img src="{{ $thumb }}"
-                alt="{{ $title }}"
+            <img src="{{ $thumb }}" alt="{{ $title }}"
                 class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
 
             {{-- Dark overlay --}}

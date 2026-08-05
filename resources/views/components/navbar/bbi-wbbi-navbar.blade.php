@@ -42,7 +42,7 @@
 
                 <div class="flex items-center gap-x-2.5">
                     {{-- X --}}
-                    <a href="#" class="p-3.25 rounded-full bg-white/10">
+                    <a href="https://x.com/Cricket_INA" target="__blank" class="p-3.25 rounded-full bg-white/10">
                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_1324_1531)">
@@ -65,7 +65,7 @@
                     </a>
 
                     {{-- Facebook --}}
-                    <a href="#" class="rounded-full bg-white/10 p-2">
+                    <a href="https://www.facebook.com/people/Persatuan-Cricket-Indonesia/61560799396848"  target="__blank" class="rounded-full bg-white/10 p-2">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -76,7 +76,7 @@
                     </a>
 
                     {{-- Youtube --}}
-                    <a href="#" class="rounded-full bg-white/10 p-2">
+                    <a href="https://youtube.com/@cricketindonesia8372" target="__blank" class="rounded-full bg-white/10 p-2">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 5C21 5 21 5 21 12C21 19 21 19 12 19C3 19 3 19 3 12C3 5 3 5 12 5Z"
@@ -87,7 +87,7 @@
                     </a>
 
                     {{-- Instagram --}}
-                    <a href="#" class="rounded-full bg-white/10 p-2">
+                    <a href="https://instagram.com/cricket_ina" target="__blank" class="rounded-full bg-white/10 p-2">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -113,19 +113,19 @@
                 </button>
                 <div class="hidden 2xl:block">
                     <ul class="2xl:gap-11.75 flex">
-                        <li><a href="/" class="font-figtree font-semibold tracking-[-0.05em] text-[#1F0222]">Watch
+                        <li><a href="#schedule" class="font-figtree font-semibold tracking-[-0.05em] text-[#1F0222]">Watch
                                 Live</a>
                         </li>
-                        <li><a href="/news" class="font-figtree font-semibold tracking-[-0.05em] text-[#1F0222]">View
+                        <li><a href="#highlighted-games" class="font-figtree font-semibold tracking-[-0.05em] text-[#1F0222]">View
                                 Fixtures</a>
                         </li>
-                        <li><a href="/interview"
+                        <li><a href="#article"
                                 class="font-figtree font-semibold tracking-[-0.05em] text-[#1F0222]">Article</a>
                         </li>
-                        <li><a href="/tournaments"
+                        <li><a href="#top-stories"
                                 class="font-figtree font-semibold tracking-[-0.05em] text-[#1F0222]">Top Stories</a>
                         </li>
-                        <li><a href="/match-centre"
+                        <li><a href="{{ route('home', ['locale' => app()->getLocale()]) }}"
                                 class="font-figtree font-semibold tracking-[-0.05em] text-[#1F0222]">CRICKET INSIGHT</a>
                         </li>
                     </ul>

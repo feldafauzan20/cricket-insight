@@ -52,7 +52,7 @@ $editorChoice = Article::with('uploader')
                     </div>
                 </div>
                 <div>
-                    <a href="{{ url('/news/' . $editorChoice->slug) }}"
+                    <a href="{{ route('news.show', ['locale' => app()->getLocale(), 'slug' => $editorChoice->slug]) }}"
                         class="group flex w-fit items-center gap-x-3 text-[11px] font-medium text-white">
                         <div
                             class="w-7.5 h-7.5 md:w-6.5 md:h-6.5 flex shrink-0 items-center justify-center rounded-full border border-white transition-transform duration-300 group-hover:-rotate-45">

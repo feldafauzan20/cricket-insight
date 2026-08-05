@@ -33,11 +33,17 @@
                             ['route' => 'bbi-wbbi', 'label' => __('navbar.bbi_wbbi')],
                             ['route' => 'gallery.index', 'label' => __('navbar.archive')],
                         ];
+
+                        foreach ($menu as &$item) {
+                            $prefix = str_contains($item['route'], '.') ? explode('.', $item['route'])[0] . '.' : null;
+                            $item['active'] = $currentRoute === $item['route'] || ($prefix && str_starts_with($currentRoute, $prefix));
+                        }
+                        unset($item);
                     @endphp
                     @foreach ($menu as $item)
                         <li>
                             <a href="{{ route($item['route'], ['locale' => app()->getLocale()]) }}"
-                                class="{{ $currentRoute === $item['route'] ? 'text-[#EC0226]' : '' }} transition hover:text-[#EC0226]">
+                                class="{{ $item['active'] ? 'text-[#EC0226]' : '' }} transition hover:text-[#EC0226]">
                                 {{ $item['label'] }}
                             </a>
                         </li>
@@ -140,9 +146,9 @@
             class="flex flex-1 flex-col gap-2 overflow-y-auto px-4 py-4 text-base font-semibold text-gray-800 dark:text-gray-200">
             @foreach ($menu as $item)
                 <li
-                    class="{{ $currentRoute === $item['route'] ? 'border-[#EC0226]' : 'border-transparent' }} border-l-4">
+                    class="{{ $item['active'] ? 'border-[#EC0226]' : 'border-transparent' }} border-l-4">
                     <a href="{{ route($item['route'], ['locale' => app()->getLocale()]) }}"
-                        class="{{ $currentRoute === $item['route'] ? 'text-[#EC0226]' : '' }} flex items-center gap-3 px-4 py-3 transition hover:text-[#EC0226]">
+                        class="{{ $item['active'] ? 'text-[#EC0226]' : '' }} flex items-center gap-3 px-4 py-3 transition hover:text-[#EC0226]">
                         {{ $item['label'] }}
                     </a>
                 </li>

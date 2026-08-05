@@ -154,7 +154,7 @@ class NewsController extends Controller
             'filters'           => $filters,
         ];
 
-        dd($data);
+        // dd($data);
 
         return view('news', $data);
     }
@@ -169,7 +169,7 @@ class NewsController extends Controller
         // Increment total views in database
         $article->increment('views_count');
 
-        dd(['article' => $article]);
+        // dd(['article' => $article]);
 
         return view('single-news', compact('article'));
     }

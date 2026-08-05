@@ -19,7 +19,7 @@
     {{-- INFORMATION SECTION END --}}
 
     {{-- SCHEDULE SECTION START --}}
-    <section class="pt-12.5 md:pt-25 2xl:pt-30 pb-12.5 md:pb-34.75 2xl:pb-27.25 dark:bg-[#1F2022]">
+    <section id="schedule" class="pt-12.5 md:pt-25 2xl:pt-30 pb-12.5 md:pb-34.75 2xl:pb-27.25 dark:bg-[#1F2022]">
         <div class="lg:mx-30 mx-2.5 2xl:container md:mx-10 2xl:mx-auto">
             <x-bbi-wbbi-schedule />
         </div>
@@ -32,17 +32,17 @@
     </section>
     {{-- MARQUEE SECTION END --}}
 
-    <section class="pt-12.5 md:pt-25 bg-[#FAF8F3] dark:bg-[#080907]">
+    <section class="pt-12.5 md:pt-25 pb-12.5 md:pb-25 bg-[#FAF8F3] dark:bg-[#080907]">
         {{-- BRAND NEW STORIES SECTION START --}}
-        <x-brand-new-stories />
+        <x-brand-new-stories id="top-stories"/>
         {{-- BRAND NEW STORIES SECTION END --}}
 
         {{-- HIGHLIGHT SECTION START --}}
-        <x-highlighted-games-bbi-wbbi :setting="$setting ?? null" />
+        <x-highlighted-games-bbi-wbbi :setting="$setting ?? null" id="highlighted-games" />
         {{-- HIGHLIGHT SECTION END --}}
 
         {{-- BBI WBBI ARTICLES SECTION START --}}
-        <x-bbi-wbbi-articles :setting="$setting ?? null" />
+        <x-bbi-wbbi-articles :setting="$setting ?? null" id="article" />
         {{-- BBI WBBI ARTICLES SECTION END --}}
 
         {{-- YOUTUBE VIDEO SECTION START --}}

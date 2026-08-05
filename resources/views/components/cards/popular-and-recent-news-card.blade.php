@@ -1,6 +1,6 @@
 @props(['news'])
 
-<div
+<a href="{{ route('news.show', ['locale' => app()->getLocale(), 'slug' => $news->slug]) }}"
     class="not-first:pt-2 lg:not-first:pt-5 not-last:pb-2 lg:not-last:pb-5.5 flex gap-x-4 border-b border-b-[#C7C7C7] px-6 last:border-b-0 md:mx-1.5 md:px-0 lg:mx-5">
     <div class="w-29 h-18 lg:w-66.25 lg:h-41 2xl:w-29 2xl:h-18 shrink-0 overflow-hidden rounded-[3px]">
         <img src="{{ $news->thumbnail ? asset('storage/' . $news->thumbnail) : asset('images/dummy/popular-recent-news/dummy-popular-recent-news.webp') }}"
@@ -26,4 +26,4 @@
             </div>
         </div>
     </div>
-</div>
+</a>
