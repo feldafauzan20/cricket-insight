@@ -304,6 +304,18 @@ Alpine.data(
         get filteredMatchesGroups() {
             let filtered = this.allMatches;
 
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            filtered = filtered.filter((match) => {
+                const matchDate = new Date(match.rawDate);
+                if (isNaN(matchDate)) return true;
+                matchDate.setHours(0, 0, 0, 0);
+                return this.activeTab === "fixtures"
+                    ? matchDate >= today
+                    : matchDate < today;
+            });
+
             if (this.selectedDay) {
                 filtered = filtered.filter((match) => {
                     // match.date sekarang string "27 JUNE, 2026" (hasil format server)
