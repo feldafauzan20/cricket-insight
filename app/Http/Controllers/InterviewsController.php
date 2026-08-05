@@ -28,7 +28,7 @@ class InterviewsController extends Controller
             'error' => $matchesData['error'] ?? null,
         ];
 
-        dd($data);
+        // dd($data);
 
         return view('interview', $data);
     }
@@ -44,7 +44,7 @@ class InterviewsController extends Controller
             ->where('status', 'published')
             ->firstOrFail();
 
-        dd(['article' => $article]);
+        // dd(['article' => $article]);
 
         return view('interview', compact('article'));
     }

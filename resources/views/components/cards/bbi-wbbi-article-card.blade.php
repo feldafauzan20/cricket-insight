@@ -5,7 +5,7 @@
     $image = $article?->thumbnail ? asset('storage/' . $article->thumbnail) : asset('images/dummy/latest-news-card/dummy-latest-news-card.webp');
     $dateDay = $article?->published_at ? $article->published_at->format('d') : '23';
     $dateMonthYear = $article?->published_at ? strtoupper($article->published_at->format('M Y')) : 'APRIL 2026';
-    $url = $article?->slug ? route('news.show', $article->slug) : '#';
+    $url = $article?->slug ? route('news.show', ['locale' => app()->getLocale(), 'slug' => $article->slug]) : '#';
 @endphp
 
 <div class="mx-2.25 border border-[#A9A9A9] md:mx-0 dark:border-[#353737]">

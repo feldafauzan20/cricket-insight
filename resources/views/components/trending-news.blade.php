@@ -26,7 +26,7 @@
         {{ __('home.trending_header') }}
     </h1>
     <p class="mb-4 text-[13px] font-semibold text-[#666] 2xl:hidden dark:text-[#B2B2B2]">
-        {{ __('home.latest_news_subheader') }}
+        {{ __('home.trending_sub_header') }}
     </p>
 
     <div class="my-4 flex md:my-0 md:mb-8 md:mt-4 2xl:hidden">

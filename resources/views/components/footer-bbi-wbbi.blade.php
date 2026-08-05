@@ -1,4 +1,17 @@
 <div>
+    @php
+        $currentRoute = Route::currentRouteName();
+        $menu = [
+            ['route' => 'home', 'label' => __('navbar.home')],
+            ['route' => 'news.index', 'label' => __('navbar.news')],
+            ['route' => 'interviews.index', 'label' => __('navbar.interview')],
+            ['route' => 'tournaments.index', 'label' => __('navbar.tournaments')],
+            ['route' => 'matches.index', 'label' => __('navbar.match_centre')],
+            ['route' => 'bbi-wbbi', 'label' => __('navbar.bbi_wbbi')],
+            ['route' => 'gallery.index', 'label' => __('navbar.archive')],
+        ];
+    @endphp
+
     <div class="2xl:flex 2xl:justify-between">
         <div class="md:mb-15 mb-5">
             <a href="/" class="mr-11 text-xl font-bold">
@@ -23,29 +36,24 @@
                 <h1 class="mb-7 text-2xl font-semibold leading-[130%] text-[#121212] dark:text-[#EEEEEE]">Index</h1>
                 <div class="grid grid-cols-2">
                     <ul class="flex flex-col gap-y-3 leading-[130%] text-[#121212] dark:text-[#EEEEEE]">
-                        <li><a href="/"
-                                class="{{ request()->is('/') ? 'text-red-500' : '' }} transition hover:text-red-500">Home</a>
-                        </li>
-                        <li><a href="/news"
-                                class="{{ request()->is('news*') ? 'text-red-500' : '' }} transition hover:text-red-500">News</a>
-                        </li>
-                        <li><a href="/interview"
-                                class="{{ request()->is('interview') ? 'text-red-500' : '' }} transition hover:text-red-500">Interview</a>
-                        </li>
-                        <li><a href="/tournaments"
-                                class="{{ request()->is('tournaments') ? 'text-red-500' : '' }} transition hover:text-red-500">Tournaments</a>
-                        </li>
+                        @foreach (array_slice($menu, 0, 4) as $item)
+                            <li>
+                                <a href="{{ route($item['route'], ['locale' => app()->getLocale()]) }}"
+                                    class="{{ $currentRoute === $item['route'] ? 'text-red-500' : '' }} transition hover:text-red-500">
+                                    {{ $item['label'] }}
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                     <ul class="flex flex-col gap-y-3 leading-[130%] text-[#121212] dark:text-[#EEEEEE]">
-                        <li><a href="/match-centre"
-                                class="{{ request()->is('match-centre') ? 'text-red-500' : '' }} transition hover:text-red-500">Match
-                                Centre</a></li>
-                        <li><a href="/bbi-wbbi"
-                                class="{{ request()->is('bbi-wbbi') ? 'text-red-500' : '' }} transition hover:text-red-500">BBI/WBBI</a>
-                        </li>
-                        <li><a href="/archive"
-                                class="{{ request()->is('archive*') ? 'text-red-500' : '' }} transition hover:text-red-500">Archive</a>
-                        </li>
+                        @foreach (array_slice($menu, 4) as $item)
+                            <li>
+                                <a href="{{ route($item['route'], ['locale' => app()->getLocale()]) }}"
+                                    class="{{ $currentRoute === $item['route'] ? 'text-red-500' : '' }} transition hover:text-red-500">
+                                    {{ $item['label'] }}
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
