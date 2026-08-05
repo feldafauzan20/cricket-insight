@@ -33,7 +33,7 @@ $editorChoice = Article::with('uploader')
                 <h1 class="mb-2 text-[24px] font-semibold text-white md:text-[28px] lg:text-[35px]">
                     {{ Str::words($editorChoice->title, 8, '...') }}
                 </h1>
-                <p class="mb-5 text-[12px] leading-[129.4%] tracking-[-3%] text-white md:text-[14px]">
+                <p class="mb-5 text-[12px] wrap-break-word leading-[129.4%] tracking-[-3%] text-white md:text-[14px]">
                     {{ Str::words(strip_tags($editorChoice->description ?? $editorChoice->content), 16, '...') }}
                 </p>
                 <div class="w-57 md:w-63.25 mb-7 flex items-center justify-between lg:h-fit">

@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <p class="mb-5.5 line-clamp-3 text-[10px] leading-[129.4%] tracking-[-3%] text-white/90">
+        <p class="mb-5.5 line-clamp-3 wrap-break-word text-[10px] leading-[129.4%] tracking-[-3%] text-white/90">
             {{ \Illuminate\Support\Str::words(strip_tags($news->description ?? $news->content), 20, '...') }}
         </p>
 
