@@ -19,16 +19,16 @@
                 class="text-[10px] font-semibold text-[#666]">{{ optional($article->published_at)->format('d M Y') ?? 'N/A' }}</span>
         </div>
         <div class="2xl:w-130 mb-2.5">
-            <p class="text-[11px] font-medium text-[#666] 2xl:text-[12px]">
+            <p class="text-[11px] font-medium text-[#666] 2xl:text-[12px] wrap-break-word">
                 {{ Str::words($article->description ?? strip_tags($article->content ?? ''), 20, '...') }}
             </p>
         </div>
         <div class="flex items-center justify-between 2xl:max-h-full">
             <div class="flex items-center gap-x-2.5 text-[#121212] dark:text-white">
                 <div class="h-9 w-9 overflow-hidden rounded-full">
-                    {{-- <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}" alt="Profile Picture"
-                        class="w-full h-full object-cover"> --}}
-                    <img src="https://placehold.co/36x36" alt="Profile Picture" class="h-full w-full object-cover">
+                    <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}" alt="Profile Picture"
+                        class="w-full h-full object-cover">
+                    {{-- <img src="https://placehold.co/36x36" alt="Profile Picture" class="h-full w-full object-cover"> --}}
                 </div>
                 <p class="text-[10px] font-medium">BY {{ strtoupper($article->uploader?->name ?? 'UNKNOWN') }}</p>
             </div>
