@@ -16,11 +16,11 @@ class CategoryTagSeeder extends Seeder
             ['name' => 'Berita Utama', 'slug' => 'news'],
             ['name' => 'Commentary', 'slug' => 'commentaries'],
             ['name' => 'Turnamen', 'slug' => 'tournament'],
-            ['name' => 'Visual Story', 'slug' => 'visual-story'],
             ['name' => 'Gallery', 'slug' => 'gallery'],
             ['name' => 'Matches', 'slug' => 'Matches'],
             ['name' => 'Interviews', 'slug' => 'Interviews'],
             ['name' => 'BBI-WBBI', 'slug' => 'bbi-wbbi'],
+            ['name' => 'Magazine', 'slug' => 'magazine'],
         ];
 
         foreach ($categories as $cat) {

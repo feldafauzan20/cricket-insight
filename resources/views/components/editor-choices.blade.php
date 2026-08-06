@@ -1,13 +1,22 @@
 @php
     use App\Models\Article;
+    use App\Models\PageSlot;
     use Illuminate\Support\Str;
 
-    // Mengambil 1 artikel terbaru yang ditandai sebagai Editor's Choice
-$editorChoice = Article::with('uploader')
-    ->where('is_editor_choice', true)
-    ->where('status', 'published')
-    ->orderBy('published_at', 'desc')
+    // Ambil artikel yang di-assign ke PageSlot 'editor_choice'
+    $slotEditorChoice = PageSlot::with(['article.uploader'])
+        ->where('page_key', 'homepage')
+        ->where('section_key', 'editor_choice')
         ->first();
+
+    $editorChoice = $slotEditorChoice?->article;
+
+    if (!$editorChoice || $editorChoice->status !== 'published') {
+        $editorChoice = Article::with('uploader')
+            ->where('status', 'published')
+            ->orderBy('published_at', 'desc')
+            ->first();
+    }
 @endphp
 
 @if ($editorChoice)

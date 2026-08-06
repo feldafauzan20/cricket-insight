@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\PageSlots\Pages;
 
 use App\Filament\Resources\PageSlots\PageSlotResource;
+use App\Models\PageSlot;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
@@ -13,7 +14,9 @@ class ListPageSlots extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->label('Create New')
+                ->visible(fn (): bool => PageSlot::count() === 0),
         ];
     }
 }

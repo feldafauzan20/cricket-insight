@@ -28,7 +28,11 @@ class OngoingTournamentResource extends Resource
         return $schema->components([
             TextInput::make('tournament_title')
                 ->label('Tournament Title')
-                ->required(),
+                ->required()
+                ->unique(ignoreRecord: true)
+                ->validationMessages([
+                    'unique' => 'A tournament with this title already exists. Please choose a unique title.',
+                ]),
 
             FileUpload::make('image')
                 ->label('Image Banner')

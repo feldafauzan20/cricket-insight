@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             PageSlotSeeder::class,
             OngoingTournamentSeeder::class,
             BbiWbbiSettingSeeder::class,
+            StreamingPartnerSeeder::class,
         ]);
     }
 }

@@ -27,7 +27,13 @@ class VideoResource extends Resource
     {
         // Berubah dari ->schema([]) menjadi ->components([])
         return $schema->components([
-            TextInput::make('title')->required(),
+            TextInput::make('title')
+                ->label('Title')
+                ->required()
+                ->unique(ignoreRecord: true)
+                ->validationMessages([
+                    'unique' => 'A video with this title already exists. Please enter a unique title.',
+                ]),
             
             Select::make('video_type')
                 ->options([

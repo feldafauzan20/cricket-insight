@@ -9,52 +9,17 @@
             </p>
         </div>
 
-        {{-- <div class="swiper live-score-swiper overflow-hidden">
-            <div class="swiper-wrapper">
-                @foreach ($matches as $match)
-                    <div class="swiper-slide w-76!">
-                        <x-cards.live-score-card :match="$match" />
-                    </div>
-                @endforeach
-            </div>
-        </div> --}}
         <div class="swiper streaming-partner-swiper overflow-hidden">
             <div class="swiper-wrapper items-center">
-                <!-- Logo 1 -->
-                <div class="swiper-slide flex! items-center justify-center">
-                    <img src="{{ asset('images/logo/streaming-partner-logo/facebook-live-logo.svg') }}"
-                        alt="dummy streaming partner" class="w-25 md:w-35 h-auto object-contain" loading="lazy">
-                </div>
-                <!-- Logo 2 -->
-                <div class="swiper-slide flex! items-center justify-center">
-                    <img src="{{ asset('images/logo/streaming-partner-logo/fancode-logo.svg') }}"
-                        alt="dummy streaming partner" class="w-25 md:w-35 h-auto object-contain" loading="lazy">
-                </div>
-                <!-- Logo 3 -->
-                <div class="swiper-slide flex! items-center justify-center">
-                    <img src="{{ asset('images/logo/streaming-partner-logo/icc-tv-logo.svg') }}"
-                        alt="dummy streaming partner" class="w-25 md:w-35 h-auto object-contain" loading="lazy">
-                </div>
-                <!-- Logo 4 -->
-                <div class="swiper-slide flex! items-center justify-center">
-                    <img src="{{ asset('images/logo/streaming-partner-logo/img-arena-logo.svg') }}"
-                        alt="dummy streaming partner" class="w-25 md:w-35 h-auto object-contain" loading="lazy">
-                </div>
-                <!-- Logo 5 -->
-                <div class="swiper-slide flex! items-center justify-center">
-                    <img src="{{ asset('images/logo/streaming-partner-logo/styx-sport-logo.svg') }}"
-                        alt="dummy streaming partner" class="w-25 md:w-35 h-auto object-contain" loading="lazy">
-                </div>
-                <!-- Logo 6 -->
-                <div class="swiper-slide flex! items-center justify-center">
-                    <img x-show="!$store.darkMode.on"
-                        src="{{ asset('images/logo/streaming-partner-logo/youtube-logo.svg') }}"
-                        alt="dummy streaming partner" class="w-25 md:w-35 h-auto object-contain" loading="lazy">
-                    <img x-show="$store.darkMode.on" x-cloak
-                        src="{{ asset('images/logo/streaming-partner-logo/youtube-logo-white.svg') }}"
-                        alt="cricket insight logo" class="w-25 md:w-35 h-auto object-contain" loading="lazy">
-                </div>
+                @foreach ($streamingPartners as $partner)
+                    <div class="swiper-slide flex! items-center justify-center">
+                        <img src="{{ is_object($partner) ? $partner->image_url : (is_array($partner) ? asset($partner['src'] ?? $partner['image'] ?? '') : asset($partner)) }}"
+                            alt="{{ is_object($partner) ? $partner->title : ($partner['alt'] ?? $partner['title'] ?? 'dummy streaming partner') }}"
+                            class="w-25 md:w-35 h-auto object-contain" loading="lazy">
+                    </div>
+                @endforeach
             </div>
         </div>
 
     </div>
+</div>
