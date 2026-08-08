@@ -48,7 +48,7 @@
 
     {{-- INTERVIEW VIDEOS SECTION START --}}
     <section class="md:mb-7.5 2xl:mb-12.5 mx-6 mb-7 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
-        <x-interview.interview-videos />
+        <x-interview.interview-videos :highlight-video="$highlightVideo" :interview-videos="$interviewVideos" />
     </section>
     {{-- INTERVIEW VIDEOS SECTION END --}}
 
