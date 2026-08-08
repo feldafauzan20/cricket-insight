@@ -6,7 +6,7 @@
     @endphp
 
     <div class="md:py-5.5 border-b border-gray-100 bg-white py-4 dark:border-[#343434] dark:bg-[#121212]">
-        <div class="mx-6 flex items-center justify-between 2xl:container lg:mx-10 2xl:mx-auto">
+        <div class="mx-6 flex items-center justify-between 2xl:container lg:mx-10 xl:mx-30 2xl:mx-auto">
 
             <div class="flex">
                 {{-- Logo --}}

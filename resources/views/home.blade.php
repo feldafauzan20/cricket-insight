@@ -6,7 +6,7 @@
 
     {{-- LIVE SCORE CARD START --}}
     <div class="bg-[#F3F3F3] dark:bg-[#171717]">
-        <div class="pt-29 lg:pt-35 pb-7.5 mx-6 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
+        <div class="pt-29 lg:pt-35 pb-7.5 mx-6 2xl:container md:mx-8 lg:mx-10 xl:mx-30 2xl:mx-auto">
             @if (isset($hasError) && $hasError)
                 <div class="mb-4 rounded-md border border-red-300 bg-white p-4 dark:border-red-500 dark:bg-[#353434]">
                     <p class="text-sm text-red-500">{{ $error ?? 'Failed to load live scores' }}</p>
@@ -56,17 +56,17 @@
     {{-- TRENDING SECTION START --}}
     <x-layout.two-column-layout>
         <x-slot name="main">
-            <section class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto">
+            <section class="md:mx-7.5 mx-6 2xl:container lg:mx-10 xl:mx-30 2xl:mx-auto">
                 <x-trending-news />
             </section>
             {{-- EDITOR CHOICES START --}}
-            <section class="lg:mt-7.5 md:mx-7.5 mt-6 2xl:container lg:mx-10 2xl:mx-auto">
+            <section class="lg:mt-7.5 md:mx-7.5 mt-6 2xl:container lg:mx-10 2xl:mx-auto xl:mx-30">
                 <x-editor-choices />
             </section>
             {{-- EDITOR CHOICES END --}}
             {{-- ADS SECTION START --}}
             <section
-                class="lg:mt-7.5 md:mx-7.5 lg:mb-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 2xl:mx-auto 2xl:mb-6">
+                class="lg:mt-7.5 md:mx-7.5 lg:mb-7.5  mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 xl:mx-30 2xl:mx-auto 2xl:mb-6">
 
                 {{-- Panggil Iklan Atas --}}
                 <x-ads position="home_top" />
@@ -75,7 +75,7 @@
             {{-- ADS SECTION END --}}
 
             {{-- COMMENTARIES SECTION START --}}
-            <section class="md:mx-7.5 mx-6 mb-7 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto 2xl:mb-0">
+            <section class="md:mx-7.5 mx-6 mb-7 2xl:container md:mb-6 lg:mx-10 xl:mx-30 lg:mb-10 2xl:mx-auto 2xl:mb-0">
                 <x-commentaries />
             </section>
             {{-- COMMENTARIES SECTION END --}}
@@ -83,7 +83,7 @@
         <x-slot name="sidebar">
             {{-- POPULAR AND RECENT NEWS RANKING SECTION START --}}
             <div
-                class="md:mx-7.5 mb-7 2xl:container md:mb-6 md:flex md:items-stretch md:gap-x-2.5 lg:mx-10 lg:mb-7 lg:flex-col 2xl:mx-auto 2xl:mb-6">
+                class="md:mx-7.5 mb-7 2xl:container md:mb-6 md:flex md:items-stretch md:gap-x-2.5 lg:mx-10 lg:mb-7 lg:flex-col 2xl:mx-auto 2xl:mb-6 xl:mx-30">
                 <section class="mx-6 mb-7 md:mx-0 md:mb-0 md:flex md:w-1/2 md:flex-col md:items-stretch lg:mb-7 lg:w-full">
                     <x-popular-recent-news />
                 </section>
@@ -96,13 +96,13 @@
             </div>
             {{-- POPULAR AND RECENT NEWS RANKING SECTION END --}}
             {{-- SOCIAL MEDIA SECTION START --}}
-            <section class="md:mx-7.5 mx-6 mb-7 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
+            <section class="md:mx-7.5 mx-6 mb-7 xl:mx-30 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
                 <x-social-media />
             </section>
             {{-- SOCIAL MEDIA SECTION END --}}
             {{-- ADS SECTION START --}}
             <section
-                class="lg:mt-7.5 md:mx-7.5 lg:mb-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 2xl:mx-auto 2xl:mb-6">
+                class="lg:mt-7.5 xl:mx-30 md:mx-7.5 lg:mb-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 2xl:mx-auto 2xl:mb-6">
 
                 {{-- Panggil Iklan Atas --}}
                 <x-ads position="home_middle" />
@@ -114,7 +114,7 @@
     {{-- TRENDING SECTION END --}}
 
     {{-- NEWS FLASH SECTION START --}}
-    <section class="md:mx-7.5 hidden 2xl:container md:mb-6 md:block lg:mx-10 lg:mb-10 2xl:mx-auto">
+    <section class="md:mx-7.5 hidden 2xl:container xl:mx-30 md:mb-6 md:block lg:mx-10 lg:mb-10 2xl:mx-auto">
         @php
             use App\Models\NewsFlash;
             $newsFlash = NewsFlash::where('is_active', true)->orderByDesc('updated_at')->first();
@@ -126,12 +126,12 @@
 
     {{-- FEATURED VIDEO SECTION START --}}
     <section class="mb-7 md:mb-6 lg:mb-10">
-        <x-featured-video page-key="home_and_match_centre" />
+        <x-featured-video.home-featured-video />
     </section>
     {{-- FEATURED VIDEO SECTION END --}}
 
     {{-- ADS SECTION START --}}
-    <section class="md:mx-7.5 mx-6 mb-7 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
+    <section class="md:mx-7.5 mx-6 mb-7 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto xl:mx-30">
         <x-ads position="home_bottom" />
     </section>
     {{-- ADS SECTION END --}}
@@ -146,7 +146,7 @@
 
     {{-- FOOTER SECTION START --}}
     <section class="bg-[#FAFAFA] dark:bg-[#171717]">
-        <div class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto">
+        <div class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto xl:mx-30">
             <x-footer />
         </div>
     </section>

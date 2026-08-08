@@ -1,0 +1,23 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('ongoing_tournaments', function (Blueprint $table) {
+            $table->boolean('is_featured')->default(false)->after('description');
+            $table->boolean('is_active')->default(true)->after('is_featured');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('ongoing_tournaments', function (Blueprint $table) {
+            $table->dropColumn(['is_featured', 'is_active']);
+        });
+    }
+};

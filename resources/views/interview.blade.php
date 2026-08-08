@@ -5,7 +5,7 @@
 @section('content')
    {{-- LIVE SCORE CARD START --}}
     <div class="bg-[#F3F3F3] dark:bg-[#171717]">
-        <div class="pt-29 lg:pt-35 pb-7.5 mx-6 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
+        <div class="pt-29 lg:pt-35 pb-7.5 mx-6 xl:mx-30 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
             @if (isset($hasError) && $hasError)
                 <div class="mb-4 rounded-md border border-red-300 bg-white p-4 dark:border-red-500 dark:bg-[#353434]">
                     <p class="text-sm text-red-500">{{ $error ?? 'Failed to load live scores' }}</p>
@@ -33,7 +33,7 @@
     {{-- LIVE SCORE CARD END --}}
 
     {{-- BEST INTERVIEW SECTION START --}}
-    <section class="md:mb-7.5 mx-6 mb-7 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
+    <section class="md:mb-7.5 mx-6 mb-7 xl:mx-30 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
         <x-interview.interview-header header="Interview"
             description="Explore the most insightful interviews with cricket players and experts." />
         <x-interview.best-interview :interviews="$bestInterviews" />
@@ -41,38 +41,38 @@
     {{-- BEST INTERVIEW SECTION END --}}
 
     {{-- ADS SECTION START --}}
-    <section class="md:mx-7.5 md:mb-7.5 mx-6 mb-7 2xl:container lg:mx-10 lg:mb-10 2xl:mx-auto">
-        <x-ads />
+    <section class="md:mx-7.5 md:mb-7.5 xl:mx-30 mx-6 mb-7 2xl:container lg:mx-10 lg:mb-10 2xl:mx-auto">
+        <x-ads position="interview_top" />
     </section>
     {{-- ADS SECTION END --}}
 
     {{-- INTERVIEW VIDEOS SECTION START --}}
-    <section class="md:mb-7.5 2xl:mb-12.5 mx-6 mb-7 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
+    <section class="md:mb-7.5 2xl:mb-12.5 xl:mx-30 mx-6 mb-7 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
         <x-interview.interview-videos :highlight-video="$highlightVideo" :interview-videos="$interviewVideos" />
     </section>
     {{-- INTERVIEW VIDEOS SECTION END --}}
 
     {{-- ALL INTERVIEW SECTION START --}}
-    <section class="md:mb-7.5 2xl:mb-12.5 mx-6 mb-7 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
+    <section class="md:mb-7.5 2xl:mb-12.5 xl:mx-30 mx-6 mb-7 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
         <x-interview.all-interview :interviews="$interviews" :region-options="$regionOptions" :filters="$filters" />
     </section>
     {{-- ALL INTERVIEW SECTION END --}}
 
     {{-- FEATURED VIDEO SECTION START --}}
-    <section class="mb-7 md:mb-6 lg:mb-10">
-        <x-featured-video page-key="interview" />
-    </section>
+    {{-- <section class="mb-7 md:mb-6 lg:mb-10">
+        <x-featured-video.interview-featured-video />
+    </section> --}}
     {{-- FEATURED VIDEO SECTION END --}}
 
     {{-- ADS SECTION START --}}
-    <section class="md:mx-7.5 mx-6 mb-7 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
-        <x-ads />
+    <section class="md:mx-7.5 mx-6 mb-7 xl:mx-30 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
+        <x-ads position="interview_bottom" />
     </section>
     {{-- ADS SECTION END --}}
 
     {{-- STREAMING PARTNER SECTION START --}}
     <section class="lg:pb-12.5 bg-[#FAFAFA] pb-5 md:pb-10 2xl:pb-20 dark:bg-[#171717]">
-        <div class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto">
+        <div class="md:mx-7.5 mx-6 xl:mx-30 2xl:container lg:mx-10 2xl:mx-auto">
             <x-streaming-partner />
         </div>
     </section>
@@ -80,7 +80,7 @@
 
     {{-- FOOTER SECTION START --}}
     <section class="bg-[#FAFAFA] dark:bg-[#171717]">
-        <div class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto">
+        <div class="md:mx-7.5 mx-6 xl:mx-30 2xl:container lg:mx-10 2xl:mx-auto">
             <x-footer />
         </div>
     </section>

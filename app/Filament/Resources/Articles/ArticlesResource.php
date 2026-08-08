@@ -41,13 +41,26 @@ class ArticlesResource extends Resource
                     ->label('Title')
                     ->required()
                     ->unique(ignoreRecord: true)
-                    ->validationMessages([
-                        'unique' => 'An article with this title already exists. Please choose a unique title.',
-                    ])
                     ->live(onBlur: true)
                     ->afterStateUpdated(fn (?string $state, $set) =>
                         $set('slug', Str::slug($state))
-                    ),
+                    )
+                    ->rule(function ($component) {
+                        return function (string $attribute, $value, \Closure $fail) use ($component) {
+                            $record = $component->getRecord();
+
+                            $exists = Article::where('slug', Str::slug($value))
+                                ->when($record, fn ($query) => $query->whereKeyNot($record))
+                                ->exists();
+
+                            if ($exists) {
+                                $fail('This title generates a slug that is already in use. Please choose a different title.');
+                            }
+                        };
+                    })
+                    ->validationMessages([
+                        'unique' => 'An article with this title already exists. Please choose a unique title.',
+                    ]),
 
                 Hidden::make('slug')
                     ->required(),
@@ -69,15 +82,6 @@ class ArticlesResource extends Resource
                     ->image()
                     ->disk('public')
                     ->directory('news'),
-
-                FileUpload::make('pdf_file')
-                    ->label('PDF File (Magazine)')
-                    ->disk('public')
-                    ->directory('magazines')
-                    ->acceptedFileTypes(['application/pdf'])
-                    ->maxSize(20480)
-                    ->openable()
-                    ->downloadable(),
 
                 Textarea::make('description')
                     ->label('Summary / Description')
@@ -118,13 +122,20 @@ class ArticlesResource extends Resource
                             ->label('New Tag Name')
                             ->required()
                             ->unique('tags', 'name')
-                            ->validationMessages([
-                                'unique' => 'A tag with this name already exists.',
-                            ])
                             ->live(onBlur: true)
                             ->afterStateUpdated(fn (?string $state, $set) =>
                                 $set('slug', Str::slug($state))
-                            ),
+                            )
+                            ->rule(function () {
+                                return function (string $attribute, $value, \Closure $fail) {
+                                    if (\App\Models\Tag::where('slug', Str::slug($value))->exists()) {
+                                        $fail('This name generates a slug that is already in use. Please choose a different name.');
+                                    }
+                                };
+                            })
+                            ->validationMessages([
+                                'unique' => 'A tag with this name already exists.',
+                            ]),
                         Hidden::make('slug')
                             ->required(),
                     ]),
@@ -180,12 +191,6 @@ class ArticlesResource extends Resource
                     ->label('Category')
                     ->sortable()
                     ->badge(),
-
-                TextColumn::make('pdf_file')
-                    ->label('PDF File')
-                    ->badge()
-                    ->formatStateUsing(fn ($state) => $state ? 'PDF Attached' : '-')
-                    ->color(fn ($state) => $state ? 'success' : 'gray'),
 
                 TextColumn::make('region')
                     ->label('Region')

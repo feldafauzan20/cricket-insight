@@ -6,6 +6,7 @@ use App\Filament\Resources\PageSlots\PageSlotResource;
 use App\Models\PageSlot;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class EditPageSlot extends EditRecord
 {
@@ -38,13 +39,18 @@ class EditPageSlot extends EditRecord
     {
         if (isset($data['slots']) && is_array($data['slots'])) {
             foreach ($data['slots'] as $sectionKey => $slotValues) {
-                PageSlot::where('page_key', $record->page_key)
-                    ->where('section_key', $sectionKey)
-                    ->update([
+                PageSlot::updateOrCreate(
+                    [
+                        'page_key' => $record->page_key,
+                        'section_key' => $sectionKey,
+                    ],
+                    [
+                        'label' => Str::headline($sectionKey),
                         'article_id' => $slotValues['article_id'] ?? null,
                         'video_id' => $slotValues['video_id'] ?? null,
                         'embed_link' => $slotValues['embed_link'] ?? null,
-                    ]);
+                    ]
+                );
             }
         }
 

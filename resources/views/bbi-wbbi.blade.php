@@ -53,7 +53,7 @@
 
     {{-- FEATURED VIDEO SECTION START --}}
     <section class="mb-7 md:mb-6 lg:mb-10">
-        <x-featured-video page-key="bbi_wbbi" />
+        <x-featured-video.bbi-wbbi-featured-video />
     </section>
     {{-- FEATURED VIDEO SECTION END --}}
 

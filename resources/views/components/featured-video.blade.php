@@ -1,3 +1,5 @@
+@use('Illuminate\Support\Str')
+
 <div class="2xl:flex">
     {{-- Header Section --}}
     <div class="2xl:w-107.25 2xl:h-131.25 relative w-full 2xl:flex 2xl:shrink-0 2xl:items-center 2xl:justify-center">
@@ -5,7 +7,7 @@
             class="absolute z-20 h-full w-full object-cover opacity-10" />
         <div class="absolute inset-0 z-10 bg-[#1F1D5E]"></div>
 
-        <div class="py-17.5 relative z-30 px-10 2xl:px-0 2xl:py-0">
+        <div class="py-17.5 relative z-30 px-10 xl:px-30 2xl:px-0 2xl:py-0">
             <div class="mb-2.5 h-0.5 w-10 bg-white md:mb-5"></div>
             <h1 class="mb-1 text-[20px] font-semibold text-white">{{ __('home.featured_video_header') }}</h1>
             <p class="mb-12.5 text-[11px] leading-[217%] text-white">{{ __('home.featured_video_subheader') }}</p>
@@ -26,17 +28,23 @@
                 @php
                     $pubDate = $video->published_at ?? $video->created_at ?? now();
                     $formattedDate = is_string($pubDate) ? \Carbon\Carbon::parse($pubDate)->format('d M Y') : $pubDate->format('d M Y');
-                    $videoUrl = $video->target_link ?? $video->embed_link ?? $video->video_url ?? '#';
+                    $videoUrl = $video->target_link ?? $video->embed_link ?? $video->video_src ?? $video->video_url ?? '#';
+
+                    if (!empty($video->thumbnail)) {
+                        $thumb = Str::startsWith($video->thumbnail, ['http://', 'https://', 'images/']) ? asset($video->thumbnail) : asset('storage/' . $video->thumbnail);
+                    } else {
+                        $thumb = asset('images/dummy/commentaries/dummy-commentaries-small-card.webp');
+                    }
                 @endphp
-                <div class="swiper-slide 2xl:w-107.25! w-full 2xl:shrink-0">
-                    <a href="{{ $videoUrl }}" 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="h-131.25 group relative block cursor-pointer">
+                <div class="swiper-slide group transition-transform duration-700 ease-in-out 2xl:w-107.25! w-full 2xl:shrink-0">
+                    <a href="{{ $videoUrl }}"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="h-131.25 relative block cursor-pointer group-hover:scale-105">
                         {{-- Thumbnail Video --}}
-                        <img src="{{ !empty($video->thumbnail) ? asset('storage/' . $video->thumbnail) : asset('images/dummy/commentaries/dummy-commentaries-small-card.webp') }}"
+                        <img src="{{ $thumb }}"
                             alt="{{ $video->title ?? 'Featured Video' }}"
-                            class="absolute h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                            class="absolute h-full w-full object-cover transition-transform duration-700 " />
 
                         <div class="bg-linear-to-b absolute inset-0 w-full from-black/0 to-black"></div>
 
@@ -80,7 +88,7 @@
                     </a>
                 </div>
             @empty
-                <div class="h-131.25 flex w-full items-center justify-center bg-[#1F1D5E]">
+                <div class="h-131.25 flex w-full items-center justify-center">
                     <p class="text-sm text-white">Belum ada video saat ini.</p>
                 </div>
             @endforelse

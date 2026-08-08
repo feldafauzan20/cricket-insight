@@ -11,7 +11,7 @@
     {{-- HERO GALLERY WITH BREADCRUMB SECTION END --}}
 
     {{-- HEADING SECTION START --}}
-    <section class="md:mx-7.5 md:mb-7.75 lg:mb-12.5 mx-6 mb-7 2xl:container lg:mx-10 2xl:mx-auto">
+    <section class="md:mx-7.5 md:mb-7.75 lg:mb-12.5 xl:mx-30 mx-6 mb-7 2xl:container lg:mx-10 2xl:mx-auto">
         <h1 class="text-[22px] font-semibold text-[#121212] dark:text-white">Explore the story through visuals</h1>
         <p class="text-[13px] font-semibold text-[#666]">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
         <div class="mt-3.75 flex">
@@ -42,7 +42,7 @@
             }
         }
     }">
-        <div class="md:mx-7.5 mx-6 mb-7 2xl:container lg:mx-10 2xl:mx-auto">
+        <div class="md:mx-7.5 mx-6 mb-7 2xl:container xl:mx-30 lg:mx-10 2xl:mx-auto">
             <div class="gap-y-6.25 md:gap-x-4.5 grid grid-cols-1 md:grid-cols-2 lg:gap-y-10 2xl:grid-cols-3">
                 <template x-for="gallery in galleries" :key="gallery.id">
                     <div x-transition:enter="transition ease-out duration-300"
@@ -137,7 +137,7 @@
         }
     }">
 
-        <div class="md:mx-7.5 mx-6 mb-7 2xl:container lg:mx-10 2xl:mx-auto">
+        <div class="md:mx-7.5 mx-6 mb-7 2xl:container xl:mx-30 lg:mx-10 2xl:mx-auto">
             {{-- HEADER AND DESCRIPTION --}}
             <div class="mb-7.5">
                 <h1 class="mb-1 text-center text-[25px] font-semibold text-[#121212] md:text-4xl dark:text-white">Cricket
@@ -203,11 +203,11 @@
     {{-- MAGAZINE SECTION END --}}
 
     {{-- SHARE THIS GALLERY SECTION START --}}
-    <section class="md:mx-7.5 mx-6 mb-7 2xl:container lg:mx-10 2xl:mx-auto">
+    <section class="md:mx-7.5 mx-6 mb-7 xl:mx-30 2xl:container lg:mx-10 2xl:mx-auto">
         {{-- SHARE GALLERY TITLE --}}
         <p class="mb-2.5 text-center text-[16px] font-medium leading-[163%] text-[#121212] dark:text-white">
             Share
-            Gallery</p>
+            Archive</p>
 
         {{-- SOCIAL MEDIA ICONS --}}
         <div class="mb-6 flex justify-center gap-x-3.5">
@@ -252,14 +252,14 @@
     {{-- SHARE THIS GALLERY SECTION END --}}
 
     {{-- ADS SECTION START --}}
-    <section class="md:mx-7.5 mx-6 mb-7 2xl:container lg:mx-10 2xl:mx-auto">
-        <x-ads />
+    <section class="md:mx-7.5 mx-6 mb-7 xl:mx-30 2xl:container lg:mx-10 2xl:mx-auto">
+        <x-ads position="gallery_bottom" />
     </section>
     {{-- ADS SECTION END --}}
 
     {{-- STREAMING PARTNER SECTION START --}}
     <section class="lg:pb-12.5 bg-[#FAFAFA] pb-5 md:pb-10 2xl:pb-20 dark:bg-[#171717]">
-        <div class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto">
+        <div class="md:mx-7.5 mx-6 2xl:container xl:mx-30 lg:mx-10 2xl:mx-auto">
             <x-streaming-partner />
         </div>
     </section>
@@ -267,7 +267,7 @@
 
     {{-- FOOTER SECTION START --}}
     <section class="bg-[#FAFAFA] dark:bg-[#171717]">
-        <div class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto">
+        <div class="md:mx-7.5 mx-6 2xl:container xl:mx-30 lg:mx-10 2xl:mx-auto">
             <x-footer />
         </div>
     </section>

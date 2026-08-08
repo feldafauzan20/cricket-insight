@@ -30,6 +30,10 @@ class PageSlotSeeder extends Seeder
             // --- INTERVIEW PAGE ---
             ['page_key' => 'interview', 'section_key' => 'main_highlight', 'label' => 'Interview Highlight Paling Atas'],
             // --- TOURNAMENT PAGE ---
+            ['page_key' => 'tournament', 'section_key' => 'hero_carousel_1', 'label' => 'Tournament Hero Carousel 1'],
+            ['page_key' => 'tournament', 'section_key' => 'hero_carousel_2', 'label' => 'Tournament Hero Carousel 2'],
+            ['page_key' => 'tournament', 'section_key' => 'hero_carousel_3', 'label' => 'Tournament Hero Carousel 3'],
+            ['page_key' => 'tournament', 'section_key' => 'hero_carousel_4', 'label' => 'Tournament Hero Carousel 4'],
             ['page_key' => 'tournament', 'section_key' => 'upcoming_match', 'label' => 'Turnamen Utama Terdekat'],
         ];
 
