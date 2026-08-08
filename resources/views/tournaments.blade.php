@@ -34,12 +34,12 @@
     {{-- LIVE SCORE CARD END --}}
 
     {{-- HERO SECTION START --}}
-    <x-hero.tournament-hero />
+    <x-hero.tournament-hero :articles="$heroArticles ?? []" />
     {{-- HERO SECTION END --}}
 
     {{-- FEATURED TOURNAMENTS SECTION START --}}
     <section class="mx-6 mt-5 2xl:container lg:mx-10 2xl:mx-auto">
-        <x-featured-tournaments />
+        <x-featured-tournaments :tournaments="$featuredTournaments ?? []" />
     </section>
     {{-- FEATURED TOURNAMENTS SECTION END --}}
 
@@ -49,7 +49,7 @@
 
             {{-- TOURNAMENTS LIST AND ONGOING TOURNAMENT SECTION START --}}
             <section class="md:mx-7.5 mx-6 2xl:container lg:mx-10 2xl:mx-auto">
-                <x-tournaments-list />
+                <x-tournaments-list :tournaments="$ongoingTournaments ?? []" />
             </section>
             {{-- TOURNAMENTS LIST AND ONGOING TOURNAMENT SECTION END --}}
 
@@ -58,7 +58,7 @@
                 class="lg:mt-7.5 md:mx-7.5 lg:mb-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 2xl:mx-auto 2xl:mb-6">
 
                 {{-- Panggil Iklan Atas --}}
-                <x-ads position="home_top" />
+                <x-ads position="tournament_top" />
 
             </section>
             {{-- ADS SECTION END --}}
@@ -89,7 +89,7 @@
                 class="lg:mt-7.5 md:mx-7.5 lg:mb-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 2xl:mx-auto 2xl:mb-6">
 
                 {{-- Panggil Iklan Atas --}}
-                <x-ads position="home_middle" />
+                <x-ads position="tournament_middle" />
 
             </section>
             {{-- ADS SECTION END --}}
@@ -99,13 +99,13 @@
 
     {{-- TOURNAMENT NEWS SECTION START --}}
     <section class="bg-[#FAFAFA] dark:bg-[#171717]">
-        <x-tournament-news />
+        <x-tournament-news :news="$tournamentNews ?? []" :indonesia-news="$indonesiaNews ?? []" :international-news="$internationalNews ?? []" />
     </section>
     {{-- TOURNAMENT NEWS SECTION END --}}
 
     {{-- FEATURED VIDEO SECTION START --}}
     <section class="mb-7 md:mb-6 lg:mb-10">
-        <x-featured-video page-key="tournament" />
+        <x-featured-video.tournament-featured-video />
     </section>
     {{-- FEATURED VIDEO SECTION END --}}
 

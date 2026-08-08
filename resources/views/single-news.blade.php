@@ -205,7 +205,7 @@
 
     {{-- ADS SECTION START --}}
     <section class="lg:mt-7.5 md:mx-7.5 mx-6 mb-7 mt-6 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
-        <x-ads />
+        <x-ads position="single_news_bottom" />
     </section>
     {{-- ADS SECTION END --}}
 

@@ -45,7 +45,7 @@ class FeaturedVideo extends Component
                 $videoItems = [];
                 foreach ($slots as $slot) {
                     $video = $slot->video;
-                    $targetLink = !empty($slot->embed_link) ? $slot->embed_link : ($video?->video_url ?? '#');
+                    $targetLink = !empty($slot->embed_link) ? $slot->embed_link : ($video?->video_src ?? $video?->video_url ?? '#');
 
                     if ($video) {
                         $video->target_link = $targetLink;
@@ -78,7 +78,7 @@ class FeaturedVideo extends Component
                     ->limit(10)
                     ->get()
                     ->map(function ($video) {
-                        $video->target_link = $video->video_url ?? '#';
+                        $video->target_link = $video->video_src ?? $video->video_url ?? '#';
                         return $video;
                     });
             }

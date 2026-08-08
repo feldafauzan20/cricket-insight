@@ -12,5 +12,8 @@ class OngoingTournament extends Model
 
     protected $casts = [
         'time_date' => 'datetime',
+        'is_featured' => 'boolean',
+        'is_active' => 'boolean',
     ];
 }
+
