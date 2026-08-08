@@ -6,7 +6,7 @@
 
     {{-- ONGOING TOURNAMENT SECTION START --}}
     <section class="lg:pt-35 pb-7.5 md:pt-35 mx-6 mb-7 xl:mx-30 pt-44 2xl:container md:mx-8 md:mb-6 lg:mx-9 lg:mb-10 2xl:mx-auto">
-        <x-ongoing-tournament />
+        <x-ongoing-tournament :tournaments="$ongoingMatches ?? []" />
     </section>
     {{-- ONGOING TOURNAMENT SECTION END --}}
 

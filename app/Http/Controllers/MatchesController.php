@@ -7,6 +7,9 @@ use App\Services\CricclubsSeriesService;
 use App\Services\CricclubsMatchesService;
 use Illuminate\Http\Request;
 
+use App\Models\OngoingMatch;
+use App\Models\OngoingTournament;
+
 class MatchesController extends Controller
 {
     /**
@@ -26,10 +29,26 @@ class MatchesController extends Controller
         $currentYear = (int) $request->query('year', now()->year);
         $seriesList = $service->getSeriesList($currentYear);
 
+        // Fetch max 10 Ongoing Matches for Match Centre
+        $ongoingMatches = OngoingMatch::query()
+            ->where('is_active', true)
+            ->latest('time_date')
+            ->take(10)
+            ->get();
+
+        if ($ongoingMatches->isEmpty()) {
+            $ongoingMatches = OngoingTournament::query()
+                ->where('is_active', true)
+                ->latest('time_date')
+                ->take(10)
+                ->get();
+        }
+
         return view('match-centre', [
             'matches' => $matches,
             'seriesList' => $seriesList,
             'currentYear' => $currentYear,
+            'ongoingMatches' => $ongoingMatches,
         ]);
     }
 

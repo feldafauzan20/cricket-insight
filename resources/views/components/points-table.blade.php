@@ -263,8 +263,8 @@
             @endphp
 
             <div class="mt-4 flex flex-col gap-2">
-                <x-ads position="match_centre_top" />
-                <x-ads position="match_centre_top" />
+                <x-ads position="match_centre_middle_1" />
+                <x-ads position="match_centre_middle_2" />
             </div>
         </div>
         <div class="mt-5.5 md:mt-0 md:w-[60%] 2xl:w-[70%]">
