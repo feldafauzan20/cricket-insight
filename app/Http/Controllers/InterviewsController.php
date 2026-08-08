@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\PageSlot;
-use App\Models\Video;
 use Illuminate\Http\Request;
 
 class InterviewsController extends Controller
@@ -104,15 +103,6 @@ class InterviewsController extends Controller
                     'created_at' => $slot->created_at ?? now(),
                 ]);
             }
-        }
-
-        // Fallback: If no slot videos configured, load active videos from database
-        if ($interviewVideos->isEmpty()) {
-            $interviewVideos = Video::query()
-                ->with(['category', 'uploader'])
-                ->where('is_active', true)
-                ->latest()
-                ->get();
         }
 
         // Fallback for highlightVideo if not explicitly configured

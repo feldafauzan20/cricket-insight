@@ -54,11 +54,11 @@
                 class="flex flex-col gap-y-2.5 md:flex-row md:gap-x-2.5 md:gap-y-0 2xl:w-1/2 2xl:flex-col 2xl:gap-x-0 2xl:gap-y-2.5">
 
                 {{-- Trending 2 (Kanan Atas) --}}
-                <x-cards.trending-card :news="$displayTrending[1]" trendingNumber="2" height="h-[300px] 2xl:h-[290px]"
+                <x-cards.trending-card :news="$displayTrending[1]" trendingNumber="2" height="h-[300px] md:h-[500px] 2xl:h-[290px]"
                     fontSize="text-[18px]" />
 
                 {{-- Trending 3 (Kanan Bawah) --}}
-                <x-cards.trending-card :news="$displayTrending[2]" trendingNumber="3" height="h-[300px] 2xl:h-[290px]"
+                <x-cards.trending-card :news="$displayTrending[2]" trendingNumber="3" height="h-[300px] md:h-[500px] 2xl:h-[290px]"
                     fontSize="text-[18px]" />
 
             </div>

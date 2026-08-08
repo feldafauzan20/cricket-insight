@@ -8,6 +8,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Table;
 
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
@@ -23,20 +24,35 @@ class CategoryResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('name')
-                ->label('Category Name')
-                ->required()
-                ->unique(ignoreRecord: true)
-                ->validationMessages([
-                    'unique' => 'A category with this name already exists. Please choose a unique name.',
-                ])
-                ->live(onBlur: true)
-                ->afterStateUpdated(fn (?string $state, $set) =>
-                    $set('slug', Str::slug($state))
-                ),
+            Section::make('Category Details')->schema([
+                TextInput::make('name')
+                    ->label('Category Name')
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (?string $state, $set) =>
+                        $set('slug', Str::slug($state))
+                    )
+                    ->rule(function ($component) {
+                        return function (string $attribute, $value, \Closure $fail) use ($component) {
+                            $record = $component->getRecord();
 
-            Hidden::make('slug')
-                ->required(),
+                            $exists = Category::where('slug', Str::slug($value))
+                                ->when($record, fn ($query) => $query->whereKeyNot($record))
+                                ->exists();
+
+                            if ($exists) {
+                                $fail('This name generates a slug that is already in use. Please choose a different name.');
+                            }
+                        };
+                    })
+                    ->validationMessages([
+                        'unique' => 'A category with this name already exists. Please choose a unique name.',
+                    ]),
+
+                Hidden::make('slug')
+                    ->required(),
+            ])->columns(1),
         ]);
     }
 

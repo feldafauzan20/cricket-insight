@@ -1,7 +1,7 @@
 @props(['setting' => null])
 
 @php
-    $videoUrl = $setting?->loop_video_url;
+    $videoUrl = \App\View\Components\YoutubeVideoBbiWbbi::toEmbedUrl($setting?->loop_video_url);
 @endphp
 
 <div class="mt-12.5 md:mt-25">

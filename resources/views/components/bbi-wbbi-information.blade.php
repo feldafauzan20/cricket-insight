@@ -6,7 +6,7 @@
 @endphp
 
 <div
-    class="py-16.25 mx-2.25 gap-7.25 md:mx-12.5 2xl:px-12.5 flex flex-col 2xl:container md:items-center lg:flex-row 2xl:mx-auto 2xl:justify-between">
+    class="py-16.25 mx-2.25 gap-7.25 md:mx-12.5 2xl:px-12.5 flex flex-col 2xl:container md:items-center lg:justify-center lg:flex-row 2xl:mx-auto 2xl:justify-between">
     <div class="gap-x-3.75 flex items-center">
         <div class="p-4.5 rounded-md border border-dashed border-black/30 dark:border-white/30">
             <div class="w-8.75 h-8.75 flex items-center justify-center text-[#B90F16] dark:text-[#97775B]">

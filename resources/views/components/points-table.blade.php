@@ -244,9 +244,9 @@
 
     {{-- PLAYER STAT AND SERIES HIGHLIGHT --}}
     <div class="mt-7.5 lg:mt-12.5 md:gap-x-5.5 md:flex md:flex-row-reverse">
-        <div class="md:w-[50%] 2xl:w-[30%]">
+        <div class="md:w-[40%] 2xl:w-[30%]">
             <h1 class="text-2xl font-semibold text-[#121212] dark:text-white">
-                SERIES HIGHLIGHT
+                &#8203;
             </h1>
 
             @php
@@ -262,42 +262,12 @@
                 ];
             @endphp
 
-            <div class="mt-4 grid grid-cols-2 gap-2">
-                @foreach ($highlights as $index => $item)
-                    @php
-                        // kolom genap (0, 2, 4...) = merah, kolom ganjil = biru
-                        $isRed = $index % 2 === 0;
-
-                        $gradientClass = $isRed
-                            ? 'bg-[#EC0226] bg-[linear-gradient(to_bottom_left,rgba(194,75,93,0)_0%,#860116_100%)]'
-                            : 'bg-[#0E2E75] bg-[linear-gradient(to_bottom_left,#1A56DB_0%,#0E2E75_100%)]';
-                    @endphp
-
-                    <div
-                        class="{{ $gradientClass }} relative flex h-32 flex-col items-center justify-center overflow-hidden rounded-[7px]">
-
-                        {{-- CONTENT LAYER — nanti ini yang jadi slide-nya kalau dipasang swiper --}}
-                        <div class="flex flex-col items-center justify-center">
-                            <p
-                                class="text-[40px] font-semibold tracking-[2px] text-transparent [-webkit-text-fill-color:transparent] [-webkit-text-stroke:1px_#ffffff]">
-                                {{ $item['value'] }}
-                            </p>
-                            <p class="text-base font-semibold text-white">{{ $item['label'] }}</p>
-                        </div>
-
-                        {{-- DOT INDICATOR — absolute, nempel di bawah card, independen dari content layer --}}
-                        <div class="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5">
-                            @for ($d = 0; $d < $item['dots']; $d++)
-                                <span
-                                    class="{{ $d === $item['activeDot'] ? 'bg-white' : 'bg-white/40' }} h-1.5 w-1.5 rounded-full transition-all duration-300"></span>
-                            @endfor
-                        </div>
-
-                    </div>
-                @endforeach
+            <div class="mt-4 flex flex-col gap-2">
+                <x-ads position="match_centre_top" />
+                <x-ads position="match_centre_top" />
             </div>
         </div>
-        <div class="mt-5.5 md:mt-0 md:w-[50%] 2xl:w-[70%]">
+        <div class="mt-5.5 md:mt-0 md:w-[60%] 2xl:w-[70%]">
             <h1 class="text-2xl font-semibold text-[#121212] dark:text-white">PLAYER STATS</h1>
 
             <x-tables.stat-table title="BATTING" columnLabel="RUNS" value-color="#1A56DB"

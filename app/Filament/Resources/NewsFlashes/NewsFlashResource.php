@@ -8,6 +8,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Table;
 
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
@@ -23,9 +24,11 @@ class NewsFlashResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('title')->required(),
-            Textarea::make('description'),
-            Toggle::make('is_active')->default(true),
+            Section::make('News Flash Details')->schema([
+                TextInput::make('title')->required(),
+                Textarea::make('description'),
+                Toggle::make('is_active')->default(true),
+            ])->columns(1),
         ]);
     }
 

@@ -58,7 +58,7 @@
     }
 @endphp
 
-<div class="md:px-7.5 md:pt-12.5 px-6 pb-4 pt-6 2xl:container md:pb-6 lg:px-10 lg:pb-11 2xl:mx-auto 2xl:px-0 2xl:pb-6">
+<div class="md:px-7.5 md:pt-12.5 px-6 pb-4 pt-6 2xl:container md:pb-6 lg:px-10 lg:pb-11 xl:px-30 2xl:mx-auto 2xl:px-0 2xl:pb-6">
     <div class="items-center justify-between md:flex">
         <div>
             <h1 class="text-2xl font-semibold text-[#121212] md:text-[22px] dark:text-white">Tournament News</h1>
@@ -100,7 +100,7 @@
 </div>
 
 <div
-    class="md:px-7.5 md:pt-12.5 px-6 pb-4 pt-6 2xl:container lg:px-10 2xl:mx-auto 2xl:flex 2xl:gap-x-5 2xl:px-0 2xl:pb-6">
+    class="md:px-7.5 md:pt-12.5 px-6 pb-4 pt-6 2xl:container lg:px-10 xl:px-30 2xl:mx-auto 2xl:flex 2xl:gap-x-5 2xl:px-0 2xl:pb-6">
     <div class="2xl:w-1/2 2xl:min-w-0">
         <div class="mb-3.75 md:flex md:items-center md:gap-x-5">
             <h1 class="whitespace-nowrap text-[22px] font-semibold text-[#121212] dark:text-white">Indonesia Tournament

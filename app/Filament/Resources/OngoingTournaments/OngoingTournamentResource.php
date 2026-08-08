@@ -7,6 +7,7 @@ use App\Models\OngoingTournament;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
@@ -28,39 +29,44 @@ class OngoingTournamentResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('tournament_title')
-                ->label('Tournament Title')
-                ->required()
-                ->unique(ignoreRecord: true)
-                ->validationMessages([
-                    'unique' => 'A tournament with this title already exists. Please choose a unique title.',
-                ]),
+            Section::make('Tournament Details')->schema([
+                TextInput::make('tournament_title')
+                    ->label('Tournament Title')
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->validationMessages([
+                        'unique' => 'A tournament with this title already exists. Please choose a unique title.',
+                    ]),
 
-            FileUpload::make('image')
-                ->label('Image Banner')
-                ->image()
-                ->disk('public')
-                ->directory('ongoing-tournaments'),
+                FileUpload::make('image')
+                    ->label('Tournament Image')
+                    ->image()
+                    ->disk('public')
+                    ->directory('ongoing-tournaments'),
 
-            TextInput::make('redirect_link')
-                ->label('Redirect Link')
-                ->url()
-                ->placeholder('https://example.com'),
+                RichEditor::make('description')
+                    ->label('Description'),
+            ])->columnSpan(2),
 
-            DateTimePicker::make('time_date')
-                ->label('Time & Date'),
+            Section::make('Settings')->schema([
+                TextInput::make('redirect_link')
+                    ->label('Redirect Link')
+                    ->url()
+                    ->placeholder('https://example.com'),
 
-            Toggle::make('is_featured')
-                ->label('Featured Tournament (Tampil di Featured Tournaments Carousel)')
-                ->default(false),
+                DateTimePicker::make('time_date')
+                    ->label('Time & Date'),
 
-            Toggle::make('is_active')
-                ->label('Status Aktif')
-                ->default(true),
+                Toggle::make('is_featured')
+                    ->label('Featured Tournament')
+                    ->helperText('Tampil di Featured Tournaments Carousel')
+                    ->default(false),
 
-            RichEditor::make('description')
-                ->label('Description'),
-        ]);
+                Toggle::make('is_active')
+                    ->label('Status Aktif')
+                    ->default(true),
+            ])->columnSpan(1),
+        ])->columns(3);
     }
 
     public static function table(Table $table): Table

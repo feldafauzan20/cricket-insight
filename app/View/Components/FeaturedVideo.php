@@ -3,7 +3,6 @@
 namespace App\View\Components;
 
 use App\Models\PageSlot;
-use App\Models\Video;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -66,21 +65,11 @@ class FeaturedVideo extends Component
                     }
                 }
 
-                if (!empty($videoItems)) {
-                    $this->featuredVideos = collect($videoItems);
-                }
+                $this->featuredVideos = collect($videoItems);
             }
 
-            if (is_null($this->featuredVideos) || (is_countable($this->featuredVideos) && count($this->featuredVideos) === 0)) {
-                $this->featuredVideos = Video::with(['uploader', 'category'])
-                    ->where('is_active', true)
-                    ->latest()
-                    ->limit(10)
-                    ->get()
-                    ->map(function ($video) {
-                        $video->target_link = $video->video_src ?? $video->video_url ?? '#';
-                        return $video;
-                    });
+            if (is_null($this->featuredVideos)) {
+                $this->featuredVideos = collect();
             }
         }
 
