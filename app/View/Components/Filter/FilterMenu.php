@@ -13,6 +13,7 @@ class FilterMenu extends Component
     public iterable $sortOptions;
     public iterable $timeFrames;
     public iterable $popularityOptions;
+    public iterable $regionOptions;
     public array $filters;
 
     /**
@@ -24,6 +25,7 @@ class FilterMenu extends Component
         iterable $sortOptions = [],
         iterable $timeFrames = [],
         iterable $popularityOptions = [],
+        iterable $regionOptions = [],
         array $filters = []
     ) {
         $this->categories = $categories;
@@ -31,6 +33,7 @@ class FilterMenu extends Component
         $this->sortOptions = $sortOptions;
         $this->timeFrames = $timeFrames;
         $this->popularityOptions = $popularityOptions;
+        $this->regionOptions = $regionOptions;
         $this->filters = $filters;
     }
 
