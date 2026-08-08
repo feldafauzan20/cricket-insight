@@ -11,7 +11,7 @@
             $highlightFormattedDate = $highlightPubDate instanceof \DateTimeInterface ? $highlightPubDate->format('d M Y') : \Carbon\Carbon::parse($highlightPubDate)->format('d M Y');
         @endphp
         <div class="md:mb-7.5 mb-5 2xl:container lg:flex lg:flex-row-reverse lg:items-stretch 2xl:mx-auto">
-            <div class="h-63.5 lg:w-150 2xl:w-11/20 overflow-hidden rounded-t-[3px] lg:h-auto">
+            <div class="h-63.5 lg:w-150 xl:w-11/20 overflow-hidden rounded-t-[3px] lg:h-auto">
                 @if ($highlightVideo->video_file)
                     <video src="{{ asset('storage/' . $highlightVideo->video_file) }}" class="h-full w-full object-cover"
                         autoplay muted loop playsinline disablepictureinpicture controlslist="nodownload noplaybackrate"></video>
@@ -20,7 +20,7 @@
                         alt="{{ $highlightVideo->title }}" class="h-full w-full object-cover">
                 @endif
             </div>
-            <div class="2xl:w-9/20 relative overflow-hidden rounded-b-[3px] 2xl:flex 2xl:flex-col 2xl:justify-center">
+            <div class="xl:w-9/20 relative overflow-hidden rounded-b-[3px] 2xl:flex 2xl:flex-col 2xl:justify-center">
                 {{-- Background Image --}}
                 <img src="{{ asset('images/dummy/dummy-editor-choices.webp') }}" alt="Editor's Choices Background"
                     class="absolute inset-0 z-20 h-full w-full object-cover opacity-40">
@@ -82,16 +82,11 @@
         <div class="swiper-wrapper">
             @forelse ($interviewVideos as $video)
                 <div class="swiper-slide w-auto!">
-                    <x-cards.interview-videos-card :video="$video" />
+                    <x-cards.interview-videos-card page-key="interview" :video="$video" />
                 </div>
             @empty
                 <p class="text-sm text-[#A2A6A9]">No videos available at the moment</p>
             @endforelse
         </div>
-    </div>
-    <div class="flex items-center gap-1.5 md:justify-end">
-        <a href="" class="text-[15px] text-[#007DFC]">View All Videos</a>
-        {{-- right arrow --}}
-        <x-fas-arrow-right class="h-6 w-6 text-[#007DFC]" />
     </div>
 </div>

@@ -10,6 +10,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -24,39 +25,43 @@ class VideoResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('title')
-                ->label('Title')
-                ->required()
-                ->unique(ignoreRecord: true)
-                ->validationMessages([
-                    'unique' => 'A video with this title already exists. Please enter a unique title.',
-                ]),
+            Section::make('Video Details')->schema([
+                TextInput::make('title')
+                    ->label('Title')
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->validationMessages([
+                        'unique' => 'A video with this title already exists. Please enter a unique title.',
+                    ]),
 
-            FileUpload::make('video_file')
-                ->label('Upload Video File (MP4, WebM, MOV)')
-                ->disk('public')
-                ->directory('videos/uploads')
-                ->acceptedFileTypes(['video/mp4', 'video/webm', 'video/quicktime', 'video/x-msvideo'])
-                ->maxSize(102400),
+                FileUpload::make('video_file')
+                    ->label('Upload Video File (MP4, WebM, MOV)')
+                    ->disk('public')
+                    ->directory('videos/uploads')
+                    ->acceptedFileTypes(['video/mp4', 'video/webm', 'video/quicktime', 'video/x-msvideo'])
+                    ->maxSize(102400),
 
-            TextInput::make('video_url')
-                ->label('URL Video (YouTube, dll)')
-                ->url()
-                ->placeholder('https://www.youtube.com/watch?v=...'),
+                TextInput::make('video_url')
+                    ->label('URL Video (YouTube, dll)')
+                    ->url()
+                    ->placeholder('https://www.youtube.com/watch?v=...'),
 
-            FileUpload::make('thumbnail')
-                ->label('Thumbnail')
-                ->image()
-                ->disk('public')
-                ->directory('videos/thumbnails'),
+                Textarea::make('description')
+                    ->label('Description'),
+            ])->columnSpan(2),
 
-            Textarea::make('description')
-                ->label('Description'),
+            Section::make('Settings')->schema([
+                FileUpload::make('thumbnail')
+                    ->label('Thumbnail')
+                    ->image()
+                    ->disk('public')
+                    ->directory('videos/thumbnails'),
 
-            Toggle::make('is_active')
-                ->label('Is active')
-                ->default(true),
-        ]);
+                Toggle::make('is_active')
+                    ->label('Is active')
+                    ->default(true),
+            ])->columnSpan(1),
+        ])->columns(3);
     }
 
     public static function table(Table $table): Table

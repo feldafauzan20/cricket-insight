@@ -39,13 +39,26 @@ class GalleryResource extends Resource
                     ->label('Title')
                     ->required()
                     ->unique(ignoreRecord: true)
-                    ->validationMessages([
-                        'unique' => 'An entry with this title already exists. Please choose a unique title.',
-                    ])
                     ->live(onBlur: true)
                     ->afterStateUpdated(fn (?string $state, $set) =>
                         $set('slug', Str::slug($state))
-                    ),
+                    )
+                    ->rule(function ($component) {
+                        return function (string $attribute, $value, \Closure $fail) use ($component) {
+                            $record = $component->getRecord();
+
+                            $exists = Article::where('slug', Str::slug($value))
+                                ->when($record, fn ($query) => $query->whereKeyNot($record))
+                                ->exists();
+
+                            if ($exists) {
+                                $fail('This title generates a slug that is already in use. Please choose a different title.');
+                            }
+                        };
+                    })
+                    ->validationMessages([
+                        'unique' => 'An entry with this title already exists. Please choose a unique title.',
+                    ]),
                 Hidden::make('slug')
                     ->required(),
                 FileUpload::make('thumbnail')->label('Thumbnail Photo')->image()->disk('public')->directory('gallery'),

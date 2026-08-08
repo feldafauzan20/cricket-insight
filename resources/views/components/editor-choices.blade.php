@@ -21,11 +21,11 @@
 
 @if ($editorChoice)
     <section class="2xl:container lg:flex lg:items-stretch 2xl:mx-auto">
-        <div class="h-54.5 lg:w-97.25 hidden overflow-hidden md:block lg:h-auto 2xl:w-2/5">
+        <div class="h-54.5 xl:h-117.25 lg:w-97.25 hidden overflow-hidden md:block lg:h-auto xl:w-2/5">
             <img src="{{ $editorChoice->thumbnail ? asset('storage/' . $editorChoice->thumbnail) : asset('images/dummy/editor-choices/dummy-bg-hero-editor-choices.webp') }}"
                 alt="{{ $editorChoice->title }}" class="h-full w-full object-cover">
         </div>
-        <div class="relative overflow-hidden 2xl:w-3/5">
+        <div class="relative overflow-hidden xl:w-3/5">
             {{-- Background Image --}}
             <img src="{{ asset('images/dummy/dummy-editor-choices.webp') }}" alt="Editor's Choices Background"
                 class="absolute inset-0 z-20 h-full w-full object-cover opacity-40">
@@ -35,7 +35,7 @@
             </div>
 
             {{-- Content --}}
-            <div class="md:mx-7.5 lg:py-13.5 lg:px-13.5 relative z-30 mx-6 py-5 lg:mx-0">
+            <div class="md:mx-7.5 lg:py-13.5 lg:px-13.5 relative z-30 mx-6 xl:mx-13.5 py-5 xl:py-13.5 lg:mx-0">
                 <div class="mb-2 w-fit rounded-full border-2 border-[#D6111A]/20 bg-[#D6111A]/20 px-3.5 py-1">
                     <p class="text-[13px] font-semibold text-white">Editor's Choices</p>
                 </div>

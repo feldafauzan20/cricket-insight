@@ -9,6 +9,7 @@ use Filament\Tables\Table;
 use Filament\Tables;
 
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\FileUpload;
@@ -26,40 +27,40 @@ class NationRankingResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('rank')
-                ->numeric()
-                ->required()
-                ->label('Peringkat')
-                ->unique(ignoreRecord: true, modifyRuleUsing: function (Unique $rule, callable $get) {
-                    return $rule->where('gender', $get('gender'));
-                }),
+            Section::make('Ranking Details')->schema([
+                Select::make('gender')
+                    ->options([
+                        'mens' => "Men's Ranking",
+                        'womens' => "Women's Ranking",
+                    ])
+                    ->required()
+                    ->label('Kategori Ranking')
+                    ->default('mens'),
 
-            Select::make('gender')
-                ->options([
-                    'mens' => "Men's Ranking",
-                    'womens' => "Women's Ranking",
-                ])
-                ->required()
-                ->label('Kategori Ranking')
-                ->default('mens'),
+                TextInput::make('rank')
+                    ->numeric()
+                    ->required()
+                    ->label('Peringkat')
+                    ->unique(ignoreRecord: true, modifyRuleUsing: function (Unique $rule, callable $get) {
+                        return $rule->where('gender', $get('gender'));
+                    }),
 
-            TextInput::make('country_name')
-                ->label('Nama Negara')
-                ->required(),
+                TextInput::make('country_name')
+                    ->label('Nama Negara')
+                    ->required(),
 
-            // --- INPUT SCORE DITAMBAHKAN DI SINI ---
-            TextInput::make('score')
-                ->label('Score / Points')
-                ->numeric()
-                ->default(0)
-                ->required(),
-            // ---------------------------------------
+                TextInput::make('score')
+                    ->label('Score / Points')
+                    ->numeric()
+                    ->default(0)
+                    ->required(),
 
-            FileUpload::make('flag_image')
-                ->label('Bendera Negara')
-                ->image()
-                ->disk('public')
-                ->directory('flags'),
+                FileUpload::make('flag_image')
+                    ->label('Bendera Negara')
+                    ->image()
+                    ->disk('public')
+                    ->directory('flags'),
+            ])->columns(2),
         ]);
     }
 

@@ -58,9 +58,17 @@ class TournamentsController extends Controller
                 ->get();
         }
 
-        // 3. Ongoing Tournaments
+        // 3. Ongoing Tournaments (time_date is now or in the future)
         $ongoingTournaments = OngoingTournament::query()
             ->where('is_active', true)
+            ->where('time_date', '>=', now())
+            ->oldest('time_date')
+            ->get();
+
+        // 3b. Past Tournaments (time_date is before now)
+        $pastTournaments = OngoingTournament::query()
+            ->where('is_active', true)
+            ->where('time_date', '<', now())
             ->latest('time_date')
             ->get();
 
@@ -118,6 +126,7 @@ class TournamentsController extends Controller
             'heroArticles' => $heroArticles,
             'featuredTournaments' => $featuredTournaments,
             'ongoingTournaments' => $ongoingTournaments,
+            'pastTournaments' => $pastTournaments,
             'tournamentNews' => $tournamentNews,
             'indonesiaNews' => $indonesiaNews,
             'internationalNews' => $internationalNews,
@@ -125,6 +134,8 @@ class TournamentsController extends Controller
             'hasError' => !$matchesData['success'],
             'error' => $matchesData['error'] ?? null,
         ];
+
+        // dd($data);
 
         return view('tournaments', $data);
     }

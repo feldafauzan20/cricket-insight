@@ -41,7 +41,7 @@ Route::prefix('{locale}')
         Route::get('/news', [NewsController::class, 'index'])->name('news.index');
         Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
 
-        Route::get('/archive', [GalleryController::class, 'index'])->name('gallery.index');
+        Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
         Route::get('/gallery/load-more', [GalleryController::class, 'loadMore'])->name('gallery.load-more');
         Route::get('/magazines/load-more', [MagazineController::class, 'loadMore'])->name('magazines.load-more');
 

@@ -24,7 +24,7 @@
     }
 @endphp
 
-<div class="md:px-7.5 md:pt-12.5 px-6 pb-4 pt-6 2xl:container md:pb-6 lg:px-10 lg:pb-11 2xl:mx-auto 2xl:px-0 2xl:pb-6">
+<div class="md:px-7.5 md:pt-12.5 px-6 pb-4 pt-6 2xl:container md:pb-6 lg:px-10 xl:px-30 lg:pb-11 2xl:mx-auto 2xl:px-0 2xl:pb-6">
     <div class="items-center justify-between md:flex">
         <div>
             <h1 class="text-2xl font-semibold text-[#121212] md:text-[22px] dark:text-white">

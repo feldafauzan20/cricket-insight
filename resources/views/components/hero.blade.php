@@ -82,7 +82,7 @@
 
                     {{-- Slide Content --}}
                     <div
-                        class="mx-7.5 pt-18 pb-8.5 relative h-full 2xl:container md:pb-12 md:pt-8 lg:mx-10 lg:pb-80 lg:pt-28 2xl:mx-auto">
+                        class="mx-7.5 pt-18 pb-8.5 relative h-full 2xl:container md:pb-12 md:pt-8 lg:mx-10 lg:pb-80 lg:pt-28 xl:mx-30 2xl:mx-auto">
 
                         {{-- Category Badge --}}
                         <div class="mb-1 lg:mb-4">
@@ -127,7 +127,7 @@
     </div>
 
     {{-- Autoplay Progress Indicator --}}
-    <div class="top-18 right-7.5 md:right-7.5 absolute z-20 md:top-8 lg:right-10 lg:top-28 2xl:right-10 2xl:top-12">
+    <div class="top-18 right-7.5 md:right-7.5 absolute z-20 md:top-8 lg:right-10 xl:right-30 lg:top-28 2xl:right-10 2xl:top-12">
         <svg class="h-10 w-10 -rotate-90" viewBox="0 0 40 40">
             <!-- Background circle -->
             <circle cx="20" cy="20" r="18" stroke="#48494A" stroke-width="2" fill="none" />
@@ -146,20 +146,20 @@
 
     {{-- Next and Previous Buttons (Desktop) --}}
     <div
-        class="2xl:top-68.75 z-20 hidden lg:absolute lg:right-10 lg:top-1/2 lg:flex lg:-translate-y-1/2 lg:flex-col lg:gap-y-2 2xl:right-10">
+        class="2xl:top-68.75 z-20 hidden lg:absolute lg:right-10 xl:right-30 lg:top-1/2 lg:flex lg:-translate-y-1/2 lg:flex-col lg:gap-y-2 2xl:right-10">
         <x-buttons.next-button class="hero-carousel-button-next" />
         <x-buttons.previous-button class="hero-carousel-button-prev" />
     </div>
 
     {{-- Indicator Dots (Large screens) --}}
-    <div class="lg:bottom-50 z-20 hidden lg:absolute lg:left-0 lg:right-0 lg:block">
+    <div class="lg:bottom-50 z-20 hidden lg:absolute lg:left-0 xl:left-20 lg:right-0 lg:block">
         <div class="2xl:container lg:mx-10 2xl:mx-auto">
             <div class="hero-carousel-pagination lg:flex lg:gap-x-2"></div>
         </div>
     </div>
 
     {{-- News Cards as Navigation (Large screens) --}}
-    <div class="lg:pb-7.5 2xl:pb-10.5 z-20 hidden lg:absolute lg:bottom-0 lg:left-0 lg:right-0 lg:block">
+    <div class="lg:pb-7.5 2xl:pb-10.5 z-20 hidden lg:absolute xl:left-20 xl:right-20 lg:bottom-0 lg:left-0 lg:right-0 lg:block">
         <div class="lg:gap-x-7.5 2xl:container lg:mx-10 lg:flex 2xl:mx-auto 2xl:gap-x-10">
             @foreach ($heroSlides as $index => $slide)
                 <div class="hero-news-card flex-1 cursor-pointer" data-slide-index="{{ $index }}">

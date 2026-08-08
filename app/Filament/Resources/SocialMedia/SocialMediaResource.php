@@ -9,6 +9,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Table;
 
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
@@ -24,10 +25,12 @@ class SocialMediaResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('platform_name')->label('Nama Platform')->required(),
-            Textarea::make('embed_url')->label('Link / Script Embed')->required(),
-            TextInput::make('sort_order')->numeric()->default(0),
-            Toggle::make('is_active')->default(true),
+            Section::make('Social Media Details')->schema([
+                TextInput::make('platform_name')->label('Nama Platform')->required(),
+                Textarea::make('embed_url')->label('Link / Script Embed')->required(),
+                TextInput::make('sort_order')->numeric()->default(0),
+                Toggle::make('is_active')->default(true),
+            ])->columns(2),
         ]);
     }
 
