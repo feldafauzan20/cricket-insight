@@ -51,6 +51,7 @@
                 :sort-options="$sortOptions"
                 :time-frames="$timeFrames"
                 :popularity-options="$popularityOptions"
+                :region-options="$regionOptions"
                 :filters="$filters"
             />
         </div>
