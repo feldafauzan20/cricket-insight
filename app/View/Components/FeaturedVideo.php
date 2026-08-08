@@ -31,18 +31,43 @@ class FeaturedVideo extends Component
     {
         if (is_null($this->featuredVideos)) {
             if ($this->pageKey) {
-                // Fetch videos assigned to page_slots for this pageKey
-                $slotVideos = PageSlot::with(['video.uploader', 'video.category'])
+                // Fetch slots assigned to page_slots for this pageKey
+                $slots = PageSlot::with(['video.uploader', 'video.category'])
                     ->where('page_key', $this->pageKey)
                     ->where('section_key', 'like', 'featured_video_%')
-                    ->whereNotNull('video_id')
+                    ->where(function ($query) {
+                        $query->whereNotNull('video_id')
+                            ->orWhereNotNull('embed_link');
+                    })
                     ->orderBy('id')
-                    ->get()
-                    ->pluck('video')
-                    ->filter();
+                    ->get();
 
-                if ($slotVideos->isNotEmpty()) {
-                    $this->featuredVideos = $slotVideos;
+                $videoItems = [];
+                foreach ($slots as $slot) {
+                    $video = $slot->video;
+                    $targetLink = !empty($slot->embed_link) ? $slot->embed_link : ($video?->video_url ?? '#');
+
+                    if ($video) {
+                        $video->target_link = $targetLink;
+                        $videoItems[] = $video;
+                    } elseif (!empty($slot->embed_link)) {
+                        // Create fallback object if only embed_link is set
+                        $videoItems[] = (object) [
+                            'id' => $slot->id,
+                            'title' => $slot->label ?? 'Featured Video',
+                            'thumbnail' => null,
+                            'uploader' => (object) ['name' => 'ADMIN'],
+                            'category' => (object) ['name' => 'Video'],
+                            'published_at' => $slot->updated_at ?? now(),
+                            'created_at' => $slot->created_at ?? now(),
+                            'views' => 0,
+                            'target_link' => $targetLink,
+                        ];
+                    }
+                }
+
+                if (!empty($videoItems)) {
+                    $this->featuredVideos = collect($videoItems);
                 }
             }
 
@@ -51,13 +76,17 @@ class FeaturedVideo extends Component
                     ->where('is_active', true)
                     ->latest()
                     ->limit(10)
-                    ->get();
+                    ->get()
+                    ->map(function ($video) {
+                        $video->target_link = $video->video_url ?? '#';
+                        return $video;
+                    });
             }
         }
 
         return view('components.featured-video', [
             'featuredVideos' => $this->featuredVideos,
-            'slotId' => $this->slotId
+            'slotId' => $this->slotId,
         ]);
     }
 }

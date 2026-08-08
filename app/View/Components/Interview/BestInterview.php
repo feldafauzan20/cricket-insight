@@ -8,12 +8,14 @@ use Illuminate\View\Component;
 
 class BestInterview extends Component
 {
+    public iterable $interviews;
+
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(iterable $interviews = [])
     {
-        //
+        $this->interviews = $interviews;
     }
 
     /**

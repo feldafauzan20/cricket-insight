@@ -9,6 +9,7 @@ use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Tables\Columns\TextColumn;
@@ -24,14 +25,17 @@ class TagResource extends Resource
     {
         return $schema->components([
             TextInput::make('name')
-                ->label('Nama Tag')
+                ->label('Tag Name')
                 ->required()
+                ->unique(ignoreRecord: true)
+                ->validationMessages([
+                    'unique' => 'A tag with this name already exists. Please choose a unique name.',
+                ])
                 ->live(onBlur: true)
-                ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
-                
-            TextInput::make('slug')
-                ->required()
-                ->unique(ignoreRecord: true),
+                ->afterStateUpdated(fn ($state, Set $set) => $set('slug', Str::slug($state))),
+
+            Hidden::make('slug')
+                ->required(),
         ]);
     }
 

@@ -2,18 +2,21 @@
 
 namespace App\View\Components;
 
+use App\Http\Controllers\StreamingPartnerController;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class StreamingPartnerBbiWbbi extends Component
 {
+    public $streamingPartners;
+
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($streamingPartners = null)
     {
-        //
+        $this->streamingPartners = $streamingPartners ?? StreamingPartnerController::getActivePartners(10);
     }
 
     /**
@@ -21,6 +24,8 @@ class StreamingPartnerBbiWbbi extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.streaming-partner-bbi-wbbi');
+        return view('components.streaming-partner-bbi-wbbi', [
+            'streamingPartners' => $this->streamingPartners,
+        ]);
     }
 }

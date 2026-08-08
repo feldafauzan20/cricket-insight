@@ -798,18 +798,20 @@ document.addEventListener("DOMContentLoaded", () => {
     new Swiper(".streaming-partner-swiper", {
         modules: [FreeMode],
         slidesPerView: 2,
-        spaceBetween: 8,
+        spaceBetween: 16,
         freeMode: true,
         grabCursor: true,
-        centerInsufficientSlides: true,
         breakpoints: {
             375: {
-                slidesPerView: 2,
+                slidesPerView: 2.5,
+            },
+            640: {
+                slidesPerView: 3.5,
             },
             768: {
-                slidesPerView: 3,
+                slidesPerView: 4.5,
             },
-            1536: {
+            1024: {
                 slidesPerView: 6,
             },
         },

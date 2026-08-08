@@ -62,28 +62,48 @@ class BbiWbbiSettingResource extends Resource
                     ->url(),
             ])->columns(2),
 
-            // 2. BBI Article CMS (Allows selecting up to 3 articles)
-            Section::make('BBI Article Section')->schema([
-                TextInput::make('article_redirect_link')
-                    ->label('Add Redirect Link (View All Button)')
-                    ->url()
-                    ->columnSpanFull(),
+            // 2. BBI / WBBI Hero Carousel Articles (3 Slots)
+            Section::make('BBI / WBBI Hero Carousel Articles (3 Slots)')->schema([
                 Select::make('article_1_id')
-                    ->label('Select Article 1')
+                    ->label('Hero Carousel Article 1')
                     ->relationship('article1', 'title')
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->allowHtml()
+                    ->getOptionLabelFromRecordUsing(fn ($record) => "
+                        <div style='display: flex; gap: 12px; align-items: center;'>
+                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "' 
+                                style='width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;' />
+                            <span style='font-weight: 500;'>" . e(\Illuminate\Support\Str::limit($record->title, 100)) . "</span>
+                        </div>
+                    "),
                 Select::make('article_2_id')
-                    ->label('Select Article 2')
+                    ->label('Hero Carousel Article 2')
                     ->relationship('article2', 'title')
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->allowHtml()
+                    ->getOptionLabelFromRecordUsing(fn ($record) => "
+                        <div style='display: flex; gap: 12px; align-items: center;'>
+                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "' 
+                                style='width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;' />
+                            <span style='font-weight: 500;'>" . e(\Illuminate\Support\Str::limit($record->title, 100)) . "</span>
+                        </div>
+                    "),
                 Select::make('article_3_id')
-                    ->label('Select Article 3')
+                    ->label('Hero Carousel Article 3')
                     ->relationship('article3', 'title')
                     ->searchable()
-                    ->preload(),
-            ])->columns(3),
+                    ->preload()
+                    ->allowHtml()
+                    ->getOptionLabelFromRecordUsing(fn ($record) => "
+                        <div style='display: flex; gap: 12px; align-items: center;'>
+                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "' 
+                                style='width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;' />
+                            <span style='font-weight: 500;'>" . e(\Illuminate\Support\Str::limit($record->title, 100)) . "</span>
+                        </div>
+                    "),
+            ])->columns(1),
 
             // 3. Highlight CMS
             Section::make('Highlight Games Section')->schema([

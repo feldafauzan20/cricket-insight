@@ -15,9 +15,13 @@ class MagazineController extends Controller
     // Dipanggil dari GalleryController@index buat initial load
     public static function initialData(): array
     {
-        $query = Article::with('category')
+        $query = Article::select([
+                'id', 'category_id', 'title', 'slug', 'description', 'thumbnail',
+                'pdf_file', 'source_link', 'published_at', 'created_at'
+            ])
+            ->with('category:id,name,slug')
             ->whereHas('category', function ($q) {
-                $q->whereIn('slug', ['visual-story', 'magazine']);
+                $q->where('slug', 'magazine');
             })
             ->latest();
 
@@ -38,9 +42,13 @@ class MagazineController extends Controller
         $page = max((int) $request->query('page', 2), 1);
         $offset = ($page - 1) * self::PER_PAGE;
 
-        $query = Article::with('category')
+        $query = Article::select([
+                'id', 'category_id', 'title', 'slug', 'description', 'thumbnail',
+                'pdf_file', 'source_link', 'published_at', 'created_at'
+            ])
+            ->with('category:id,name,slug')
             ->whereHas('category', function ($q) {
-                $q->whereIn('slug', ['visual-story', 'magazine']);
+                $q->where('slug', 'magazine');
             })
             ->latest();
 
@@ -54,8 +62,6 @@ class MagazineController extends Controller
             'has_more_pages' => ($offset + self::PER_PAGE) < $total,
         ];
 
-        dd($responseData);
-
         return response()->json($responseData);
     }
 
@@ -68,13 +74,24 @@ class MagazineController extends Controller
                 : asset('storage/' . $article->thumbnail);
         }
 
+        // Lightweight lazy loading: Send link URL string only. File is fetched on-demand when clicked.
+        $targetUrl = '#';
+        if (!empty($article->source_link)) {
+            $targetUrl = $article->source_link;
+        } elseif (!empty($article->pdf_file)) {
+            $targetUrl = asset('storage/' . $article->pdf_file);
+        }
+
         return [
             'id' => $article->id,
             'title' => $article->title,
             'description' => $article->description ?? '',
             'thumbnail_url' => $thumbnailUrl,
-            'pdf_url' => $article->source_link ?? '#',
-            'category' => $article->category?->name ?? 'Visual Story',
+            'target_url' => $targetUrl,
+            'pdf_url' => $targetUrl,
+            'link_url' => $targetUrl,
+            'has_pdf' => !empty($article->pdf_file),
+            'category' => $article->category?->name ?? 'Magazine',
             'published_date' => $article->published_at 
                 ? $article->published_at->format('d M, Y') 
                 : ($article->created_at ? $article->created_at->format('d M, Y') : date('d M, Y')),

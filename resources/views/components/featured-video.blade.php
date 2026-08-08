@@ -23,11 +23,19 @@
     <div class="swiper featured-video-swiper w-full overflow-hidden 2xl:w-auto">
         <div class="swiper-wrapper">
             @forelse ($featuredVideos as $video)
+                @php
+                    $pubDate = $video->published_at ?? $video->created_at ?? now();
+                    $formattedDate = is_string($pubDate) ? \Carbon\Carbon::parse($pubDate)->format('d M Y') : $pubDate->format('d M Y');
+                    $videoUrl = $video->target_link ?? $video->embed_link ?? $video->video_url ?? '#';
+                @endphp
                 <div class="swiper-slide 2xl:w-107.25! w-full 2xl:shrink-0">
-                    <div class="h-131.25 group relative block cursor-pointer">
+                    <a href="{{ $videoUrl }}" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="h-131.25 group relative block cursor-pointer">
                         {{-- Thumbnail Video --}}
-                        <img src="{{ $video->thumbnail ? asset('storage/' . $video->thumbnail) : asset('images/dummy/commentaries/dummy-commentaries-small-card.webp') }}"
-                            alt="{{ $video->title }}"
+                        <img src="{{ !empty($video->thumbnail) ? asset('storage/' . $video->thumbnail) : asset('images/dummy/commentaries/dummy-commentaries-small-card.webp') }}"
+                            alt="{{ $video->title ?? 'Featured Video' }}"
                             class="absolute h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
 
                         <div class="bg-linear-to-b absolute inset-0 w-full from-black/0 to-black"></div>
@@ -58,7 +66,7 @@
                                     <div class="flex items-center gap-x-2">
                                         <x-letsicon-time-atack class="h-2.5 w-2.5 text-[#EC0226]" />
                                         <span class="text-[10px] font-semibold text-white">
-                                            {{ strtoupper($video->published_at ? $video->published_at->format('d M Y') : $video->created_at->format('d M Y')) }}
+                                            {{ strtoupper($formattedDate) }}
                                         </span>
                                     </div>
                                     <div class="flex items-center gap-x-1.5">
@@ -69,7 +77,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             @empty
                 <div class="h-131.25 flex w-full items-center justify-center bg-[#1F1D5E]">

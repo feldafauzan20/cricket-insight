@@ -1,37 +1,9 @@
+@props(['streamingPartners' => null])
+
 @php
-    $streamingPartners = [
-        [
-            'src' => asset('images/logo/streaming-partner-logo/facebook-live-logo.svg'),
-            'alt' => 'Facebook Live',
-            'size' => 'h-20 w-32 md:h-28 md:w-44',
-        ],
-        [
-            'src' => asset('images/logo/streaming-partner-logo/youtube-logo.svg'),
-            'dark_src' => asset('images/logo/streaming-partner-logo/youtube-logo-white.svg'),
-            'alt' => 'YouTube',
-            'size' => 'h-16 w-28 md:h-20 md:w-36',
-        ],
-        [
-            'src' => asset('images/logo/streaming-partner-logo/fancode-logo.svg'),
-            'alt' => 'Fancode',
-            'size' => 'h-14 w-24 md:h-18 md:w-32',
-        ],
-        [
-            'src' => asset('images/logo/streaming-partner-logo/icc-tv-logo.svg'),
-            'alt' => 'ICC TV',
-            'size' => 'h-24 w-24 md:h-30 md:w-30',
-        ],
-        [
-            'src' => asset('images/logo/streaming-partner-logo/img-arena-logo.svg'),
-            'alt' => 'Arena',
-            'size' => 'h-20 w-32 md:h-24 md:w-40',
-        ],
-        [
-            'src' => asset('images/logo/streaming-partner-logo/styx-sport-logo.svg'),
-            'alt' => 'Styx Sport',
-            'size' => 'h-16 w-28 md:h-20 md:w-36',
-        ],
-    ];
+    if (empty($streamingPartners)) {
+        $streamingPartners = \App\Http\Controllers\StreamingPartnerController::getActivePartners(10);
+    }
 @endphp
 
 {{-- STREAMING PARTNERS START --}}
@@ -48,15 +20,9 @@
         @foreach ($streamingPartners as $partner)
             <div
                 class="py-12.5 px-12.5 md:py-12.5 md:px-16.5 2xl:py-23.25 2xl:px-13.25 h-35 flex items-center justify-center border border-[#B6B6B6] 2xl:h-60">
-                @if (isset($partner['dark_src']))
-                    <img src="{{ $partner['src'] }}" alt="{{ $partner['alt'] }}"
-                        class="{{ $partner['size'] }} block object-contain dark:hidden" loading="lazy">
-                    <img src="{{ $partner['dark_src'] }}" alt="{{ $partner['alt'] }}"
-                        class="{{ $partner['size'] }} hidden object-contain dark:block" loading="lazy">
-                @else
-                    <img src="{{ $partner['src'] }}" alt="{{ $partner['alt'] }}"
-                        class="{{ $partner['size'] }} object-contain" loading="lazy">
-                @endif
+                <img src="{{ is_object($partner) ? $partner->image_url : (is_array($partner) ? asset($partner['src'] ?? $partner['image'] ?? '') : asset($partner)) }}"
+                    alt="{{ is_object($partner) ? $partner->title : ($partner['alt'] ?? $partner['title'] ?? '') }}"
+                    class="h-20 w-32 md:h-28 md:w-44 object-contain" loading="lazy">
             </div>
         @endforeach
     </div>

@@ -8,12 +8,18 @@ use Illuminate\View\Component;
 
 class AllInterview extends Component
 {
+    public iterable $interviews;
+    public iterable $regionOptions;
+    public array $filters;
+
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(iterable $interviews = [], iterable $regionOptions = [], array $filters = [])
     {
-        //
+        $this->interviews = $interviews;
+        $this->regionOptions = $regionOptions;
+        $this->filters = $filters;
     }
 
     /**

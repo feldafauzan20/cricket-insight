@@ -33,4 +33,14 @@ class Article extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function getPdfBase64Attribute(): ?string
+    {
+        if (!$this->pdf_file || !\Illuminate\Support\Facades\Storage::disk('public')->exists($this->pdf_file)) {
+            return null;
+        }
+
+        $content = \Illuminate\Support\Facades\Storage::disk('public')->get($this->pdf_file);
+        return 'data:application/pdf;base64,' . base64_encode($content);
+    }
 }

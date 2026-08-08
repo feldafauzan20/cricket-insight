@@ -8,6 +8,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Table;
 
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Str;
@@ -23,17 +24,19 @@ class CategoryResource extends Resource
     {
         return $schema->components([
             TextInput::make('name')
-                ->label('Nama Kategori')
-                ->required()
-                ->live(onBlur: true)
-                ->afterStateUpdated(fn (string $operation, ?string $state, $set) =>
-                    $operation === 'create' ? $set('slug', Str::slug($state)) : null
-                ),
-                
-            TextInput::make('slug')
+                ->label('Category Name')
                 ->required()
                 ->unique(ignoreRecord: true)
-                ->helperText('PERINGATAN: Jangan mengubah slug untuk kategori bawaan (news, tournament, visual-story) karena akan merusak filter sistem.'),
+                ->validationMessages([
+                    'unique' => 'A category with this name already exists. Please choose a unique name.',
+                ])
+                ->live(onBlur: true)
+                ->afterStateUpdated(fn (?string $state, $set) =>
+                    $set('slug', Str::slug($state))
+                ),
+
+            Hidden::make('slug')
+                ->required(),
         ]);
     }
 

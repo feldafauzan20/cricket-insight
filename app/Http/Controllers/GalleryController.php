@@ -15,9 +15,13 @@ class GalleryController extends Controller
 
     public static function initialData(): array
     {
-        $query = Article::with('category')
+        $query = Article::select([
+                'id', 'category_id', 'title', 'slug', 'description', 'thumbnail',
+                'pdf_file', 'source_link', 'visual_year', 'views_count', 'published_at', 'created_at'
+            ])
+            ->with('category:id,name,slug')
             ->whereHas('category', function ($q) {
-                $q->where('slug', 'gallery')->orWhere('categories.id', 7);
+                $q->where('slug', 'gallery');
             })
             ->latest();
 
@@ -37,9 +41,13 @@ class GalleryController extends Controller
         $page = max((int) $request->query('page', 2), 1);
         $offset = ($page - 1) * self::PER_PAGE;
 
-        $query = Article::with('category')
+        $query = Article::select([
+                'id', 'category_id', 'title', 'slug', 'description', 'thumbnail',
+                'pdf_file', 'source_link', 'visual_year', 'views_count', 'published_at', 'created_at'
+            ])
+            ->with('category:id,name,slug')
             ->whereHas('category', function ($q) {
-                $q->where('slug', 'gallery')->orWhere('categories.id', 7);
+                $q->where('slug', 'gallery');
             })
             ->latest();
 
@@ -53,8 +61,6 @@ class GalleryController extends Controller
             'has_more_pages' => ($offset + self::PER_PAGE) < $total,
         ];
 
-        dd($responseData);
-
         return response()->json($responseData);
     }
 
@@ -67,6 +73,14 @@ class GalleryController extends Controller
                 : asset('storage/' . $article->thumbnail);
         }
 
+        // Lightweight lazy loading: Send link URL string only. File is fetched on-demand when clicked.
+        $targetUrl = '#';
+        if (!empty($article->source_link)) {
+            $targetUrl = $article->source_link;
+        } elseif (!empty($article->pdf_file)) {
+            $targetUrl = asset('storage/' . $article->pdf_file);
+        }
+
         return [
             'id' => $article->id,
             'title' => $article->title,
@@ -74,7 +88,10 @@ class GalleryController extends Controller
             'image_url' => $imageUrl,
             'year' => (string) ($article->visual_year ?? $article->created_at?->format('Y') ?? date('Y')),
             'views' => $article->views_count ?? 0,
-            'source_link' => $article->source_link ?? '',
+            'target_url' => $targetUrl,
+            'source_link' => $targetUrl,
+            'has_pdf' => !empty($article->pdf_file),
+            'category' => $article->category?->name ?? 'Gallery',
         ];
     }
 
@@ -88,8 +105,6 @@ class GalleryController extends Controller
             'magazines' => $magazineGalleryData['magazines'],
             'magazinesHasMore' => $magazineGalleryData['hasMore'],
         ];
-
-        dd($data);
 
         return view('gallery', $data);
     }
