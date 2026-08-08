@@ -8,12 +8,16 @@ use Illuminate\View\Component;
 
 class InterviewVideos extends Component
 {
+    public $highlightVideo;
+    public iterable $interviewVideos;
+
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($highlightVideo = null, iterable $interviewVideos = [])
     {
-        //
+        $this->highlightVideo = $highlightVideo;
+        $this->interviewVideos = $interviewVideos;
     }
 
     /**

@@ -131,7 +131,7 @@ class InterviewsController extends Controller
             'regionOptions' => $regionOptions,
             'filters' => ['region' => $region],
         ];
-
+        // dd($data);
         return view('interview', $data);
     }
 
