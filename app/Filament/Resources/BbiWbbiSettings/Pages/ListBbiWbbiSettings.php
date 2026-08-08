@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\BbiWbbiSettings\Pages;
 
 use App\Filament\Resources\BbiWbbiSettings\BbiWbbiSettingResource;
+use App\Models\BbiWbbiSetting;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
@@ -14,7 +15,8 @@ class ListBbiWbbiSettings extends ListRecords
     {
         return [
             CreateAction::make()
-                ->label('Create New'),
+                ->label('Create New')
+                ->visible(fn (): bool => BbiWbbiSetting::count() === 0),
         ];
     }
 }

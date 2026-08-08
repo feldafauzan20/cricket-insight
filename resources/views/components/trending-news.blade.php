@@ -1,23 +1,28 @@
 @php
     use App\Models\Article;
+    use App\Models\PageSlot;
 
-    $fetchedTrending = Article::with(['category', 'uploader'])
-        ->where('is_trending_manual', true)
-        ->where('status', 'published')
-        ->orderBy('published_at', 'desc')
-        ->limit(3)
-        ->get();
+    $slotTrending = PageSlot::with(['article.category', 'article.uploader'])
+        ->where('page_key', 'homepage')
+        ->whereIn('section_key', ['trending_1', 'trending_2', 'trending_3'])
+        ->whereNotNull('article_id')
+        ->get()
+        ->keyBy('section_key');
 
-    $displayTrending = collect();
-    if ($fetchedTrending->isNotEmpty()) {
-        while ($displayTrending->count() < 3) {
-            foreach ($fetchedTrending as $news) {
-                if ($displayTrending->count() >= 3) {
-                    break;
-                }
-                $displayTrending->push($news);
-            }
-        }
+    $displayTrending = collect([
+        $slotTrending->get('trending_1')?->article,
+        $slotTrending->get('trending_2')?->article,
+        $slotTrending->get('trending_3')?->article,
+    ])->filter(fn ($art) => $art && $art->status === 'published')->values();
+
+    if ($displayTrending->count() < 3) {
+        $fallbacks = Article::with(['category', 'uploader'])
+            ->where('status', 'published')
+            ->whereNotIn('id', $displayTrending->pluck('id')->filter())
+            ->orderBy('published_at', 'desc')
+            ->limit(3 - $displayTrending->count())
+            ->get();
+        $displayTrending = $displayTrending->concat($fallbacks);
     }
 @endphp
 
@@ -34,7 +39,7 @@
         <div class="h-px w-full bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>
     </div>
 
-    @if ($displayTrending->count() == 3)
+    @if ($displayTrending->count() >= 3)
         {{-- Trending cards container --}}
         <div class="2xl:flex 2xl:gap-x-2.5">
 

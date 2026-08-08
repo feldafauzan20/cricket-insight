@@ -31,8 +31,6 @@ class TournamentsController extends Controller
             'error' => $matchesData['error'] ?? null,
         ];
 
-        dd($data);
-
         return view('tournaments', $data);
     }
 
@@ -49,8 +47,6 @@ class TournamentsController extends Controller
             ->where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
-
-        dd(['article' => $article]);
 
         return view('tournaments', compact('article'));
     }

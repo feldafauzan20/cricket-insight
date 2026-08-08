@@ -1,22 +1,47 @@
 @php
-    $slides = [
+    use App\Models\BbiWbbiSetting;
+    use App\Models\PageSlot;
+    use App\Models\Article;
+    use Illuminate\Support\Str;
+
+    $setting = BbiWbbiSetting::with(['article1', 'article2', 'article3'])->first();
+
+    $dynamicArticles = collect([
+        $setting?->article1,
+        $setting?->article2,
+        $setting?->article3,
+    ])->filter(fn ($art) => $art && $art->status === 'published')->values();
+
+    if ($dynamicArticles->isEmpty()) {
+        $slotRecords = PageSlot::with(['article'])
+            ->where('page_key', 'bbi_wbbi')
+            ->whereIn('section_key', ['bbi_wbbi_hero_1', 'bbi_wbbi_hero_2', 'bbi_wbbi_hero_3'])
+            ->orderBy('section_key', 'asc')
+            ->get();
+        $dynamicArticles = $slotRecords->map(fn ($s) => $s->article)->filter(fn ($art) => $art && $art->status === 'published')->values();
+    }
+
+    if ($dynamicArticles->isEmpty()) {
+        $dynamicArticles = Article::where('status', 'published')->latest()->take(3)->get();
+    }
+
+    $dynamicSlides = [];
+    foreach ($dynamicArticles as $index => $article) {
+        $dynamicSlides[] = [
+            'id' => $index + 1,
+            'heading' => Str::limit($article->title, 50),
+            'poster' => $article->thumbnail
+                ? asset('storage/' . $article->thumbnail)
+                : asset('images/dummy/hero-home/bg-hero-home.webp'),
+            'video' => ['type' => 'youtube', 'id' => 'dQw4w9WgXcQ'],
+            'more_details_url' => route('news.show', ['locale' => app()->getLocale(), 'slug' => $article->slug]),
+        ];
+    }
+
+    $slides = !empty($dynamicSlides) ? $dynamicSlides : [
         [
             'id' => 1,
             'heading' => "Dedicated Team Exceptional\nUnique Cricket Playstyle",
-            'poster' => asset('images/dummy/hero-home/bg-hero-home.webp'),
-            'video' => ['type' => 'youtube', 'id' => 'dQw4w9WgXcQ'],
-            'more_details_url' => '#',
-        ],
-        [
-            'id' => 2,
-            'heading' => "Second Slide Heading\nGoes Here",
-            'poster' => asset('images/dummy/hero-home/bg-hero-home.webp'),
-            'video' => ['type' => 'youtube', 'id' => 'dQw4w9WgXcQ'],
-            'more_details_url' => '#',
-        ],
-        [
-            'id' => 3,
-            'heading' => "Third Slide Heading\nGoes Here",
             'poster' => asset('images/dummy/hero-home/bg-hero-home.webp'),
             'video' => ['type' => 'youtube', 'id' => 'dQw4w9WgXcQ'],
             'more_details_url' => '#',
@@ -32,21 +57,8 @@
             x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
             x-transition:leave="transition ease-in duration-500" x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0" class="absolute inset-0 h-full w-full">
-            {{-- Poster — tampil selama belum playing --}}
-            <img :src="slide.poster" :alt="slide.heading" class="absolute inset-0 h-full w-full object-cover"
-                x-show="!(playing && active === index)">
-
-            {{-- YouTube mount — wrapper pegang styling, div dalam target YT.Player --}}
-            <div x-show="slide.video.type === 'youtube'"
-                class="absolute inset-0 h-full w-full transition-opacity duration-500"
-                :class="(playing && active === index) ? 'opacity-100' : 'pointer-events-none opacity-0'">
-                <div :id="'yt-player-' + index" class="h-full w-full"></div>
-            </div>
-
-            {{-- MP4 fallback --}}
-            <video x-show="slide.video.type === 'mp4'" :id="'video-' + index" muted playsinline
-                class="absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
-                :class="(playing && active === index) ? 'opacity-100' : 'pointer-events-none opacity-0'"></video>
+            {{-- Poster --}}
+            <img :src="slide.poster" :alt="slide.heading" class="absolute inset-0 h-full w-full object-cover">
         </div>
     </template>
 
@@ -57,24 +69,7 @@
     <div
         class="2xl:mt-75.25 relative z-10 flex h-full flex-col items-center justify-center px-6 text-center 2xl:container lg:mx-10 2xl:mx-auto 2xl:justify-start">
 
-        {{-- Play / Pause --}}
-        <button @click="togglePlay()" type="button" aria-label="Play or pause video"
-            class="h-33.75 w-33.75 mb-2.5 flex items-center justify-center rounded-full bg-[#D9D9D9]/20 p-5 md:mb-14">
-            <span class="h-23.75 w-23.75 flex items-center justify-center rounded-full bg-white/20 p-5">
-                <template x-if="!playing">
-                    <svg class="h-13 w-13 text-white" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M8 5v14l11-7z" />
-                    </svg>
-                </template>
-                <template x-if="playing">
-                    <svg class="h-13 w-13 text-white" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
-                    </svg>
-                </template>
-            </span>
-        </button>
-
-        {{-- Heading --}}
+        {{-- Heading (Max 50 Chars) --}}
         <h1 x-text="slides[active].heading"
             class="font-barlow-semi-condensed md:w-142.5 2xl:w-205 md:mb-14.25 mb-10 text-[25px] font-bold uppercase tracking-[-0.05em] text-white md:block md:text-[70px]">
         </h1>

@@ -1,12 +1,26 @@
 @php
     use App\Models\Article;
+    use App\Models\PageSlot;
 
-    // --- LOGIKA POPULAR NEWS (Sementara tanpa 'views') ---
-    $fetchedPopular = Article::with(['category', 'uploader'])
-        ->where('status', 'published')
-        ->inRandomOrder() // Diacak sementara sebagai pengganti views
-        ->limit(4)
-        ->get();
+    // --- LOGIKA POPULAR / TRENDING NEWS ---
+    $slotArticles = PageSlot::with(['article.category', 'article.uploader'])
+        ->where('page_key', 'homepage')
+        ->where('section_key', 'like', 'trending_side_%')
+        ->whereNotNull('article_id')
+        ->orderBy('section_key')
+        ->get()
+        ->pluck('article')
+        ->filter(fn ($art) => $art && $art->status === 'published');
+
+    if ($slotArticles->isNotEmpty()) {
+        $fetchedPopular = $slotArticles;
+    } else {
+        $fetchedPopular = Article::with(['category', 'uploader'])
+            ->where('status', 'published')
+            ->inRandomOrder()
+            ->limit(4)
+            ->get();
+    }
 
     $displayPopular = collect();
     if ($fetchedPopular->isNotEmpty()) {

@@ -74,7 +74,7 @@
                                                 x-text="gallery.year"></p>
                                         </div>
                                         <div class="px-3.25 rounded-[3px] bg-[#232323] py-2 dark:bg-[#353434]">
-                                            <a href="" class="text-[11px] font-medium text-[#EC0226]">VIEW <span
+                                            <a :href="gallery.target_url || gallery.source_link || '#'" target="_blank" class="text-[11px] font-medium text-[#EC0226]">VIEW <span
                                                     class="text-white">ALBUM</span></a>
                                         </div>
                                     </div>
@@ -149,7 +149,8 @@
             </div>
             <div class="gap-y-6.25 md:gap-x-4.5 grid grid-cols-1 md:grid-cols-2 lg:gap-y-10 2xl:grid-cols-3">
                 <template x-for="(magazine, index) in magazines" :key="magazine.id">
-                    <div class="group relative aspect-[3/4] overflow-hidden rounded-[8px]"
+                    <a :href="magazine.target_url || magazine.pdf_url || magazine.source_link || '#'" target="_blank"
+                        class="group relative aspect-[3/4] block overflow-hidden rounded-[8px]"
                         x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
                         x-transition:enter-end="opacity-100 scale-100">
 
@@ -168,7 +169,7 @@
                             <p class="mb-2.5 line-clamp-2 text-[12px] text-white/70" x-text="magazine.description"></p>
                             <p class="text-[11px] font-medium text-white/60" x-text="magazine.published_date"></p>
                         </div>
-                    </div>
+                    </a>
                 </template>
             </div>
 

@@ -42,7 +42,6 @@ class LiveScoreController extends Controller
     private function fetchMatchesFromAPI($limit)
     {
         try {
-            // dd('fetching from API');
             $apiUrl = config('app.cricket_api_url');
             $clubId = config('app.cricket_club_id', '19323');
 
@@ -79,7 +78,6 @@ class LiveScoreController extends Controller
             }
 
             $data = $response->json();
-            // dd($data);
 
             if (!$data['responseState'] ?? false) {
                 Log::error('API returned error state', ['response' => $data]);
@@ -94,8 +92,6 @@ class LiveScoreController extends Controller
             $matches = collect($data['data'] ?? [])->map(function ($match) use ($apiUrl) {
                 return $this->formatMatchData($match, $apiUrl);
             })->toArray();
-
-            // dd($matches);
 
             return [
                 'success' => true,
@@ -134,7 +130,6 @@ class LiveScoreController extends Controller
         $t1Logo = !empty($match['t1_logo_file_path'])
             ? "https://media.cricclubs.com" . $match['t1_logo_file_path']
             : asset('images/dummy/live-score-card/dummy-logo-live-score-1.webp');
-        // dd($t1Logo);
 
         $t2Logo = !empty($match['t2_logo_file_path'])
             ? "https://media.cricclubs.com" . $match['t2_logo_file_path']
@@ -209,7 +204,6 @@ class LiveScoreController extends Controller
     {
         $status = strtolower($match['status'] ?? '');
         $isComplete = $match['isComplete'] ?? 0;
-        // dd($status, $isComplete);
 
         if ($status === 'live' && !$isComplete) {
             return [
@@ -309,8 +303,6 @@ class LiveScoreController extends Controller
             $scorecardData = [
                 'scorecard' => $data['data'] ?? null
             ];
-
-            dd($scorecardData);
 
             return view('components.cards.live-score-card', $scorecardData);
 
