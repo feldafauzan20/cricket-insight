@@ -135,11 +135,16 @@ class PageSlotResource extends Resource
 
             if ($pageKey === 'interview') {
                 $sections[] = Section::make('Interview Main Highlight')->schema([
-                    Select::make('slots.main_highlight.article_id')
-                        ->label('Highlight Paling Atas (Article)')
-                        ->options(fn () => static::getArticleSelectOptions())
+                    Select::make('slots.main_highlight.video_id')
+                        ->label('Highlight Paling Atas (Video)')
+                        ->options(fn () => static::getVideoSelectOptions())
                         ->allowHtml()->searchable()->preload()->nullable(),
-                ]);
+
+                    TextInput::make('slots.main_highlight.embed_link')
+                        ->label('YouTube Embed Link (Optional)')
+                        ->url()
+                        ->placeholder('https://www.youtube.com/embed/...'),
+                ])->columns(2);
             }
 
             if ($pageKey === 'tournament') {

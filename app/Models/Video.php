@@ -24,4 +24,13 @@ class Video extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+
+    public function getVideoSrcAttribute(): ?string
+    {
+        if ($this->video_file) {
+            return asset('storage/' . $this->video_file);
+        }
+
+        return $this->video_url;
+    }
 } 

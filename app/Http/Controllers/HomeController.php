@@ -31,8 +31,6 @@ class HomeController extends Controller
             'featuredVideos' => $featuredVideos,
         ];
 
-        // dd($data);
-
         return view('home', $data);
    }
 }
