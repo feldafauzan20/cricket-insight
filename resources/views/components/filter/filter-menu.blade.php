@@ -20,6 +20,7 @@
         $timeLabel = $timeFrames[$filters['time_frame'] ?? 'all_time'] ?? 'All Time';
         $popularityLabel = $popularityOptions[$filters['popularity'] ?? 'most_viewed'] ?? 'Most Viewed';
         $tagLabel = $filters['tag'] ? ucfirst(str_replace(['-', '_'], ' ', $filters['tag'])) : 'Any';
+        $regionLabel = $regionOptions[$filters['region'] ?? ''] ?? 'Any';
     @endphp
 
     <div
@@ -68,6 +69,24 @@
                     <button type="button"
                         class="flex w-full items-center rounded-[6px] px-3 py-2 text-left text-sm text-[#121212] transition hover:bg-[#F3F3F3] dark:text-white dark:hover:bg-[#2A2A2A]"
                         @click.prevent="applyFilter('popularity', '{{ $popularityKey }}'); open = false">{{ $popularityLabelItem }}</button>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="relative" x-data="{ open: false }" @click.away="open = false"
+            @filter-open.window="if ($event.detail !== 'region') open = false">
+            <x-filter.filter-card icon="ri-map-pin-line" category="Region" categoryValue="{{ $regionLabel }}"
+                iconColor="#EC0226"
+                x-on:click="open = !open; if (open) $dispatch('filter-open', 'region'); else $dispatch('filter-open', null)" />
+            <div x-show="open" x-cloak
+                class="absolute left-0 top-full z-20 mt-2 min-w-[220px] rounded-[10px] border border-[#E0E0E0] bg-white p-2 shadow-lg dark:border-[#2A2A2A] dark:bg-[#171717]">
+                <button type="button"
+                    class="flex w-full items-center rounded-[6px] px-3 py-2 text-left text-sm text-[#121212] transition hover:bg-[#F3F3F3] dark:text-white dark:hover:bg-[#2A2A2A]"
+                    @click.prevent="applyFilter('region', ''); open = false">Any Region</button>
+                @foreach ($regionOptions as $regionKey => $regionLabelItem)
+                    <button type="button"
+                        class="flex w-full items-center rounded-[6px] px-3 py-2 text-left text-sm text-[#121212] transition hover:bg-[#F3F3F3] dark:text-white dark:hover:bg-[#2A2A2A]"
+                        @click.prevent="applyFilter('region', '{{ $regionKey }}'); open = false">{{ $regionLabelItem }}</button>
                 @endforeach
             </div>
         </div>
