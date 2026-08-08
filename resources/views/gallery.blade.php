@@ -253,7 +253,7 @@
 
     {{-- ADS SECTION START --}}
     <section class="md:mx-7.5 mx-6 mb-7 2xl:container lg:mx-10 2xl:mx-auto">
-        <x-ads />
+        <x-ads position="gallery_bottom" />
     </section>
     {{-- ADS SECTION END --}}
 

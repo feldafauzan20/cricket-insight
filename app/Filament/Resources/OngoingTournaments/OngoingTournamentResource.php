@@ -12,6 +12,8 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 
@@ -48,6 +50,14 @@ class OngoingTournamentResource extends Resource
             DateTimePicker::make('time_date')
                 ->label('Time & Date'),
 
+            Toggle::make('is_featured')
+                ->label('Featured Tournament (Tampil di Featured Tournaments Carousel)')
+                ->default(false),
+
+            Toggle::make('is_active')
+                ->label('Status Aktif')
+                ->default(true),
+
             RichEditor::make('description')
                 ->label('Description'),
         ]);
@@ -56,9 +66,11 @@ class OngoingTournamentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            ImageColumn::make('image')->label('Image'),
+            ImageColumn::make('image')->label('Image')->disk('public'),
             TextColumn::make('tournament_title')->label('Title')->searchable()->sortable(),
             TextColumn::make('time_date')->label('Time & Date')->dateTime('d M Y H:i')->sortable(),
+            IconColumn::make('is_featured')->label('Featured')->boolean(),
+            IconColumn::make('is_active')->label('Aktif')->boolean(),
             TextColumn::make('redirect_link')->label('Redirect Link'),
             TextColumn::make('created_at')->dateTime('d M Y H:i')->toggleable(isToggledHiddenByDefault: true),
         ]);

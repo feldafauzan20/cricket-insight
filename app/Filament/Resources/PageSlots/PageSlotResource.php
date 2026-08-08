@@ -148,12 +148,24 @@ class PageSlotResource extends Resource
             }
 
             if ($pageKey === 'tournament') {
-                $sections[] = Section::make('Tournament Upcoming Match')->schema([
-                    Select::make('slots.upcoming_match.article_id')
-                        ->label('Turnamen Utama Terdekat (Article)')
+                $sections[] = Section::make('Tournament Hero Carousel (Max 4 Articles)')->schema([
+                    Select::make('slots.hero_carousel_1.article_id')
+                        ->label('Carousel Article 1')
                         ->options(fn () => static::getArticleSelectOptions())
                         ->allowHtml()->searchable()->preload()->nullable(),
-                ]);
+                    Select::make('slots.hero_carousel_2.article_id')
+                        ->label('Carousel Article 2')
+                        ->options(fn () => static::getArticleSelectOptions())
+                        ->allowHtml()->searchable()->preload()->nullable(),
+                    Select::make('slots.hero_carousel_3.article_id')
+                        ->label('Carousel Article 3')
+                        ->options(fn () => static::getArticleSelectOptions())
+                        ->allowHtml()->searchable()->preload()->nullable(),
+                    Select::make('slots.hero_carousel_4.article_id')
+                        ->label('Carousel Article 4')
+                        ->options(fn () => static::getArticleSelectOptions())
+                        ->allowHtml()->searchable()->preload()->nullable(),
+                ])->columns(2);
             }
 
             // 10 Featured Video Slots

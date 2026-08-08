@@ -42,7 +42,7 @@
 
     {{-- ADS SECTION START --}}
     <section class="md:mx-7.5 md:mb-7.5 mx-6 mb-7 2xl:container lg:mx-10 lg:mb-10 2xl:mx-auto">
-        <x-ads />
+        <x-ads position="interview_top" />
     </section>
     {{-- ADS SECTION END --}}
 
@@ -60,13 +60,13 @@
 
     {{-- FEATURED VIDEO SECTION START --}}
     <section class="mb-7 md:mb-6 lg:mb-10">
-        <x-featured-video page-key="interview" />
+        <x-featured-video.interview-featured-video />
     </section>
     {{-- FEATURED VIDEO SECTION END --}}
 
     {{-- ADS SECTION START --}}
     <section class="md:mx-7.5 mx-6 mb-7 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
-        <x-ads />
+        <x-ads position="interview_bottom" />
     </section>
     {{-- ADS SECTION END --}}
 

@@ -94,25 +94,25 @@
 
                 {{-- ADS CONTENT --}}
                 <div class="flex flex-col 2xl:flex-row gap-y-5 2xl:gap-y-0 2xl:gap-x-7.5 mb-7.5">
-                    <x-ads />
-                    <x-ads />
+                    <x-ads position="news_slot_1" />
+                    <x-ads position="news_slot_2" />
                 </div>
 
                 <div class="mb-7.5">
-                    <x-ads />
+                    <x-ads position="news_slot_3" />
                 </div>
 
                 <div class="flex flex-col 2xl:flex-row gap-y-5 2xl:gap-y-0 2xl:gap-x-7.5 mb-5 2xl:mb-7.5">
-                    <x-ads />
-                    <x-ads />
+                    <x-ads position="news_slot_4" />
+                    <x-ads position="news_slot_5" />
                 </div>
 
                 <div class="flex flex-col gap-y-5 mb-7.5">
-                    <x-ads />
-                    <x-ads />
+                    <x-ads position="news_slot_6" />
+                    <x-ads position="news_slot_7" />
                 </div>
                 <div class="mb-5 md:mb-7.5">
-                    <x-ads />
+                    <x-ads position="news_slot_8" />
                 </div>
                 <div class="mb-7.5">
                     <x-pagination.pagination :paginator="$news" />
@@ -142,7 +142,7 @@
             {{-- SOCIAL MEDIA SECTION END --}}
             {{-- ADS SECTION START --}}
             <section class="mt-6 lg:mt-7.5 mx-6 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto mb-7 md:mb-6 lg:mb-10">
-                <x-ads />
+                <x-ads position="news_sidebar" />
             </section>
             {{-- ADS SECTION END --}}
         </x-slot>
@@ -150,7 +150,7 @@
 
     {{-- ADS SECTION START --}}
     <section class="mx-6 md:mx-7.5 lg:mx-10 2xl:container 2xl:mx-auto mb-7 md:mb-6 lg:mb-10">
-        <x-ads />
+        <x-ads position="news_bottom" />
     </section>
     {{-- ADS SECTION END --}}
 

@@ -126,7 +126,7 @@
 
     {{-- FEATURED VIDEO SECTION START --}}
     <section class="mb-7 md:mb-6 lg:mb-10">
-        <x-featured-video page-key="home_and_match_centre" />
+        <x-featured-video.home-featured-video />
     </section>
     {{-- FEATURED VIDEO SECTION END --}}
 

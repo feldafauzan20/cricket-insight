@@ -1,3 +1,5 @@
+@props(['tournaments' => []])
+
 <div>
     {{-- HEADER --}}
     <h1 class="text-[22px] font-semibold text-[#121212] dark:text-white">Featured Tournaments</h1>
@@ -13,11 +15,20 @@
     {{-- SCORE CARD TOURNAMENT --}}
     <div class="swiper score-card-tournament-swiper overflow-hidden">
         <div class="swiper-wrapper">
-            @for ($i = 0; $i < 11; $i++)
-                <div class="swiper-slide w-80!">
-                    <x-cards.score-card-tournament :index="$i" />
-                </div>
-            @endfor
+            @if(count($tournaments) > 0)
+                @foreach ($tournaments as $index => $tournament)
+                    <div class="swiper-slide w-80! h-auto flex">
+                        <x-cards.score-card-tournament :tournament="$tournament" :index="$index" />
+                    </div>
+                @endforeach
+            @else
+                @for ($i = 0; $i < 6; $i++)
+                    <div class="swiper-slide w-80! h-auto flex">
+                        <x-cards.score-card-tournament :index="$i" />
+                    </div>
+                @endfor
+            @endif
         </div>
     </div>
 </div>
+
