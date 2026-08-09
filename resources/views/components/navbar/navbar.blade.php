@@ -72,16 +72,89 @@
                     </div>
 
                     {{-- Search input --}}
-                    <div class="relative flex items-center pr-3">
-                        <input x-show="searchOpen" x-transition type="text" placeholder="Search..."
+                    <form action="{{ route('search.index', ['locale' => app()->getLocale()]) }}" method="GET"
+                        x-data="navSearch(@js(route('search.live', ['locale' => app()->getLocale()])), @js(request('q', '')))"
+                        @click.outside="searchOpen = false" class="relative flex items-center pr-3">
+                        <input x-show="searchOpen" x-transition name="q" type="text" placeholder="Search..."
+                            x-model="query" @input.debounce.400ms="fetchResults()" autocomplete="off"
                             class="w-32 rounded-full bg-white px-3 py-4 pr-10 text-gray-900 placeholder-gray-400 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 md:w-48 lg:w-72 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:focus:ring-blue-400">
 
-                        <button @click="searchOpen = !searchOpen"
-                            class="flex h-12 w-12 items-center justify-center rounded-full text-[#A2A6A9] transition-all focus:outline-none dark:text-white"
-                            :class="searchOpen ? 'absolute right-1' : ''">
+                        <button type="button" x-show="!searchOpen" @click="searchOpen = true"
+                            class="flex h-12 w-12 items-center justify-center rounded-full text-[#A2A6A9] transition-all focus:outline-none dark:text-white">
                             <x-iconoir-search class="h-8 w-8" />
                         </button>
-                    </div>
+
+                        <button type="submit" x-show="searchOpen" x-cloak
+                            class="absolute right-1 flex h-12 w-12 items-center justify-center rounded-full text-[#A2A6A9] transition-all focus:outline-none dark:text-white">
+                            <x-iconoir-search class="h-8 w-8" />
+                        </button>
+
+                        {{-- Live search dropdown --}}
+                        <div x-show="searchOpen && query.trim() !== ''" x-transition x-cloak
+                            class="absolute right-0 top-full z-50 mt-2 max-h-96 w-80 overflow-y-auto rounded-lg bg-white p-3 text-left shadow-xl md:w-96 dark:bg-gray-800">
+
+                            <p x-show="loading" class="p-3 text-center text-xs text-gray-400">Searching...</p>
+
+                            <p x-show="!loading && !hasResults" class="p-3 text-center text-xs text-gray-400">
+                                No results found.
+                            </p>
+
+                            <div x-show="!loading && hasResults" class="flex flex-col gap-y-3">
+                                <template x-if="results.news.length">
+                                    <div>
+                                        <p class="mb-1 px-1 text-[10px] font-semibold uppercase text-gray-400">News
+                                        </p>
+                                        <template x-for="item in results.news" :key="item.url">
+                                            <a :href="item.url"
+                                                class="flex items-center gap-x-2 rounded-md px-1 py-1.5 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                <img :src="item.thumbnail || '{{ asset('images/dummy/news-card/dummy-news-card.webp') }}'"
+                                                    class="h-10 w-14 shrink-0 rounded object-cover">
+                                                <span class="line-clamp-2 text-xs font-medium text-gray-800 dark:text-white"
+                                                    x-text="item.title"></span>
+                                            </a>
+                                        </template>
+                                    </div>
+                                </template>
+
+                                <template x-if="results.interviews.length">
+                                    <div>
+                                        <p class="mb-1 px-1 text-[10px] font-semibold uppercase text-gray-400">
+                                            Interviews</p>
+                                        <template x-for="item in results.interviews" :key="item.url">
+                                            <a :href="item.url"
+                                                class="flex items-center gap-x-2 rounded-md px-1 py-1.5 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                <img :src="item.thumbnail || '{{ asset('images/dummy/gallery/dummy-gallery.webp') }}'"
+                                                    class="h-10 w-14 shrink-0 rounded object-cover">
+                                                <span class="line-clamp-2 text-xs font-medium text-gray-800 dark:text-white"
+                                                    x-text="item.title"></span>
+                                            </a>
+                                        </template>
+                                    </div>
+                                </template>
+
+                                <template x-if="results.tournaments.length">
+                                    <div>
+                                        <p class="mb-1 px-1 text-[10px] font-semibold uppercase text-gray-400">
+                                            Tournaments</p>
+                                        <template x-for="item in results.tournaments" :key="item.url">
+                                            <a :href="item.url"
+                                                class="flex items-center gap-x-2 rounded-md px-1 py-1.5 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                <img :src="item.thumbnail || 'https://placehold.co/56x40'"
+                                                    class="h-10 w-14 shrink-0 rounded object-cover">
+                                                <span class="line-clamp-2 text-xs font-medium text-gray-800 dark:text-white"
+                                                    x-text="item.title"></span>
+                                            </a>
+                                        </template>
+                                    </div>
+                                </template>
+
+                                <button type="submit"
+                                    class="mt-1 w-full rounded-md bg-[#EC0226] py-2 text-xs font-semibold text-white transition hover:opacity-90">
+                                    See all results
+                                </button>
+                            </div>
+                        </div>
+                    </form>
 
                     {{-- Darkmode Toggle --}}
                     <button @click="$store.darkMode.toggle()"
