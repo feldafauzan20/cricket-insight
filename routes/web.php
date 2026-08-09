@@ -9,6 +9,7 @@ use App\Http\Controllers\MatchesController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OngoingTournamentController;
 use App\Http\Controllers\PointsTableController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\TeamsController;
 use App\Http\Controllers\TournamentsController;
@@ -34,8 +35,6 @@ Route::prefix('{locale}')
     ->whereIn('locale', config('app.available_locales'))
     ->middleware('setlocale')
     ->group(function () {
-        Route::get('/dd', [DebugController::class, 'index'])->name('debug.dd');
-        Route::get('/debug-data', [DebugController::class, 'index'])->name('debug.data');
         Route::get('/', [HomeController::class, 'index'])->name('home');
 
         Route::get('/news', [NewsController::class, 'index'])->name('news.index');
@@ -64,4 +63,7 @@ Route::prefix('{locale}')
         Route::get('/tournaments/{slug}', [TournamentsController::class, 'show'])->name('tournaments.show');
 
         Route::get('/bbi-wbbi', [BbiWbbiController::class, 'index'])->name('bbi-wbbi');
+
+        Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+        Route::get('/search/live', [SearchController::class, 'live'])->name('search.live');
     });

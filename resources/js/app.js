@@ -530,6 +530,54 @@ Alpine.data(
     }),
 );
 
+// Alpine.js Component for Navbar Live Search
+Alpine.data("navSearch", (liveUrl, initialQuery = "") => ({
+    query: initialQuery,
+    results: { news: [], interviews: [], tournaments: [] },
+    loading: false,
+    _requestId: 0,
+
+    get hasResults() {
+        return (
+            this.results.news.length > 0 ||
+            this.results.interviews.length > 0 ||
+            this.results.tournaments.length > 0
+        );
+    },
+
+    async fetchResults() {
+        const query = this.query.trim();
+
+        if (!query) {
+            this.results = { news: [], interviews: [], tournaments: [] };
+            this.loading = false;
+            return;
+        }
+
+        const requestId = ++this._requestId;
+        this.loading = true;
+
+        try {
+            const res = await fetch(
+                `${liveUrl}?q=${encodeURIComponent(query)}`,
+            );
+            const data = await res.json();
+
+            if (requestId !== this._requestId) return;
+
+            this.results = data;
+        } catch (error) {
+            if (requestId !== this._requestId) return;
+            console.error("Failed to fetch live search results", error);
+            this.results = { news: [], interviews: [], tournaments: [] };
+        } finally {
+            if (requestId === this._requestId) {
+                this.loading = false;
+            }
+        }
+    },
+}));
+
 // Alpine.js Component for Points Table
 Alpine.data(
     "pointsTable",
