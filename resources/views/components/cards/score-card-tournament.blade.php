@@ -15,7 +15,8 @@
 
     {{-- BACKGROUND IMAGE --}}
     <img src="{{ asset('images/background-image-abstract/bg-image-score-card-tournament.webp') }}"
-        alt="Editor's Choices Background" class="absolute inset-0 z-40 h-full w-full object-cover opacity-10">
+        alt="Editor's Choices Background"
+        class="pointer-events-none absolute inset-0 z-40 h-full w-full object-cover opacity-10">
 
     {{-- CONTENT --}}
     <div class="p-4.25 {{ $bgColor }} relative z-30 rounded-md h-full flex flex-col justify-between w-full">
