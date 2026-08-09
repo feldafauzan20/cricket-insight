@@ -1,0 +1,22 @@
+<div class="rounded-[30px] bg-white dark:bg-[#1E1F1F]">
+    <div class="px-4.5 md:px-8.75 border-b border-[#B6B6B6] py-5">
+        <h1
+            class="font-barlow-semi-condensed lg:py-8.75 mb-3.5 text-center text-xl font-bold tracking-[0.09em] text-[#434343] lg:mb-0 dark:text-white">
+            TITLE IPSUM
+            3</h1>
+        <div class="lg:mb-9.75 mb-3.5 overflow-hidden rounded-[20px]">
+            <img src="https://placehold.co/291x213?text=Dummy" alt="" class="h-full w-full object-cover">
+        </div>
+        <p
+            class="font-figtree md:w-132 text-center font-medium leading-[135%] tracking-[-0.05em] text-[#969696] md:mx-auto md:block lg:w-full">
+            Lorem ipsum
+            dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+    </div>
+    <a class="py-6.5 flex items-center justify-center gap-x-4 text-[#434343] dark:text-[#E3E3E3]" href="#">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="curentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.175 9L6.575 14.6L8 16L16 8L8 0L6.575 1.4L12.175 7H0V9H12.175Z" fill="currentColor" />
+        </svg>
+        <p class="font-figtree font-semibold leading-[135%] tracking-[-0.05em] text-[#B90F16] dark:text-white">MORE
+            DETAILS</p>
+    </a>
+</div>

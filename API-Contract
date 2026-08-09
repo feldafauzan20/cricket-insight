@@ -1,0 +1,103 @@
+BLADE VIEW DATA CONTRACT (FRONTEND DOCUMENTATION)
+
+--------------------------------------------------
+1. NEWS PAGE (/news)
+Controller: NewsController@index
+View: resources/views/news.blade.php (atau sesuai kesepakatan)
+
+Variabel yang dikirim ke View:
+- $news (Paginator) : Koleksi data berita (10 item/halaman).
+- $categories (Collection) : Daftar kategori untuk filter.
+- $tags (Collection) : Daftar tag untuk filter.
+- $regionOptions (Array) : Opsi Region ['Indonesia' => 'Indonesia', 'Global' => 'Global'].
+- $sortOptions (Array) : Opsi urutan (Newest, Oldest, Popular, dll).
+- $timeFrames (Array) : Opsi waktu (Today, This Week, dll).
+- $filters (Array) : Menyimpan query parameter yang sedang aktif.
+- $matches (Array) : Data Live Score pertandingan.
+- $hasError (Boolean) : true jika Live Score gagal dimuat.
+
+Cara Looping & Properti Item ($news):
+@foreach($news as $item)
+  - URL Detail: {{ route('news.show', $item->slug) }}
+  - Judul: {{ $item->title }}
+  - Gambar Utama: {{ asset($item->thumbnail) }}
+  - Gambar Ekstra: {{ asset($item->foto1) }} & {{ asset($item->foto2) }}
+  - Deskripsi: {{ $item->description }}
+  - Region: {{ $item->region }}
+  - Tanggal: {{ $item->published_at->format('d M Y') }}
+  - Kategori: {{ $item->category->name ?? 'Uncategorized' }}
+  - Status Editor Choice: {{ $item->is_editor_choice ? 'Ya' : 'Tidak' }}
+  - Status Trending: {{ $item->is_trending_manual ? 'Ya' : 'Tidak' }}
+@endforeach
+
+Menampilkan Pagination (Otomatis membawa query parameters):
+{{ $news->links() }}
+
+Contoh Form Filter (Region, Category, dll):
+<form action="{{ route('news.index') }}" method="GET">
+  <!-- Looping filter lama agar tidak hilang -->
+  @foreach(request()->except('region', 'page') as $key => $value)
+      <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+  @endforeach
+
+  <!-- Dropdown Region -->
+  <select name="region" onchange="this.form.submit()">
+      <option value="">Semua Region</option>
+      @foreach($regionOptions as $key => $label)
+          <option value="{{ $key }}" {{ ($filters['region'] ?? '') == $key ? 'selected' : '' }}>
+              {{ $label }}
+          </option>
+      @endforeach
+  </select>
+</form>
+
+--------------------------------------------------
+2. SINGLE NEWS PAGE (/news/{slug})
+Controller: NewsController@show
+
+Variabel: $article (Object)
+Properti yang bisa dipanggil:
+- Judul: {{ $article->title }}
+- Gambar: {{ asset($article->thumbnail) }}
+- Isi HTML: {!! $article->content !!}
+- Region: {{ $article->region }}
+- Uploader: {{ $article->uploader->name ?? 'Admin' }}
+- Tags: @foreach($article->tags as $tag) {{ $tag->name }} @endforeach
+
+--------------------------------------------------
+3. MATCHES (/match-centre)
+Otomatis terfilter hanya category_id = 5.
+
+List View (/match-centre):
+- Variabel: $matches (Paginator)
+- Properti Tambahan: {{ $match->match_date }}
+- URL Detail: {{ route('matches.show', $match->slug) }}
+- Pagination: {{ $matches->links() }}
+
+Detail View (/match-centre/{slug}):
+- Variabel: $article (Object)
+
+--------------------------------------------------
+4. TOURNAMENTS (/tournaments)
+Otomatis terfilter hanya category_id = 2.
+
+List View (/tournaments):
+- Variabel: $tournaments (Paginator)
+- Properti Tambahan: {{ $tournament->match_date }}
+- URL Detail: {{ route('tournaments.show', $tournament->slug) }}
+- Pagination: {{ $tournaments->links() }}
+
+Detail View (/tournaments/{slug}):
+- Variabel: $article (Object)
+
+--------------------------------------------------
+5. INTERVIEWS (/interview)
+Otomatis terfilter hanya category_id = 6.
+
+List View (/interview):
+- Variabel: $interviews (Paginator)
+- URL Detail: {{ route('interviews.show', $interview->slug) }}
+- Pagination: {{ $interviews->links() }}
+
+Detail View (/interview/{slug}):
+- Variabel: $article (Object)
