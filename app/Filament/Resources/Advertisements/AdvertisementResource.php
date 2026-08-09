@@ -61,6 +61,8 @@ class AdvertisementResource extends Resource
             ],
             'Match Centre' => [
                 'match_centre_top' => 'Match Centre — Top Banner (Ratio 6:1)',
+                'match_centre_middle_1' => 'Match Centre — Sidebar Banner 1 (Ratio 4:3)',
+                'match_centre_middle_2' => 'Match Centre — Sidebar Banner 2 (Ratio 4:3)',
                 'match_centre_bottom' => 'Match Centre — Bottom Banner (Ratio 6:1)',
             ],
             'Halaman Lainnya & Fallbacks' => [
