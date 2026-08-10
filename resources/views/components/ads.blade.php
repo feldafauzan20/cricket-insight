@@ -14,7 +14,7 @@
             ->first();
     }
 
-    $hasAdsense = !empty($ad?->adsense_code);
+    $hasAdsense = !empty($ad?->adsense_code) && ($ad->is_adsense_active ?? true);
     $hasCmsImage = !empty($ad?->image);
 
     $imagePath = null;

@@ -48,7 +48,7 @@
                 <div class="w-57 md:w-63.25 mb-7 flex items-center justify-between lg:h-fit">
                     <div class="flex items-center gap-x-2.5 text-white">
                         <div class="h-9 w-9 shrink-0 overflow-hidden rounded-full border border-white/30">
-                            <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}"
+                            <img src="{{ $editorChoice->uploader?->avatar_url ?? asset('images/dummy/hero-home/profile-picture-dummy.webp') }}"
                                 alt="Profile Picture" class="h-full w-full object-cover">
                         </div>
                         <p class="line-clamp-1 text-[10px] font-semibold"><span class="font-normal">By

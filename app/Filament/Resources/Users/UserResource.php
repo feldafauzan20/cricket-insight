@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Hash;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
 
 class UserResource extends Resource
 {
@@ -24,6 +26,16 @@ class UserResource extends Resource
     {
         return $schema->components([
             Section::make('Data Admin')->schema([
+                FileUpload::make('avatar')
+                    ->label('Foto Profil Admin')
+                    ->image()
+                    ->avatar()
+                    ->disk('public')
+                    ->directory('avatars')
+                    ->visibility('public')
+                    ->maxSize(2048)
+                    ->columnSpanFull(),
+
                 TextInput::make('name')
                     ->label('Nama Lengkap')
                     ->required(),
@@ -46,6 +58,11 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
+            ImageColumn::make('avatar')
+                ->label('Foto')
+                ->circular()
+                ->disk('public')
+                ->defaultImageUrl(asset('images/dummy/hero-home/profile-picture-dummy.webp')),
             TextColumn::make('name')->searchable(),
             TextColumn::make('email')->searchable(),
             TextColumn::make('created_at')->dateTime('d M Y')->label('Tgl Dibuat'),

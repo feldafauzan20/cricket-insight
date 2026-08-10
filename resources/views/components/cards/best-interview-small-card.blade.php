@@ -25,7 +25,7 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-x-2.5 text-[#121212] dark:text-white">
                 <div class="h-9 w-9 overflow-hidden rounded-full">
-                    <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}" alt="Profile Picture"
+                    <img src="{{ $interview->uploader?->avatar_url ?? asset('images/dummy/hero-home/profile-picture-dummy.webp') }}" alt="Profile Picture"
                         class="h-full w-full object-cover">
                 </div>
                 <p class="text-[10px] font-medium">BY {{ strtoupper($interview->uploader?->name ?? 'UNKNOWN') }}</p>

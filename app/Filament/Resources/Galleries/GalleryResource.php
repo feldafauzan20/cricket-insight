@@ -63,16 +63,34 @@ class GalleryResource extends Resource
                     ->required(),
                 FileUpload::make('thumbnail')->label('Thumbnail Photo')->image()->disk('public')->directory('gallery'),
                 FileUpload::make('pdf_file')
-                    ->label('PDF File (Magazine)')
+                    ->label('PDF File (Magazine Only)')
                     ->disk('public')
                     ->directory('magazines')
                     ->acceptedFileTypes(['application/pdf'])
                     ->maxSize(20480)
                     ->openable()
-                    ->downloadable(),
+                    ->downloadable()
+                    ->disabled(function ($get) {
+                        $catId = $get('category_id');
+                        return $catId ? Category::where('id', $catId)->value('slug') !== 'magazine' : false;
+                    })
+                    ->hidden(function ($get) {
+                        $catId = $get('category_id');
+                        return $catId ? Category::where('id', $catId)->value('slug') === 'gallery' : false;
+                    }),
                 Textarea::make('description')->label('Description'),
                 TextInput::make('visual_year')->label('Year')->numeric(),
-                TextInput::make('source_link')->label('Redirect Link')->url(),
+                TextInput::make('source_link')
+                    ->label('Redirect Link (Gallery Only)')
+                    ->url()
+                    ->disabled(function ($get) {
+                        $catId = $get('category_id');
+                        return $catId ? Category::where('id', $catId)->value('slug') === 'magazine' : false;
+                    })
+                    ->hidden(function ($get) {
+                        $catId = $get('category_id');
+                        return $catId ? Category::where('id', $catId)->value('slug') === 'magazine' : false;
+                    }),
             ])->columnSpan(2),
 
             Section::make('Settings')->schema([
@@ -82,7 +100,8 @@ class GalleryResource extends Resource
                     ->default(fn () => Category::where('slug', 'gallery')->value('id'))
                     ->required()
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->live(),
 
                 Select::make('user_id')
                     ->label('Uploader / Journalist')

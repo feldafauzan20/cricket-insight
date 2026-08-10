@@ -13,11 +13,15 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\TeamsController;
 use App\Http\Controllers\TournamentsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect()->route('home', ['locale' => app()->getLocale()]);
 });
+
+Route::get('/api/users', [UserController::class, 'index'])->name('api.users.index');
+Route::get('/api/users/{id}', [UserController::class, 'show'])->name('api.users.show');
 
 Route::get('/api/series', [SeriesController::class, 'index'])->name('api.series');
 

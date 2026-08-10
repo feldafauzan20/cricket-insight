@@ -17,7 +17,7 @@
                 'category' => $article->category ? $article->category->name : 'Uncategorized',
                 'title' => $article->title,
                 'description' => strip_tags($article->description ?? $article->content ?? ''),
-                'author_image' => asset('images/dummy/hero-home/profile-picture-dummy.webp'),
+                'author_image' => $article->uploader?->avatar_url ?? asset('images/dummy/hero-home/profile-picture-dummy.webp'),
                 'author_name' => strtoupper($article->uploader->name ?? 'SUPER ADMIN'),
                 'date' => strtoupper(
                     $article->published_at

@@ -140,14 +140,6 @@ class ArticlesResource extends Resource
                             ->required(),
                     ]),
 
-
-                TextInput::make('source_link')
-                    ->label('Redirect Link / Source URL')
-                    ->url(),
-
-                DateTimePicker::make('match_date')
-                    ->label('Match Date'),
-
                 Select::make('region')
                     ->label('Region')
                     ->options([

@@ -20,8 +20,21 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'avatar',
         'password',
     ];
+
+    /**
+     * Get avatar URL or default fallback dummy image.
+     */
+    public function getAvatarUrlAttribute(): string
+    {
+        if ($this->avatar && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->avatar)) {
+            return asset('storage/' . $this->avatar);
+        }
+
+        return asset('images/dummy/hero-home/profile-picture-dummy.webp');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

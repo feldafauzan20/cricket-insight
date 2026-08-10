@@ -37,7 +37,7 @@
                 <div class="flex items-center gap-x-2.5 text-[#121212] dark:text-white">
                     <div
                         class="h-9 w-9 shrink-0 overflow-hidden rounded-full border border-gray-200 dark:border-gray-700">
-                        <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}"
+                        <img src="{{ $latestCommentary->uploader?->avatar_url ?? asset('images/dummy/hero-home/profile-picture-dummy.webp') }}"
                             alt="Profile Picture" class="h-full w-full object-cover">
                     </div>
                     <p class="line-clamp-1 text-[10px] font-semibold md:text-sm">

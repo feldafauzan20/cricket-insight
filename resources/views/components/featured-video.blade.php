@@ -52,7 +52,7 @@
                         <div class="px-7.5 relative flex h-full flex-col justify-between py-10">
                             <div class="flex items-center gap-x-2.5 text-white">
                                 <div class="h-9 w-9 shrink-0 overflow-hidden rounded-full border border-white/30">
-                                    <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}"
+                                    <img src="{{ $video->uploader?->avatar_url ?? asset('images/dummy/hero-home/profile-picture-dummy.webp') }}"
                                         alt="Profile Picture" class="h-full w-full object-cover">
                                 </div>
                                 <p class="line-clamp-1 text-[10px] font-semibold md:text-sm">BY

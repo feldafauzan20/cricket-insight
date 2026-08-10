@@ -21,6 +21,12 @@ class SocialMediaResource extends Resource
     protected static ?string $model = SocialMedia::class;
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-share';
     protected static string|\UnitEnum|null $navigationGroup = 'Supporting Elements';
+    protected static bool $shouldRegisterNavigation = false;
+
+    public static function canViewAny(): bool
+    {
+        return false;
+    }
 
     public static function form(Schema $schema): Schema
     {
