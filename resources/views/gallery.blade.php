@@ -61,7 +61,7 @@
                                 <div class="gap-x-1.25 flex items-center">
                                     <x-bi-eye class="w-3.75 h-3.75 text-[#EC0226]" />
                                     <span class="text-[11px] text-[#666] dark:text-[#989292]">
-                                        Viewed <span x-text="gallery.views"></span> Times
+                                        Viewed <span x-text="Number(gallery.views || 0).toLocaleString()"></span> Times
                                     </span>
                                 </div>
                                 <div class="mt-auto">

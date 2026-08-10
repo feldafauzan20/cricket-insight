@@ -80,7 +80,7 @@
                                     <div class="flex items-center gap-x-1.5">
                                         <x-bi-eye class="h-2.5 w-2.5 text-[#EC0226]" />
                                         <span
-                                            class="text-[10px] font-semibold text-white">{{ $video->views ?? '0' }}</span>
+                                            class="text-[10px] font-semibold text-white">{{ number_format($video->views ?? 0) }}</span>
                                     </div>
                                 </div>
                             </div>
