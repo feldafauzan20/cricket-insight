@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-iUOLALtZ.css",
+    "file": "assets/app-DplqYMRe.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -49,7 +49,7 @@
     "src": "resources/fonts/Poppins-SemiBold.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-BFMGzlJC.js",
+    "file": "assets/app-D1oxCAj0.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
