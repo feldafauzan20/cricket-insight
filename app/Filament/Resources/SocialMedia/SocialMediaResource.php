@@ -21,15 +21,25 @@ class SocialMediaResource extends Resource
     protected static ?string $model = SocialMedia::class;
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-share';
     protected static string|\UnitEnum|null $navigationGroup = 'Supporting Elements';
+    protected static ?string $navigationLabel = 'Social Media';
 
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
             Section::make('Social Media Details')->schema([
-                TextInput::make('platform_name')->label('Nama Platform')->required(),
-                Textarea::make('embed_url')->label('Link / Script Embed')->required(),
-                TextInput::make('sort_order')->numeric()->default(0),
-                Toggle::make('is_active')->default(true),
+                TextInput::make('platform_name')
+                    ->label('Nama Platform')
+                    ->required(),
+                TextInput::make('sosmed_link')
+                    ->label('Sosmed Link')
+                    ->placeholder('https://...')
+                    ->url(),
+                Textarea::make('embed_url')
+                    ->label('Embed Link / Script')
+                    ->rows(3),
+                Toggle::make('is_active')
+                    ->label('Status Aktif')
+                    ->default(true),
             ])->columns(2),
         ]);
     }
@@ -37,10 +47,20 @@ class SocialMediaResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            TextColumn::make('platform_name')->searchable(),
-            TextColumn::make('sort_order')->sortable(),
-            IconColumn::make('is_active')->boolean(),
-        ])->defaultSort('sort_order', 'asc');
+            TextColumn::make('platform_name')
+                ->label('Platform')
+                ->searchable(),
+            TextColumn::make('sosmed_link')
+                ->label('Sosmed Link')
+                ->limit(35)
+                ->searchable(),
+            TextColumn::make('embed_url')
+                ->label('Embed Link')
+                ->limit(35),
+            IconColumn::make('is_active')
+                ->label('Aktif')
+                ->boolean(),
+        ]);
     }
 
     public static function getPages(): array

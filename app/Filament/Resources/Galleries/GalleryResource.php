@@ -63,16 +63,35 @@ class GalleryResource extends Resource
                     ->required(),
                 FileUpload::make('thumbnail')->label('Thumbnail Photo')->image()->disk('public')->directory('gallery'),
                 FileUpload::make('pdf_file')
-                    ->label('PDF File (Magazine)')
+                    ->label('Upload File PDF (Gallery Only)')
                     ->disk('public')
-                    ->directory('magazines')
+                    ->directory('galleries')
                     ->acceptedFileTypes(['application/pdf'])
                     ->maxSize(20480)
                     ->openable()
-                    ->downloadable(),
+                    ->downloadable()
+                    ->disabled(function ($get) {
+                        $catId = $get('category_id');
+                        return $catId ? Category::where('id', $catId)->value('slug') === 'magazine' : false;
+                    })
+                    ->hidden(function ($get) {
+                        $catId = $get('category_id');
+                        return $catId ? Category::where('id', $catId)->value('slug') === 'magazine' : false;
+                    }),
                 Textarea::make('description')->label('Description'),
                 TextInput::make('visual_year')->label('Year')->numeric(),
-                TextInput::make('source_link')->label('Redirect Link')->url(),
+                TextInput::make('source_link')
+                    ->label('Link GDrive / Redirect URL (Magazine Only)')
+                    ->url()
+                    ->placeholder('https://drive.google.com/...')
+                    ->disabled(function ($get) {
+                        $catId = $get('category_id');
+                        return $catId ? Category::where('id', $catId)->value('slug') === 'gallery' : false;
+                    })
+                    ->hidden(function ($get) {
+                        $catId = $get('category_id');
+                        return $catId ? Category::where('id', $catId)->value('slug') === 'gallery' : false;
+                    }),
             ])->columnSpan(2),
 
             Section::make('Settings')->schema([
@@ -82,7 +101,8 @@ class GalleryResource extends Resource
                     ->default(fn () => Category::where('slug', 'gallery')->value('id'))
                     ->required()
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->live(),
 
                 Select::make('user_id')
                     ->label('Uploader / Journalist')
@@ -111,12 +131,12 @@ class GalleryResource extends Resource
                     ->sortable(),
                 TextColumn::make('visual_year')->label('Year')->sortable(),
                 TextColumn::make('pdf_file')
-                    ->label('PDF')
+                    ->label('PDF File')
                     ->badge()
                     ->formatStateUsing(fn ($state) => $state ? 'PDF Attached' : '-')
                     ->color(fn ($state) => $state ? 'success' : 'gray'),
                 TextColumn::make('source_link')
-                    ->label('Link')
+                    ->label('GDrive / Link')
                     ->limit(30)
                     ->url(fn ($record) => $record->source_link)
                     ->openUrlInNewTab(),

@@ -29,7 +29,7 @@
         <p class="mb-2 text-[11px] text-[#666] dark:text-[#989292]">{{ $description }}</p>
         <div class="gap-x-1.25 flex items-center">
             <x-bi-eye class="w-3.75 h-3.75 text-[#EC0226]" />
-            <span class="text-[11px] text-[#666] dark:text-[#989292]">Viewed {{ $views }} Times</span>
+            <span class="text-[11px] text-[#666] dark:text-[#989292]">Viewed {{ is_numeric($views) ? number_format($views) : $views }} Times</span>
         </div>
         <div class="mt-auto">
             <div class="my-3.75 h-px bg-[#EFEFEF]"></div>

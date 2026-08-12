@@ -26,9 +26,8 @@
         <div class="flex items-center justify-between 2xl:max-h-full">
             <div class="flex items-center gap-x-2.5 text-[#121212] dark:text-white">
                 <div class="h-9 w-9 overflow-hidden rounded-full">
-                    <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}" alt="Profile Picture"
+                    <img src="{{ $article->uploader?->avatar_url ?? asset('images/dummy/hero-home/profile-picture-dummy.webp') }}" alt="Profile Picture"
                         class="w-full h-full object-cover">
-                    {{-- <img src="https://placehold.co/36x36" alt="Profile Picture" class="h-full w-full object-cover"> --}}
                 </div>
                 <p class="text-[10px] font-medium">BY {{ strtoupper($article->uploader?->name ?? 'UNKNOWN') }}</p>
             </div>

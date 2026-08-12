@@ -4,17 +4,19 @@
     use App\Models\Advertisement;
     use Illuminate\Support\Str;
 
-    $ad = Advertisement::where('position', $position)
-        ->where('is_active', true)
-        ->first();
+    $adRecord = Advertisement::where('position', $position)->first();
+    $hidePlaceholder = $adRecord?->hide_placeholder ?? false;
 
-    if (!$ad && $position !== 'default') {
+    $ad = null;
+    if ($adRecord && $adRecord->is_active) {
+        $ad = $adRecord;
+    } elseif ($position !== 'default') {
         $ad = Advertisement::where('position', 'default')
             ->where('is_active', true)
             ->first();
     }
 
-    $hasAdsense = !empty($ad?->adsense_code);
+    $hasAdsense = !empty($ad?->adsense_code) && ($ad->is_adsense_active ?? true);
     $hasCmsImage = !empty($ad?->image);
 
     $imagePath = null;
@@ -38,6 +40,10 @@
              class="w-full h-auto object-cover max-h-[120px] md:max-h-[150px] lg:max-h-[200px]" 
              fetchpriority="low">
     </a>
+@elseif ($hidePlaceholder)
+    <div class="w-full rounded-md p-8 text-center invisible pointer-events-none select-none" aria-hidden="true">
+        <p class="text-sm font-semibold uppercase opacity-0">&nbsp;</p>
+    </div>
 @else
     <div class="w-full rounded-md border border-dashed border-gray-300 bg-gray-100 p-8 text-center dark:border-[#515050] dark:bg-[#353434]">
         <p class="text-sm font-semibold text-[#A2A6A9] uppercase">

@@ -65,10 +65,10 @@ class DummyContentSeeder extends Seeder
         );
 
         $rankings = [
-            ['rank' => 1, 'country_name' => 'India'],
-            ['rank' => 2, 'country_name' => 'Australia'],
-            ['rank' => 3, 'country_name' => 'England'],
-            ['rank' => 56, 'country_name' => 'Indonesia'],
+            ['rank' => 1, 'country_name' => 'India', 'is_pinned' => false],
+            ['rank' => 2, 'country_name' => 'Australia', 'is_pinned' => false],
+            ['rank' => 3, 'country_name' => 'England', 'is_pinned' => false],
+            ['rank' => 56, 'country_name' => 'Indonesia', 'is_pinned' => true],
         ];
 
         foreach ($rankings as $rank) {

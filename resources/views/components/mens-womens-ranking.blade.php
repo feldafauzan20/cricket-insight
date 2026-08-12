@@ -23,7 +23,8 @@
                 $m3 = $mensRankings->get(2);
                 $m4 = $mensRankings->get(3);
                 $m5 = $mensRankings->get(4);
-                $mId = $mensRankings->first(fn($r) => \Illuminate\Support\Str::lower($r->country_name) === 'indonesia');
+                $mId = $mensRankings->first(fn($r) => $r->is_pinned)
+                    ?? $mensRankings->first(fn($r) => \Illuminate\Support\Str::lower($r->country_name) === 'indonesia');
             @endphp
 
             <x-cards.mens-womens-rangking-card :rank="sprintf('%02d', $m1->rank ?? 1)" :flag="$m1 && $m1->flag_image ? asset('storage/' . $m1->flag_image) : ''" :country="$m1->country_name ?? ''" :points="$m1->score ?? '0'"
@@ -48,9 +49,8 @@
                 $w3 = $womensRankings->get(2);
                 $w4 = $womensRankings->get(3);
                 $w5 = $womensRankings->get(4);
-                $wId = $womensRankings->first(
-                    fn($r) => \Illuminate\Support\Str::lower($r->country_name) === 'indonesia',
-                );
+                $wId = $womensRankings->first(fn($r) => $r->is_pinned)
+                    ?? $womensRankings->first(fn($r) => \Illuminate\Support\Str::lower($r->country_name) === 'indonesia');
             @endphp
 
             <x-cards.mens-womens-rangking-card :rank="sprintf('%02d', $w1->rank ?? 1)" :flag="$w1 && $w1->flag_image ? asset('storage/' . $w1->flag_image) : ''" :country="$w1->country_name ?? ''"

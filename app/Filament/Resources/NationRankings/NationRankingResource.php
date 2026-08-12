@@ -13,8 +13,10 @@ use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Illuminate\Validation\Rules\Unique;
 
 class NationRankingResource extends Resource
@@ -60,6 +62,11 @@ class NationRankingResource extends Resource
                     ->image()
                     ->disk('public')
                     ->directory('flags'),
+
+                Toggle::make('is_pinned')
+                    ->label('Pin Indonesia / Baris Bawah Sidebar')
+                    ->helperText('Aktifkan untuk menampilkan negara ini di posisi terbawah (pinned slot) sidebar ranking')
+                    ->default(false),
             ])->columns(2),
         ]);
     }
@@ -83,6 +90,9 @@ class NationRankingResource extends Resource
                 ->label('Score')
                 ->sortable(),
             // ---------------------------------------
+
+            ToggleColumn::make('is_pinned')
+                ->label('Pinned (Indonesia)'),
 
             TextColumn::make('gender')
                 ->label('Kategori')

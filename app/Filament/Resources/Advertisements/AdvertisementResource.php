@@ -15,6 +15,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
@@ -107,11 +108,21 @@ class AdvertisementResource extends Resource
                     Toggle::make('is_active')
                         ->label('Status Aktif')
                         ->default(true),
+
+                    Toggle::make('hide_placeholder')
+                        ->label('Sembunyikan Placeholder Iklan (Invisible Layout)')
+                        ->default(false)
+                        ->helperText('Jika diaktifkan, kotak placeholder ("ADS HERE") akan disembunyikan secara transparan/invisible tanpa merusak atau merubah tata letak layout.'),
                 ])->columns(1),
 
             Section::make('Primary Ad Source — Google AdSense')
                 ->description('Sumber iklan utama yang akan diprioritaskan untuk ditampilkan di website.')
                 ->schema([
+                    Toggle::make('is_adsense_active')
+                        ->label('Status Aktif Script Google AdSense')
+                        ->default(true)
+                        ->helperText('Jika dimatikan, skrip Google AdSense tidak akan dimuat dan otomatis beralih ke Banner Foto CMS di bawah.'),
+
                     Textarea::make('adsense_code')
                         ->label('Kode HTML / JS Google AdSense')
                         ->rows(6)
@@ -120,7 +131,7 @@ class AdvertisementResource extends Resource
                 ])->columns(1),
 
             Section::make('Fallback Ad Source — Custom CMS Banner')
-                ->description('Gambar banner cadangan jika skrip Google AdSense kosong atau gagal dimuat.')
+                ->description('Gambar banner cadangan jika skrip Google AdSense dimatikan/kosong.')
                 ->schema([
                     FileUpload::make('image')
                         ->label('Upload Banner Photo (CMS Fallback)')
@@ -162,16 +173,24 @@ class AdvertisementResource extends Resource
 
                 TextColumn::make('primary_source')
                     ->label('Sumber Utama')
-                    ->state(fn ($record) => !empty($record->adsense_code) ? 'Google AdSense' : (!empty($record->image) ? 'Foto CMS' : 'Belum Ada Content'))
+                    ->state(fn ($record) => (!empty($record->adsense_code) && $record->is_adsense_active) ? 'Google AdSense (ON)' : ((!empty($record->adsense_code) && !$record->is_adsense_active) ? 'AdSense (OFF)' : (!empty($record->image) ? 'Foto CMS' : 'Belum Ada Content')))
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'Google AdSense' => 'success',
+                        'Google AdSense (ON)' => 'success',
+                        'AdSense (OFF)' => 'danger',
                         'Foto CMS' => 'warning',
                         default => 'gray',
                     }),
 
+                ToggleColumn::make('hide_placeholder')
+                    ->label('Hide Placeholder'),
+
+                IconColumn::make('is_adsense_active')
+                    ->label('AdSense Aktif')
+                    ->boolean(),
+
                 IconColumn::make('is_active')
-                    ->label('Aktif')
+                    ->label('Slot Aktif')
                     ->boolean(),
             ])
             ->filters([

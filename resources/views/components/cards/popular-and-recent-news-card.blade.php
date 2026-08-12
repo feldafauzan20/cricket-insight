@@ -22,7 +22,7 @@
             </div>
             <div class="flex items-center gap-x-1.5">
                 <x-bi-eye class="h-2.5 w-2.5 text-[#EC0226]" />
-                <span class="text-[10px] font-semibold text-[#666]">1.2K</span> {{-- Dikembalikan ke hardcode sementara --}}
+                <span class="text-[10px] font-semibold text-[#666] dark:text-[#989292]">{{ number_format($news->views_count ?? 0) }}</span>
             </div>
         </div>
     </div>

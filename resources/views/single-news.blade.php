@@ -54,7 +54,7 @@
                     {{-- AUTHOR INFO --}}
                     <div class="mb-7.5 flex items-center gap-x-2.5 md:gap-x-3">
                         <div class="md:w-11.25 md:h-11.25 h-9 w-9 shrink-0 overflow-hidden rounded-full">
-                            <img src="{{ asset('images/dummy/hero-home/profile-picture-dummy.webp') }}" alt="Author"
+                            <img src="{{ $article->uploader?->avatar_url ?? asset('images/dummy/hero-home/profile-picture-dummy.webp') }}" alt="Author"
                                 class="h-full w-full object-cover">
                         </div>
                         <div>

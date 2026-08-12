@@ -26,7 +26,7 @@
                     'category' => $article->category ? $article->category->name : 'Uncategorized',
                     'title' => $article->title,
                     'description' => strip_tags($article->description ?? $article->content),
-                    'author_image' => asset('images/dummy/hero-home/profile-picture-dummy.webp'),
+                    'author_image' => $article->uploader?->avatar_url ?? asset('images/dummy/hero-home/profile-picture-dummy.webp'),
                     'author_name' => strtoupper($article->uploader->name ?? 'SUPER ADMIN'),
                     'date' => strtoupper(
                         $article->published_at
@@ -49,7 +49,7 @@
                     'category' => 'Video',
                     'title' => $video->title,
                     'description' => strip_tags($video->description ?? ''),
-                    'author_image' => asset('images/dummy/hero-home/profile-picture-dummy.webp'),
+                    'author_image' => $video->uploader?->avatar_url ?? asset('images/dummy/hero-home/profile-picture-dummy.webp'),
                     'author_name' => strtoupper($video->uploader->name ?? 'SUPER ADMIN'),
                     'date' => strtoupper($video->created_at->format('d M Y')),
                     'thumbnail' => $video->thumbnail
