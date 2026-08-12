@@ -15,6 +15,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
@@ -107,6 +108,11 @@ class AdvertisementResource extends Resource
                     Toggle::make('is_active')
                         ->label('Status Aktif')
                         ->default(true),
+
+                    Toggle::make('hide_placeholder')
+                        ->label('Sembunyikan Placeholder Iklan (Invisible Layout)')
+                        ->default(false)
+                        ->helperText('Jika diaktifkan, kotak placeholder ("ADS HERE") akan disembunyikan secara transparan/invisible tanpa merusak atau merubah tata letak layout.'),
                 ])->columns(1),
 
             Section::make('Primary Ad Source — Google AdSense')
@@ -175,6 +181,9 @@ class AdvertisementResource extends Resource
                         'Foto CMS' => 'warning',
                         default => 'gray',
                     }),
+
+                ToggleColumn::make('hide_placeholder')
+                    ->label('Hide Placeholder'),
 
                 IconColumn::make('is_adsense_active')
                     ->label('AdSense Aktif')

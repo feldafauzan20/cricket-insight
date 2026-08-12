@@ -11,5 +11,6 @@ class Advertisement extends Model
     protected $casts = [
         'is_active' => 'boolean',
         'is_adsense_active' => 'boolean',
+        'hide_placeholder' => 'boolean',
     ];
 }

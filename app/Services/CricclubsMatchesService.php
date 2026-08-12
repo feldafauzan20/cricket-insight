@@ -61,7 +61,7 @@ class CricclubsMatchesService
             'matchId' => $match['matchId'] ?? null,
             'date' => $formattedDate,
             'rawDate' => $rawDate,
-            'type' => strtoupper($match['matchType'] ?? 'MATCH'),
+            'type' => $match['seriesType'] ?? 'Series',
             'title' => $match['seriesName'] ?? ($match['result'] ?? 'Match'),
             'venue' => $match['location'] ?? 'Venue TBA',
             'teamOne' => [
