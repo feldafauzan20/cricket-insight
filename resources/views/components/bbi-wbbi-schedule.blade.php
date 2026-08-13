@@ -4,6 +4,8 @@
     $title = $setting?->latest_bbi_title ?? 'BALI BASH INTERNATIONAL';
     $date = $setting?->latest_bbi_date ?? 'May 20, 2026';
     $description = $setting?->latest_bbi_description ?? '';
+    $thumbnail1 = $setting?->latest_bbi_thumbnail_1 ?? asset('images/dummy/latest-news-card/dummy-latest-news-card.webp');
+    $thumbnail2 = $setting?->latest_bbi_thumbnail_2 ?? asset('images/dummy/latest-news-card/dummy-latest-news-card.webp');
     $link1 = $setting?->latest_bbi_livestream_link_1 ?? '#';
     $link2 = $setting?->latest_bbi_livestream_link_2 ?? '#';
 
@@ -13,7 +15,7 @@
     <div class="md:gap-x-4.25 2xl:gap-x-10.75 md:mb-14 md:flex md:items-center 2xl:mb-0">
         <div
             class="h-150.25 2xl:h-155 mb-12.5 2xl:w-95 relative flex items-center justify-center overflow-hidden rounded-2xl md:mb-0 md:flex-1 2xl:flex-none">
-            <img src="{{ asset('images/dummy/latest-news-card/dummy-latest-news-card.webp') }}" alt="Hero Image"
+            <img src="{{ $thumbnail1 }}" alt="Hero Image"
                 width="1920" height="1080" loading="lazy" fetchpriority="high"
                 class="absolute inset-0 h-full w-full object-cover">
 
@@ -28,7 +30,7 @@
         </div>
         <div
             class="h-136 2xl:h-145.5 mb-12.5 md:w-81.75 2xl:w-90 relative flex items-center justify-center overflow-hidden rounded-2xl md:mb-0">
-            <img src="{{ asset('images/dummy/latest-news-card/dummy-latest-news-card.webp') }}" alt="Hero Image"
+            <img src="{{ $thumbnail2 }}" alt="Hero Image"
                 width="1920" height="1080" loading="lazy" fetchpriority="high"
                 class="absolute inset-0 h-full w-full object-cover">
 

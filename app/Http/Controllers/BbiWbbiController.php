@@ -10,6 +10,7 @@ class BbiWbbiController extends Controller
     public function index()
     {
         $setting = BbiWbbiSetting::with(['article1', 'article2', 'article3'])->first();
+        // dd($setting);
 
         return view('bbi-wbbi', compact('setting'));
     }
