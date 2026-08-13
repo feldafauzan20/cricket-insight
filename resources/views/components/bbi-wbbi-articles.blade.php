@@ -1,10 +1,13 @@
-@props(['setting' => null, 'id' => "article"])
+@props(['setting' => null, 'latestBbiArticles' => null, 'id' => "article"])
 
 @php
-    // $readMoreUrl = $setting?->article_redirect_link ?? route('news.index' ,['locale' => app()->getLocale()]);
-    $article1 = $setting?->article1;
-    $article2 = $setting?->article2;
-    $article3 = $setting?->article3;
+    $fallbackArticles = $latestBbiArticles ?? \App\Models\Article::whereHas('category', function ($query) {
+        $query->where('slug', 'bbi-wbbi');
+    })->latest('published_at')->latest('created_at')->take(3)->get();
+
+    $article1 = $setting?->article1 ?? ($fallbackArticles[0] ?? null);
+    $article2 = $setting?->article2 ?? ($fallbackArticles[1] ?? null);
+    $article3 = $setting?->article3 ?? ($fallbackArticles[2] ?? null);
 @endphp
 
 <div id="{{ $id }}"
