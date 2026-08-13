@@ -1,8 +1,12 @@
 @props(['setting' => null])
 
 @php
+    $title = $setting?->latest_bbi_title ?? 'BALI BASH INTERNATIONAL';
+    $date = $setting?->latest_bbi_date ?? 'May 20, 2026';
+    $description = $setting?->latest_bbi_description ?? '';
     $link1 = $setting?->latest_bbi_livestream_link_1 ?? '#';
     $link2 = $setting?->latest_bbi_livestream_link_2 ?? '#';
+
 @endphp
 
 <div class="2xl:relative 2xl:flex">
@@ -37,11 +41,7 @@
         class="2xl:w-191.75 2xl:pb-4.5 2xl:mb-4.75 2xl:right-30 2xl:absolute 2xl:bottom-0 2xl:rounded-tl-[50px] 2xl:bg-white 2xl:py-10 2xl:pl-20 dark:bg-[#1F2022]">
         <h1
             class="font-barlow-semi-condensed mb-6.25 md:mb-7.5 text-2xl font-bold uppercase text-[#434343] md:text-[54px] dark:text-white">
-            Lorem
-            ipsum dolor sit
-            amet,
-            consectetur
-            adipiscing.
+            {{ $title }}
         </h1>
         <div>
             <div class="md:gap-x-8.75 md:mb-7.5 md:flex md:items-center">
@@ -63,15 +63,10 @@
                 <div>
                     <p
                         class="font-barlow-semi-condensed text-[26px] font-bold uppercase text-[#434343] dark:text-white">
-                        may
-                        20,
-                        2026</p>
+                        {{ $date }}</p>
 
-                    <p class="font-figtree w-51.25 mb-6.25 block font-medium tracking-[-0.05em] text-[#969696]">Lorem
-                        ipsum
-                        dolor sit
-                        amet,
-                        consectetur adipiscing.</p>
+                    <p class="font-figtree w-51.25 mb-6.25 block font-medium tracking-[-0.05em] text-[#969696]">
+                        {{ $description }} </p>
                 </div>
             </div>
             <a href="{{ $link1 }}" target="_blank" class="mb-7.5 md:w-125 block">
