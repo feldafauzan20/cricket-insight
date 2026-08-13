@@ -1,3 +1,10 @@
+@props(['setting' => null])
+
+@php
+    $link1 = $setting?->latest_bbi_livestream_link_1 ?? '#';
+    $link2 = $setting?->latest_bbi_livestream_link_2 ?? '#';
+@endphp
+
 <div class="2xl:relative 2xl:flex">
     <div class="md:gap-x-4.25 2xl:gap-x-10.75 md:mb-14 md:flex md:items-center 2xl:mb-0">
         <div
@@ -67,7 +74,7 @@
                         consectetur adipiscing.</p>
                 </div>
             </div>
-            <a href="#" class="mb-7.5 md:w-125 block">
+            <a href="{{ $link1 }}" target="_blank" class="mb-7.5 md:w-125 block">
                 <div class="mb-3.75 flex justify-between">
                     <p class="font-barlow-semi-condensed text-xl font-bold uppercase text-[#434343] dark:text-white">
                         link streaming 1
@@ -84,7 +91,7 @@
                     <div class="h-0.75 flex-1 bg-[#A6A182]/20"></div>
                 </div>
             </a>
-            <a href="#" class="md:w-125 md:block">
+            <a href="{{ $link2 }}" target="_blank" class="md:w-125 md:block">
                 <div class="mb-3.75 flex justify-between">
                     <p class="font-barlow-semi-condensed text-xl font-bold uppercase text-[#434343] dark:text-white">
                         link streaming 2

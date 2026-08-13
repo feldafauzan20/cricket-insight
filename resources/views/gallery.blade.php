@@ -12,8 +12,8 @@
 
     {{-- HEADING SECTION START --}}
     <section class="md:mx-7.5 md:mb-7.75 lg:mb-12.5 xl:mx-30 mx-6 mb-7 2xl:container lg:mx-10 2xl:mx-auto">
-        <h1 class="text-[22px] font-semibold text-[#121212] dark:text-white">Explore the story through visuals</h1>
-        <p class="text-[13px] font-semibold text-[#666]">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+        <h1 class="text-[22px] font-semibold text-[#121212] dark:text-white">{{ __('gallery.gallery_header') }}</h1>
+        <p class="text-[13px] font-semibold text-[#666]">{{ __('gallery.gallery_subheader') }}</p>
         <div class="mt-3.75 flex">
             <div class="w-48.5 h-px bg-[#1069F7]"></div>
             <div class="h-px w-full bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>
@@ -140,12 +140,9 @@
         <div class="md:mx-7.5 mx-6 mb-7 2xl:container xl:mx-30 lg:mx-10 2xl:mx-auto">
             {{-- HEADER AND DESCRIPTION --}}
             <div class="mb-7.5">
-                <h1 class="mb-1 text-center text-[25px] font-semibold text-[#121212] md:text-4xl dark:text-white">Cricket
-                    Insight Magazine
+                <h1 class="mb-1 text-center text-[25px] font-semibold text-[#121212] md:text-4xl dark:text-white">{{ __('gallery.magazine_header') }}
                 </h1>
-                <p class="text-center text-sm font-semibold text-[#666666]">Lorem ipsum dolor sit amet, consectetur
-                    adipiscing
-                    elit</p>
+                <p class="text-center text-sm font-semibold text-[#666666]">{{ __('gallery.magazine_subheader') }}</p>
             </div>
             <div class="gap-y-6.25 md:gap-x-4.5 grid grid-cols-1 md:grid-cols-2 lg:gap-y-10 2xl:grid-cols-3">
                 <template x-for="(magazine, index) in magazines" :key="magazine.id">

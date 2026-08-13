@@ -21,7 +21,7 @@
     {{-- SCHEDULE SECTION START --}}
     <section id="schedule" class="pt-12.5 md:pt-25 2xl:pt-30 pb-12.5 md:pb-34.75 2xl:pb-27.25 dark:bg-[#1F2022]">
         <div class="lg:mx-30 mx-2.5 2xl:container md:mx-10 2xl:mx-auto">
-            <x-bbi-wbbi-schedule />
+            <x-bbi-wbbi-schedule :setting="$setting ?? null" />
         </div>
     </section>
     {{-- SCHEDULE SECTION END --}}
