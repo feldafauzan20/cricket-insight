@@ -42,7 +42,7 @@
         {{-- HIGHLIGHT SECTION END --}}
 
         {{-- BBI WBBI ARTICLES SECTION START --}}
-        <x-bbi-wbbi-articles :setting="$setting ?? null" id="article" />
+        <x-bbi-wbbi-articles :setting="$setting ?? null" :latestBbiArticles="$latestBbiArticles ?? null" id="article" />
         {{-- BBI WBBI ARTICLES SECTION END --}}
 
         {{-- YOUTUBE VIDEO SECTION START --}}

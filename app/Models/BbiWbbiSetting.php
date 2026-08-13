@@ -30,4 +30,24 @@ class BbiWbbiSetting extends Model
     {
         return $this->belongsTo(Article::class, 'article_3_id');
     }
+
+    public function brandStory1(): BelongsTo
+    {
+        return $this->belongsTo(Article::class, 'brand_story_1_id');
+    }
+
+    public function brandStory2(): BelongsTo
+    {
+        return $this->belongsTo(Article::class, 'brand_story_2_id');
+    }
+
+    public function brandStory3(): BelongsTo
+    {
+        return $this->belongsTo(Article::class, 'brand_story_3_id');
+    }
+
+    public function getFormattedLatestBbiDateAttribute(): ?string
+    {
+        return $this->latest_bbi_date?->format('M, d Y');
+    }
 }

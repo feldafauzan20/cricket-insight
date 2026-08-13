@@ -4,6 +4,7 @@ namespace App\Filament\Resources\BbiWbbiSettings;
 
 use App\Filament\Resources\BbiWbbiSettings\Pages;
 use App\Models\BbiWbbiSetting;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\Schemas\Schema;
@@ -35,7 +36,8 @@ class BbiWbbiSettingResource extends Resource
                     ->label('Title (ex: BALI BASH INTERNATIONAL: SWEDEN TOUR TO INDONESIA)')
                     ->required(),
                 DatePicker::make('latest_bbi_date')
-                    ->label('Date'),
+                    ->label('Date')
+                    ->displayFormat('M, d Y'),
                 Textarea::make('latest_bbi_description')
                     ->label('Small Description')
                     ->rows(3),
@@ -66,7 +68,7 @@ class BbiWbbiSettingResource extends Resource
             Section::make('BBI / WBBI Hero Carousel Articles (3 Slots)')->schema([
                 Select::make('article_1_id')
                     ->label('Hero Carousel Article 1')
-                    ->relationship('article1', 'title')
+                    ->relationship('article1', 'title', fn (Builder $query) => $query->whereHas('category', fn ($q) => $q->where('slug', 'bbi-wbbi')))
                     ->searchable()
                     ->preload()
                     ->allowHtml()
@@ -79,7 +81,7 @@ class BbiWbbiSettingResource extends Resource
                     "),
                 Select::make('article_2_id')
                     ->label('Hero Carousel Article 2')
-                    ->relationship('article2', 'title')
+                    ->relationship('article2', 'title', fn (Builder $query) => $query->whereHas('category', fn ($q) => $q->where('slug', 'bbi-wbbi')))
                     ->searchable()
                     ->preload()
                     ->allowHtml()
@@ -92,7 +94,50 @@ class BbiWbbiSettingResource extends Resource
                     "),
                 Select::make('article_3_id')
                     ->label('Hero Carousel Article 3')
-                    ->relationship('article3', 'title')
+                    ->relationship('article3', 'title', fn (Builder $query) => $query->whereHas('category', fn ($q) => $q->where('slug', 'bbi-wbbi')))
+                    ->searchable()
+                    ->preload()
+                    ->allowHtml()
+                    ->getOptionLabelFromRecordUsing(fn ($record) => "
+                        <div style='display: flex; gap: 12px; align-items: center;'>
+                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "' 
+                                style='width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;' />
+                            <span style='font-weight: 500;'>" . e(\Illuminate\Support\Str::limit($record->title, 100)) . "</span>
+                        </div>
+                    "),
+            ])->columns(1),
+
+            // Read BBI's Brand New Stories (3 Slots)
+            Section::make("Read BBI's Brand New Stories (3 Slots)")->schema([
+                Select::make('brand_story_1_id')
+                    ->label('Brand Story Article 1')
+                    ->relationship('brandStory1', 'title', fn (Builder $query) => $query->whereHas('category', fn ($q) => $q->where('slug', 'bbi-wbbi')))
+                    ->searchable()
+                    ->preload()
+                    ->allowHtml()
+                    ->getOptionLabelFromRecordUsing(fn ($record) => "
+                        <div style='display: flex; gap: 12px; align-items: center;'>
+                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "' 
+                                style='width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;' />
+                            <span style='font-weight: 500;'>" . e(\Illuminate\Support\Str::limit($record->title, 100)) . "</span>
+                        </div>
+                    "),
+                Select::make('brand_story_2_id')
+                    ->label('Brand Story Article 2')
+                    ->relationship('brandStory2', 'title', fn (Builder $query) => $query->whereHas('category', fn ($q) => $q->where('slug', 'bbi-wbbi')))
+                    ->searchable()
+                    ->preload()
+                    ->allowHtml()
+                    ->getOptionLabelFromRecordUsing(fn ($record) => "
+                        <div style='display: flex; gap: 12px; align-items: center;'>
+                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "' 
+                                style='width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;' />
+                            <span style='font-weight: 500;'>" . e(\Illuminate\Support\Str::limit($record->title, 100)) . "</span>
+                        </div>
+                    "),
+                Select::make('brand_story_3_id')
+                    ->label('Brand Story Article 3')
+                    ->relationship('brandStory3', 'title', fn (Builder $query) => $query->whereHas('category', fn ($q) => $q->where('slug', 'bbi-wbbi')))
                     ->searchable()
                     ->preload()
                     ->allowHtml()
@@ -137,7 +182,7 @@ class BbiWbbiSettingResource extends Resource
     {
         return $table->columns([
             TextColumn::make('latest_bbi_title')->label('Title')->searchable(),
-            TextColumn::make('latest_bbi_date')->label('Date')->date('d M Y')->sortable(),
+            TextColumn::make('latest_bbi_date')->label('Date')->date('M, d Y')->sortable(),
             TextColumn::make('updated_at')->label('Last Updated')->dateTime('d M Y H:i'),
         ]);
     }
