@@ -34,7 +34,7 @@
 
     <section class="pt-12.5 md:pt-25 pb-12.5 md:pb-25 bg-[#FAF8F3] dark:bg-[#080907]">
         {{-- BRAND NEW STORIES SECTION START --}}
-        <x-brand-new-stories id="top-stories"/>
+        <x-brand-new-stories :setting="$setting ?? null" id="top-stories"/>
         {{-- BRAND NEW STORIES SECTION END --}}
 
         {{-- HIGHLIGHT SECTION START --}}
@@ -42,7 +42,7 @@
         {{-- HIGHLIGHT SECTION END --}}
 
         {{-- BBI WBBI ARTICLES SECTION START --}}
-        <x-bbi-wbbi-articles :setting="$setting ?? null" id="article" />
+        <x-bbi-wbbi-articles :setting="$setting ?? null" :latestBbiArticles="$latestBbiArticles ?? null" id="article" />
         {{-- BBI WBBI ARTICLES SECTION END --}}
 
         {{-- YOUTUBE VIDEO SECTION START --}}
