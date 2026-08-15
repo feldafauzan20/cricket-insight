@@ -16,7 +16,7 @@ class GalleryController extends Controller
     public static function initialData(): array
     {
         $query = Article::select([
-                'id', 'category_id', 'title', 'slug', 'description', 'thumbnail',
+                'id', 'category_id', 'title', 'title_en', 'slug', 'description', 'description_en', 'thumbnail',
                 'pdf_file', 'source_link', 'visual_year', 'views_count', 'published_at', 'created_at'
             ])
             ->with('category:id,name,slug')
@@ -42,7 +42,7 @@ class GalleryController extends Controller
         $offset = ($page - 1) * self::PER_PAGE;
 
         $query = Article::select([
-                'id', 'category_id', 'title', 'slug', 'description', 'thumbnail',
+                'id', 'category_id', 'title', 'title_en', 'slug', 'description', 'description_en', 'thumbnail',
                 'pdf_file', 'source_link', 'visual_year', 'views_count', 'published_at', 'created_at'
             ])
             ->with('category:id,name,slug')
@@ -84,7 +84,11 @@ class GalleryController extends Controller
         return [
             'id' => $article->id,
             'title' => $article->title,
+            'title_id' => $article->title_id,
+            'title_en' => $article->title_en,
             'description' => $article->description ?? '',
+            'description_id' => $article->description_id ?? '',
+            'description_en' => $article->description_en ?? '',
             'image_url' => $imageUrl,
             'year' => (string) ($article->visual_year ?? $article->created_at?->format('Y') ?? date('Y')),
             'views' => $article->views_count ?? 0,

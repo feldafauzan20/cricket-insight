@@ -31,12 +31,16 @@ class OngoingTournamentResource extends Resource
         return $schema->components([
             Section::make('Tournament Details')->schema([
                 TextInput::make('tournament_title')
-                    ->label('Tournament Title')
+                    ->label('Tournament Title (ID)')
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->validationMessages([
                         'unique' => 'A tournament with this title already exists. Please choose a unique title.',
                     ]),
+
+                TextInput::make('tournament_title_en')
+                    ->label('Tournament Title (EN)')
+                    ->placeholder('English title translation...'),
 
                 FileUpload::make('image')
                     ->label('Tournament Image')
@@ -45,7 +49,10 @@ class OngoingTournamentResource extends Resource
                     ->directory('ongoing-tournaments'),
 
                 RichEditor::make('description')
-                    ->label('Description'),
+                    ->label('Description (ID)'),
+
+                RichEditor::make('description_en')
+                    ->label('Description (EN)'),
             ])->columnSpan(2),
 
             Section::make('Settings')->schema([

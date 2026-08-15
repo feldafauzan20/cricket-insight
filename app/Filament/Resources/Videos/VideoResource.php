@@ -27,12 +27,16 @@ class VideoResource extends Resource
         return $schema->components([
             Section::make('Video Details')->schema([
                 TextInput::make('title')
-                    ->label('Title')
+                    ->label('Title (ID)')
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->validationMessages([
                         'unique' => 'A video with this title already exists. Please enter a unique title.',
                     ]),
+
+                TextInput::make('title_en')
+                    ->label('Title (EN)')
+                    ->placeholder('English title translation...'),
 
                 FileUpload::make('video_file')
                     ->label('Upload Video File (MP4, WebM, MOV)')
@@ -47,7 +51,11 @@ class VideoResource extends Resource
                     ->placeholder('https://www.youtube.com/watch?v=...'),
 
                 Textarea::make('description')
-                    ->label('Description'),
+                    ->label('Description (ID)'),
+
+                Textarea::make('description_en')
+                    ->label('Description (EN)')
+                    ->placeholder('English description translation...'),
             ])->columnSpan(2),
 
             Section::make('Settings')->schema([

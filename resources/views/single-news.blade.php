@@ -104,7 +104,7 @@
                         <div
                             class="prose dark:prose-invert max-w-none text-[15px] leading-[170%] text-[#121212] dark:text-[#EEEEEE] wrap-break-word">
                             @foreach ($part1 as $p)
-                                {!! $p !!}</p>
+                                {!! preg_match('/<\/(p|h[1-6]|ul|ol|li|blockquote|div|section|article)\s*>$/i', trim($p)) ? $p : $p . '</p>' !!}
                             @endforeach
                         </div>
 
@@ -123,7 +123,7 @@
                         <div
                             class="prose dark:prose-invert max-w-none text-[15px] leading-[170%] text-[#121212] dark:text-[#EEEEEE] wrap-break-word">
                             @foreach ($part2 as $p)
-                                {!! $p !!}</p>
+                                {!! preg_match('/<\/(p|h[1-6]|ul|ol|li|blockquote|div|section|article)\s*>$/i', trim($p)) ? $p : $p . '</p>' !!}
                             @endforeach
                         </div>
 

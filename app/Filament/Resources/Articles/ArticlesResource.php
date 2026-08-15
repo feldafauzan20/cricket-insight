@@ -36,9 +36,9 @@ class ArticlesResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            Section::make('Article Content')->schema([
+            Section::make('Article Content (Indonesian & English)')->schema([
                 TextInput::make('title')
-                    ->label('Title')
+                    ->label('Title (ID)')
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->live(onBlur: true)
@@ -62,6 +62,10 @@ class ArticlesResource extends Resource
                         'unique' => 'An article with this title already exists. Please choose a unique title.',
                     ]),
 
+                TextInput::make('title_en')
+                    ->label('Title (EN)')
+                    ->placeholder('English title translation...'),
+
                 Hidden::make('slug')
                     ->required(),
 
@@ -84,12 +88,20 @@ class ArticlesResource extends Resource
                     ->directory('news'),
 
                 Textarea::make('description')
-                    ->label('Summary / Description')
+                    ->label('Summary / Description (ID)')
                     ->rows(3),
 
+                Textarea::make('description_en')
+                    ->label('Summary / Description (EN)')
+                    ->rows(3)
+                    ->placeholder('English description translation...'),
+
                 RichEditor::make('content')
-                    ->label('Content Body')
+                    ->label('Content Body (ID)')
                     ->required(),
+
+                RichEditor::make('content_en')
+                    ->label('Content Body (EN)'),
             ])->columnSpan(2),
 
             Section::make('Settings & Categorization')->schema([
