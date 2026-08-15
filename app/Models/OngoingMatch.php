@@ -16,9 +16,14 @@ class OngoingMatch extends Model
         'is_active' => 'boolean',
     ];
 
+    private function hasTranslation(?string $value): bool
+    {
+        return $value !== null && trim(strip_tags($value)) !== '';
+    }
+
     public function getTournamentTitleAttribute($value)
     {
-        if (app()->getLocale() === 'en' && !empty($this->attributes['tournament_title_en'])) {
+        if (app()->getLocale() === 'en' && $this->hasTranslation($this->attributes['tournament_title_en'] ?? null)) {
             return $this->attributes['tournament_title_en'];
         }
         return $value;
@@ -26,7 +31,7 @@ class OngoingMatch extends Model
 
     public function getDescriptionAttribute($value)
     {
-        if (app()->getLocale() === 'en' && !empty($this->attributes['description_en'])) {
+        if (app()->getLocale() === 'en' && $this->hasTranslation($this->attributes['description_en'] ?? null)) {
             return $this->attributes['description_en'];
         }
         return $value;
