@@ -28,7 +28,7 @@ class Article extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
-    
+
     public function uploader()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -44,9 +44,14 @@ class Article extends Model
         return 'data:application/pdf;base64,' . base64_encode($content);
     }
 
+    private function hasTranslation(?string $value): bool
+    {
+        return $value !== null && trim(strip_tags($value)) !== '';
+    }
+
     public function getTitleAttribute($value)
     {
-        if (app()->getLocale() === 'en' && !empty($this->attributes['title_en'])) {
+        if (app()->getLocale() === 'en' && $this->hasTranslation($this->attributes['title_en'] ?? null)) {
             return $this->attributes['title_en'];
         }
         return $value;
@@ -54,7 +59,7 @@ class Article extends Model
 
     public function getDescriptionAttribute($value)
     {
-        if (app()->getLocale() === 'en' && !empty($this->attributes['description_en'])) {
+        if (app()->getLocale() === 'en' && $this->hasTranslation($this->attributes['description_en'] ?? null)) {
             return $this->attributes['description_en'];
         }
         return $value;
@@ -62,7 +67,7 @@ class Article extends Model
 
     public function getContentAttribute($value)
     {
-        if (app()->getLocale() === 'en' && !empty($this->attributes['content_en'])) {
+        if (app()->getLocale() === 'en' && $this->hasTranslation($this->attributes['content_en'] ?? null)) {
             return $this->attributes['content_en'];
         }
         return $value;
