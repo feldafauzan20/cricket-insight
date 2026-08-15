@@ -33,4 +33,30 @@ class Video extends Model
 
         return $this->video_url;
     }
+
+    public function getTitleAttribute($value)
+    {
+        if (app()->getLocale() === 'en' && !empty($this->attributes['title_en'])) {
+            return $this->attributes['title_en'];
+        }
+        return $value;
+    }
+
+    public function getDescriptionAttribute($value)
+    {
+        if (app()->getLocale() === 'en' && !empty($this->attributes['description_en'])) {
+            return $this->attributes['description_en'];
+        }
+        return $value;
+    }
+
+    public function getTitleIdAttribute()
+    {
+        return $this->attributes['title'] ?? null;
+    }
+
+    public function getDescriptionIdAttribute()
+    {
+        return $this->attributes['description'] ?? null;
+    }
 } 

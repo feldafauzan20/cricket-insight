@@ -21,7 +21,7 @@ class NewsController extends Controller
 
         $query = Article::with(['category', 'tags']);
 
-        if (! $request->filled('status')) {
+        if (!$request->filled('status')) {
             $query->where('status', 'published');
         }
 
@@ -73,8 +73,8 @@ class NewsController extends Controller
             match ($sort) {
                 'oldest_first' => $query->orderBy('published_at', 'asc')->orderBy('created_at', 'asc'),
                 'most_popular', 'most_viewed' => $query->orderBy('views_count', 'desc')->orderBy('published_at', 'desc'),
-                'a_z' => $query->orderBy('title', 'asc'),
-                'z_a' => $query->orderBy('title', 'desc'),
+                'a_z' => $query->orderByRaw($this->localizedTitleColumn() . ' asc'),
+                'z_a' => $query->orderByRaw($this->localizedTitleColumn() . ' desc'),
                 default => $query->orderBy('published_at', 'desc')->orderBy('created_at', 'desc'),
             };
         } elseif ($request->filled('popularity')) {
@@ -88,24 +88,28 @@ class NewsController extends Controller
 
         $news = $query->paginate(10)->withQueryString();
 
-        $categoryOptions = Category::whereHas('articles')->orderBy('name')->get(['name', 'slug']);
-        $tagOptions = Tag::whereHas('articles')->orderBy('name')->get(['name', 'slug']);
+        $categoryOptions = Category::whereHas('articles')
+            ->orderBy('name')
+            ->get(['name', 'slug']);
+        $tagOptions = Tag::whereHas('articles')
+            ->orderBy('name')
+            ->get(['name', 'slug']);
 
         $sortOptions = [
             'newest_first' => 'Newest First',
             'oldest_first' => 'Oldest First',
             'most_popular' => 'Most Popular',
-            'most_viewed'  => 'Most Viewed',
-            'a_z'          => 'Alphabetical A-Z',
-            'z_a'          => 'Alphabetical Z-A',
+            'most_viewed' => 'Most Viewed',
+            'a_z' => 'Alphabetical A-Z',
+            'z_a' => 'Alphabetical Z-A',
         ];
 
         $timeFrameOptions = [
-            'all_time'   => 'All Time',
-            'today'      => 'Today',
-            'this_week'  => 'This Week',
+            'all_time' => 'All Time',
+            'today' => 'Today',
+            'this_week' => 'This Week',
             'this_month' => 'This Month',
-            'this_year'  => 'This Year',
+            'this_year' => 'This Year',
         ];
 
         $popularityOptions = [
@@ -114,47 +118,31 @@ class NewsController extends Controller
 
         $regionOptions = [
             'Indonesia' => 'Indonesia',
-            'Global'    => 'Global',
+            'Global' => 'Global',
         ];
 
-        $filters = array_merge(
-            array_fill_keys([
-                'category',
-                'tag',
-                'editor_choice',
-                'trending',
-                'sort',
-                'time_frame',
-                'popularity',
-                'region',
-            ], null),
-            $request->only([
-                'category',
-                'tag',
-                'editor_choice',
-                'trending',
-                'sort',
-                'time_frame',
-                'popularity',
-                'region',
-            ])
-        );
+        $filters = array_merge(array_fill_keys(['category', 'tag', 'editor_choice', 'trending', 'sort', 'time_frame', 'popularity', 'region'], null), $request->only(['category', 'tag', 'editor_choice', 'trending', 'sort', 'time_frame', 'popularity', 'region']));
 
         $data = [
-            'news'              => $news,
-            'matches'           => $matchesData['data'] ?? [],
-            'hasError'          => ! $matchesData['success'],
-            'error'             => $matchesData['error'] ?? null,
-            'categories'        => $categoryOptions,
-            'tags'              => $tagOptions,
-            'sortOptions'       => $sortOptions,
-            'timeFrames'        => $timeFrameOptions,
+            'news' => $news,
+            'matches' => $matchesData['data'] ?? [],
+            'hasError' => !$matchesData['success'],
+            'error' => $matchesData['error'] ?? null,
+            'categories' => $categoryOptions,
+            'tags' => $tagOptions,
+            'sortOptions' => $sortOptions,
+            'timeFrames' => $timeFrameOptions,
             'popularityOptions' => $popularityOptions,
-            'regionOptions'     => $regionOptions,
-            'filters'           => $filters,
+            'regionOptions' => $regionOptions,
+            'filters' => $filters,
         ];
 
         return view('news', $data);
+    }
+
+    private function localizedTitleColumn(): string
+    {
+        return app()->getLocale() === 'en' ? "COALESCE(NULLIF(title_en, ''), title)" : 'title';
     }
 
     /**

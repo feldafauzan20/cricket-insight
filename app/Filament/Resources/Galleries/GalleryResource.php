@@ -36,7 +36,7 @@ class GalleryResource extends Resource
         return $schema->components([
             Section::make('Gallery / Magazine Content')->schema([
                 TextInput::make('title')
-                    ->label('Title')
+                    ->label('Title (ID)')
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->live(onBlur: true)
@@ -59,6 +59,9 @@ class GalleryResource extends Resource
                     ->validationMessages([
                         'unique' => 'An entry with this title already exists. Please choose a unique title.',
                     ]),
+                TextInput::make('title_en')
+                    ->label('Title (EN)')
+                    ->placeholder('English title translation...'),
                 Hidden::make('slug')
                     ->required(),
                 FileUpload::make('thumbnail')->label('Thumbnail Photo')->image()->disk('public')->directory('gallery'),
@@ -78,7 +81,8 @@ class GalleryResource extends Resource
                         $catId = $get('category_id');
                         return $catId ? Category::where('id', $catId)->value('slug') === 'magazine' : false;
                     }),
-                Textarea::make('description')->label('Description'),
+                Textarea::make('description')->label('Description (ID)'),
+                Textarea::make('description_en')->label('Description (EN)')->placeholder('English description translation...'),
                 TextInput::make('visual_year')->label('Year')->numeric(),
                 TextInput::make('source_link')
                     ->label('Link GDrive / Redirect URL (Magazine Only)')

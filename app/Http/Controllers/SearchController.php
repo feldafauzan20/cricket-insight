@@ -23,21 +23,33 @@ class SearchController extends Controller
         $results = $this->search($q, 5);
 
         return response()->json([
-            'news' => $results['news']->map(fn (Article $a) => [
-                'title' => $a->title,
-                'thumbnail' => $a->thumbnail ? asset('storage/' . $a->thumbnail) : null,
-                'url' => route('news.show', ['locale' => app()->getLocale(), 'slug' => $a->slug]),
-            ])->values(),
-            'interviews' => $results['interviews']->map(fn (Article $a) => [
-                'title' => $a->title,
-                'thumbnail' => $a->thumbnail ? asset('storage/' . $a->thumbnail) : null,
-                'url' => route('news.show', ['locale' => app()->getLocale(), 'slug' => $a->slug]),
-            ])->values(),
-            'tournaments' => $results['tournaments']->map(fn (OngoingTournament $t) => [
-                'title' => $t->tournament_title,
-                'thumbnail' => $t->image ? asset('storage/' . $t->image) : null,
-                'url' => $t->redirect_link ?: route('news.show', ['locale' => app()->getLocale(), 'id' => $t->id]),
-            ])->values(),
+            'news' => $results['news']
+                ->map(
+                    fn(Article $a) => [
+                        'title' => $a->title,
+                        'thumbnail' => $a->thumbnail ? asset('storage/' . $a->thumbnail) : null,
+                        'url' => route('news.show', ['locale' => app()->getLocale(), 'slug' => $a->slug]),
+                    ],
+                )
+                ->values(),
+            'interviews' => $results['interviews']
+                ->map(
+                    fn(Article $a) => [
+                        'title' => $a->title,
+                        'thumbnail' => $a->thumbnail ? asset('storage/' . $a->thumbnail) : null,
+                        'url' => route('news.show', ['locale' => app()->getLocale(), 'slug' => $a->slug]),
+                    ],
+                )
+                ->values(),
+            'tournaments' => $results['tournaments']
+                ->map(
+                    fn(OngoingTournament $t) => [
+                        'title' => $t->tournament_title,
+                        'thumbnail' => $t->image ? asset('storage/' . $t->image) : null,
+                        'url' => $t->redirect_link ?: route('news.show', ['locale' => app()->getLocale(), 'id' => $t->id]),
+                    ],
+                )
+                ->values(),
         ]);
     }
 
@@ -51,19 +63,20 @@ class SearchController extends Controller
         }
 
         $interviewCategoryFilter = function ($query) {
-            $query->where('category_id', 7)
-                ->orWhereHas('category', function ($q) {
-                    $q->where('slug', 'Interviews')
-                        ->orWhere('slug', 'interviews')
-                        ->orWhere('id', 7);
-                });
+            $query->where('category_id', 7)->orWhereHas('category', function ($q) {
+                $q->where('slug', 'Interviews')->orWhere('slug', 'interviews')->orWhere('id', 7);
+            });
         };
 
         $needle = '%' . mb_strtolower($q) . '%';
 
-        $matchesKeyword = function ($query) use ($needle) {
-            $query->whereRaw('LOWER(title) LIKE ?', [$needle])
-                ->orWhereRaw('LOWER(description) LIKE ?', [$needle]);
+        $titleCol = app()->getLocale() === 'en' ? "COALESCE(NULLIF(title_en, ''), title)" : 'title';
+        $descCol = app()->getLocale() === 'en' ? "COALESCE(NULLIF(description_en, ''), description)" : 'description';
+        $tournamentTitleCol = app()->getLocale() === 'en' ? "COALESCE(NULLIF(tournament_title_en, ''), tournament_title)" : 'tournament_title';
+
+        $matchesKeyword = function ($query) use ($needle, $titleCol, $descCol) {
+            $query->whereRaw("LOWER($titleCol) LIKE ?", [$needle])
+                ->orWhereRaw("LOWER($descCol) LIKE ?", [$needle]);
         };
 
         $news = Article::query()
@@ -85,7 +98,7 @@ class SearchController extends Controller
             ->get();
 
         $tournaments = OngoingTournament::query()
-            ->whereRaw('LOWER(tournament_title) LIKE ?', [$needle])
+            ->whereRaw("LOWER($tournamentTitleCol) LIKE ?", [$needle])
             ->latest('time_date')
             ->take($limit)
             ->get();
