@@ -43,4 +43,43 @@ class Article extends Model
         $content = \Illuminate\Support\Facades\Storage::disk('public')->get($this->pdf_file);
         return 'data:application/pdf;base64,' . base64_encode($content);
     }
+
+    public function getTitleAttribute($value)
+    {
+        if (app()->getLocale() === 'en' && !empty($this->attributes['title_en'])) {
+            return $this->attributes['title_en'];
+        }
+        return $value;
+    }
+
+    public function getDescriptionAttribute($value)
+    {
+        if (app()->getLocale() === 'en' && !empty($this->attributes['description_en'])) {
+            return $this->attributes['description_en'];
+        }
+        return $value;
+    }
+
+    public function getContentAttribute($value)
+    {
+        if (app()->getLocale() === 'en' && !empty($this->attributes['content_en'])) {
+            return $this->attributes['content_en'];
+        }
+        return $value;
+    }
+
+    public function getTitleIdAttribute()
+    {
+        return $this->attributes['title'] ?? null;
+    }
+
+    public function getDescriptionIdAttribute()
+    {
+        return $this->attributes['description'] ?? null;
+    }
+
+    public function getContentIdAttribute()
+    {
+        return $this->attributes['content'] ?? null;
+    }
 }

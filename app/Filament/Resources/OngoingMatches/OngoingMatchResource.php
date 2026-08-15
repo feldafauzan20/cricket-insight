@@ -30,12 +30,16 @@ class OngoingMatchResource extends Resource
     {
         return $schema->components([
             TextInput::make('tournament_title')
-                ->label('Title')
+                ->label('Title (ID)')
                 ->required()
                 ->unique(ignoreRecord: true)
                 ->validationMessages([
                     'unique' => 'A match with this title already exists. Please choose a unique title.',
                 ]),
+
+            TextInput::make('tournament_title_en')
+                ->label('Title (EN)')
+                ->placeholder('English title translation...'),
 
             FileUpload::make('image')
                 ->label('Image Banner')
@@ -51,13 +55,15 @@ class OngoingMatchResource extends Resource
             DateTimePicker::make('time_date')
                 ->label('Time & Date'),
 
-
             Toggle::make('is_active')
                 ->label('Aktif')
                 ->default(true),
 
             RichEditor::make('description')
-                ->label('Description'),
+                ->label('Description (ID)'),
+
+            RichEditor::make('description_en')
+                ->label('Description (EN)'),
         ]);
     }
 

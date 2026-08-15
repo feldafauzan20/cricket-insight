@@ -15,4 +15,30 @@ class OngoingMatch extends Model
         'is_featured' => 'boolean',
         'is_active' => 'boolean',
     ];
+
+    public function getTournamentTitleAttribute($value)
+    {
+        if (app()->getLocale() === 'en' && !empty($this->attributes['tournament_title_en'])) {
+            return $this->attributes['tournament_title_en'];
+        }
+        return $value;
+    }
+
+    public function getDescriptionAttribute($value)
+    {
+        if (app()->getLocale() === 'en' && !empty($this->attributes['description_en'])) {
+            return $this->attributes['description_en'];
+        }
+        return $value;
+    }
+
+    public function getTournamentTitleIdAttribute()
+    {
+        return $this->attributes['tournament_title'] ?? null;
+    }
+
+    public function getDescriptionIdAttribute()
+    {
+        return $this->attributes['description'] ?? null;
+    }
 }
