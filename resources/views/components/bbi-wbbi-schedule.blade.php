@@ -4,8 +4,12 @@
     $title = $setting?->latest_bbi_title ?? 'BALI BASH INTERNATIONAL';
     $date = $setting?->latest_bbi_date ?? 'May 20, 2026';
     $description = $setting?->latest_bbi_description ?? '';
-    $thumbnail1 = $setting?->latest_bbi_thumbnail_1 ? \Storage::url($setting->latest_bbi_thumbnail_1) : asset('images/dummy/latest-news-card/dummy-latest-news-card.webp');
-    $thumbnail2 = $setting?->latest_bbi_thumbnail_2 ? \Storage::url($setting->latest_bbi_thumbnail_2) : asset('images/dummy/latest-news-card/dummy-latest-news-card.webp');
+    $thumbnail1 = $setting?->latest_bbi_thumbnail_1
+        ? \Storage::url($setting->latest_bbi_thumbnail_1)
+        : asset('images/dummy/latest-news-card/dummy-latest-news-card.webp');
+    $thumbnail2 = $setting?->latest_bbi_thumbnail_2
+        ? \Storage::url($setting->latest_bbi_thumbnail_2)
+        : asset('images/dummy/latest-news-card/dummy-latest-news-card.webp');
     $link1 = $setting?->latest_bbi_livestream_link_1 ?? '#';
     $link2 = $setting?->latest_bbi_livestream_link_2 ?? '#';
 
@@ -15,8 +19,7 @@
     <div class="md:gap-x-4.25 2xl:gap-x-10.75 md:mb-14 md:flex md:items-center 2xl:mb-0">
         <div
             class="h-150.25 2xl:h-155 mb-12.5 2xl:w-95 relative flex items-center justify-center overflow-hidden rounded-2xl md:mb-0 md:flex-1 2xl:flex-none">
-            <img src="{{ $thumbnail1 }}" alt="Hero Image"
-                width="1920" height="1080" loading="lazy" fetchpriority="high"
+            <img src="{{ $thumbnail1 }}" alt="Hero Image" width="1920" height="1080" loading="lazy" fetchpriority="high"
                 class="absolute inset-0 h-full w-full object-cover">
 
             {{-- Overlay --}}
@@ -24,15 +27,14 @@
 
             {{-- Content --}}
             <div class="h-55.25 relative">
-                <img src="{{ asset('images/logo/cricket-insight-bali-bash-logo-2.webp') }}" alt="Bali Bash Logo"
-                    class="h-full w-full object-cover">
+                <img src="{{ $setting?->latest_bbi_logo ? \Storage::url($setting->latest_bbi_logo) : asset('images/logo/cricket-insight-bali-bash-logo-2.webp') }}"
+                    alt="{{ $title }}" class="h-full w-full object-cover">
             </div>
         </div>
         <div
             class="h-136 2xl:h-145.5 mb-12.5 md:w-81.75 2xl:w-90 relative flex items-center justify-center overflow-hidden rounded-2xl md:mb-0">
-            <img src="{{ $thumbnail2 }}" alt="Hero Image"
-                width="1920" height="1080" loading="lazy" fetchpriority="high"
-                class="absolute inset-0 h-full w-full object-cover">
+            <img src="{{ $thumbnail2 }}" alt="Hero Image" width="1920" height="1080" loading="lazy"
+                fetchpriority="high" class="absolute inset-0 h-full w-full object-cover">
 
             {{-- Overlay --}}
             <div class="absolute inset-0 w-full bg-black/70"></div>
