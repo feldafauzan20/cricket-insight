@@ -4,8 +4,8 @@
     $title = $setting?->latest_bbi_title ?? 'BALI BASH INTERNATIONAL';
     $date = $setting?->latest_bbi_date ?? 'May 20, 2026';
     $description = $setting?->latest_bbi_description ?? '';
-    $thumbnail1 = $setting?->latest_bbi_thumbnail_1 ?? asset('images/dummy/latest-news-card/dummy-latest-news-card.webp');
-    $thumbnail2 = $setting?->latest_bbi_thumbnail_2 ?? asset('images/dummy/latest-news-card/dummy-latest-news-card.webp');
+    $thumbnail1 = $setting?->latest_bbi_thumbnail_1 ? \Storage::url($setting->latest_bbi_thumbnail_1) : asset('images/dummy/latest-news-card/dummy-latest-news-card.webp');
+    $thumbnail2 = $setting?->latest_bbi_thumbnail_2 ? \Storage::url($setting->latest_bbi_thumbnail_2) : asset('images/dummy/latest-news-card/dummy-latest-news-card.webp');
     $link1 = $setting?->latest_bbi_livestream_link_1 ?? '#';
     $link2 = $setting?->latest_bbi_livestream_link_2 ?? '#';
 
