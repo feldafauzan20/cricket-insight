@@ -7,5 +7,5 @@ return [
     'tournaments' => 'Turnamen',
     'match_centre' => 'Pusat Pertandingan',
     'bbi_wbbi' => 'BBI/WBBI',
-    'archive' => 'Arsip',
+    'archive' => 'Galeri',
 ];

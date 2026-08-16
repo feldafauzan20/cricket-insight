@@ -1,13 +1,14 @@
 @props(['seriesList' => [], 'currentYear' => now()->year])
 
-<div class="rounded-[7px] border border-[#EDF1F6] dark:border-[#353434]" x-data="fixturesFilters(@js($seriesList), {{ $currentYear }})">
+<div class="rounded-[7px] border border-[#EDF1F6] dark:border-[#353434]"
+    x-data="fixturesFilters(@js($seriesList), {{ $currentYear }}, @js(__('match_centre.all_series_filter')), @js(__('match_centre.all_teams_filter')), @js(__('match_centre.all_days_filter')), @js(__('match_centre.days')))">
     @php
         $dummyFixturesPaginator = new \Illuminate\Pagination\LengthAwarePaginator(collect(range(1, 50)), 50, 30, 1);
     @endphp
 
     {{-- HEADER --}}
     <div class="md:pl-9.5 rounded-t-[7px] bg-[#0A1628] py-3.5 pl-2.5 dark:bg-[#1F1F1F]">
-        <h1 class="text-xl font-semibold text-white lg:text-[22px]">FIXTURES & RESULTS</h1>
+        <h1 class="text-xl font-semibold text-white lg:text-[22px]">{{ __('match_centre.fixtures_result_header') }}</h1>
     </div>
 
     {{-- TAB NAVIGATION: MEN, WOMEN, RESULTS, FIXTURES --}}
@@ -32,14 +33,14 @@
                     <button @click="activeTab = 'results'"
                         :class="activeTab === 'results' ? 'border-b-2 border-[#007DFC]' : ''"
                         class="px-6 py-4 text-base font-medium text-[#121212] transition-colors hover:bg-gray-50 dark:text-white dark:hover:bg-[#353434]">
-                        RESULTS
+                        {{ __('match_centre.fixture_results_results_filter') }}
                     </button>
                 </div>
                 <div class="swiper-slide w-auto!">
                     <button @click="activeTab = 'fixtures'"
                         :class="activeTab === 'fixtures' ? 'border-b-2 border-[#007DFC]' : ''"
                         class="px-6 py-4 text-base font-medium text-[#121212] transition-colors hover:bg-gray-50 dark:text-white dark:hover:bg-[#353434]">
-                        FIXTURES
+                        {{ __('match_centre.fixture_results_fixture_filter') }}
                     </button>
                 </div>
             </div>
@@ -120,7 +121,7 @@
                                 <div class="gap-x-0.75 flex items-center">
                                     <x-ri-flag-line class="h-6 w-6" style="color: #EC0226" />
                                     <p class="text-[15px] text-[#121212] dark:text-white"
-                                        x-text="selectedSeriesId ? selectedFormat : 'All Series'"></p>
+                                        x-text="selectedSeriesId ? selectedFormat : allSeriesLabel"></p>
                                 </div>
                                 <div x-show="selectedSeriesId" class="px-3.25 rounded-full"
                                     style="background-color: #EC022630">
@@ -134,7 +135,7 @@
                         </div>
                         <template x-teleport="body">
                             <div x-show="open" @click.away="open = false" x-cloak
-                                :title="selectedFormat || 'All Series'"
+                                :title="selectedFormat || allSeriesLabel"
                                 x-transition:enter="transition ease-out duration-200"
                                 x-transition:enter-start="opacity-0 translate-y-1"
                                 x-transition:enter-end="opacity-100 translate-y-0"
@@ -149,7 +150,7 @@
                                             'bg-[#EC0226] bg-opacity-10 text-[#121212] dark:text-white' :
                                             'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
                                         class="w-full px-4 py-2 text-left text-sm transition-colors">
-                                        All Series
+                                        {{ __('match_centre.all_series_filter') }}
                                     </button>
 
                                     <template x-if="seriesLoading">
@@ -300,7 +301,7 @@
                                 <div class="gap-x-0.75 flex items-center">
                                     <x-ri-flag-line class="h-6 w-6" style="color: #EC0226" />
                                     <p class="text-[15px] text-[#121212] dark:text-white"
-                                        x-text="selectedTeamName || 'All Teams'"></p>
+                                        x-text="selectedTeamName || allTeamsLabel"></p>
                                 </div>
                                 <div x-show="selectedTeamId" class="px-3.25 rounded-full"
                                     style="background-color: #EC022630">
@@ -328,7 +329,7 @@
                                         :class="!selectedTeamId ? 'bg-[#EC0226] bg-opacity-10 text-[#121212] dark:text-white' :
                                             'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
                                         class="w-full px-4 py-2 text-left text-sm transition-colors">
-                                        All Teams
+                                        {{ __('match_centre.all_teams_filter') }}
                                     </button>
 
                                     <template x-if="teamsLoading">
@@ -353,105 +354,6 @@
                         </template>
                     </div>
                 </div>
-
-                {{-- CLUBS FILTER --}}
-                {{-- <div class="swiper-slide w-auto!">
-                    <div class="relative" x-data="{
-                        open: false,
-                        pos: {},
-                        toggle() {
-                            this.open = !this.open;
-                            if (this.open) {
-                                const r = this.$refs.btn.getBoundingClientRect();
-                                this.pos = {
-                                    top: r.bottom + window.scrollY + 8 + 'px',
-                                    left: r.left + window.scrollX + 'px',
-                                    width: r.width + 'px',
-                                };
-                            }
-                        }
-                    }">
-                        <div @click="toggle()" x-ref="btn" class="cursor-pointer">
-                            <div
-                                class="flex w-fit items-center gap-x-2 rounded-[3px] border border-[#E0E0E0] bg-white p-2 shadow-md dark:border-[#353434] dark:bg-[#353434]">
-                                <div class="gap-x-0.75 flex items-center">
-                                    <x-ri-flag-line class="h-6 w-6" style="color: #EC0226" />
-                                    <p class="text-[15px] text-[#121212] dark:text-white">All Clubs</p>
-                                </div>
-                                <div x-show="selectedTeam" class="px-3.25 rounded-full"
-                                    style="background-color: #EC022630">
-                                    <p class="text-[15px] font-normal" style="color: #EC0226" x-text="selectedTeam">
-                                    </p>
-                                </div>
-                                <div>
-                                    <x-ri-arrow-down-s-line class="h-3 w-3" style="color: #EC0226" />
-                                </div>
-                            </div>
-                        </div>
-                        <template x-teleport="body">
-                            <div x-show="open" @click.away="open = false" x-cloak
-                                x-transition:enter="transition ease-out duration-200"
-                                x-transition:enter-start="opacity-0 translate-y-1"
-                                x-transition:enter-end="opacity-100 translate-y-0"
-                                x-transition:leave="transition ease-in duration-150"
-                                x-transition:leave-start="opacity-100 translate-y-0"
-                                x-transition:leave-end="opacity-0 translate-y-1"
-                                :style="`top: ${pos.top}; left: ${pos.left}; width: ${pos.width};`"
-                                class="absolute z-50 max-h-64 overflow-y-auto rounded-[3px] border border-[#E0E0E0] bg-white shadow-lg dark:border-[#171717] dark:bg-[#353434]">
-                                <div class="py-1">
-                                    <button @click="selectTeam('India'); open = false"
-                                        :class="selectedTeam === 'India' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">India</button>
-                                    <button @click="selectTeam('Australia'); open = false"
-                                        :class="selectedTeam === 'Australia' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">Australia</button>
-                                    <button @click="selectTeam('England'); open = false"
-                                        :class="selectedTeam === 'England' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">England</button>
-                                    <button @click="selectTeam('Pakistan'); open = false"
-                                        :class="selectedTeam === 'Pakistan' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">Pakistan</button>
-                                    <button @click="selectTeam('South Africa'); open = false"
-                                        :class="selectedTeam === 'South Africa' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">South
-                                        Africa</button>
-                                    <button @click="selectTeam('New Zealand'); open = false"
-                                        :class="selectedTeam === 'New Zealand' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">New
-                                        Zealand</button>
-                                    <button @click="selectTeam('Sri Lanka'); open = false"
-                                        :class="selectedTeam === 'Sri Lanka' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">Sri Lanka</button>
-                                    <button @click="selectTeam('Bangladesh'); open = false"
-                                        :class="selectedTeam === 'Bangladesh' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">Bangladesh</button>
-                                    <button @click="selectTeam('West Indies'); open = false"
-                                        :class="selectedTeam === 'West Indies' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">West
-                                        Indies</button>
-                                    <button @click="selectTeam('Afghanistan'); open = false"
-                                        :class="selectedTeam === 'Afghanistan' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">Afghanistan</button>
-                                    <button @click="selectTeam(''); open = false"
-                                        :class="selectedTeam === '' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full border-t border-[#E0E0E0] px-4 py-2 text-left text-sm transition-colors dark:border-[#171717]">All
-                                        Teams</button>
-                                </div>
-                            </div>
-                        </template>
-                    </div>
-                </div> --}}
 
                 {{-- DAYS FILTER --}}
                 <div class="swiper-slide w-auto!">
@@ -479,11 +381,12 @@
                                 <div class="gap-x-0.75 flex items-center">
                                     <x-ri-flag-line class="h-6 w-6" style="color: #EC0226" />
                                     <p class="text-[15px] text-[#121212] dark:text-white"
-                                        x-text="selectedDay || 'All Days'"></p>
+                                        x-text="selectedDay ? daysMap[selectedDay] : allDaysLabel"></p>
                                 </div>
                                 <div x-show="selectedDay" class="px-3.25 rounded-full"
                                     style="background-color: #EC022630">
-                                    <p class="text-[15px] font-normal" style="color: #EC0226" x-text="selectedDay">
+                                    <p class="text-[15px] font-normal" style="color: #EC0226"
+                                        x-text="daysMap[selectedDay]">
                                     </p>
                                 </div>
                                 <div>
@@ -506,7 +409,7 @@
                                         :class="!selectedDay ? 'bg-[#EC0226] bg-opacity-10 text-[#121212] dark:text-white' :
                                             'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
                                         class="w-full px-4 py-2 text-left text-sm transition-colors">
-                                        All Days
+                                        {{ __('match_centre.all_days_filter') }}
                                     </button>
 
                                     <template x-for="day in dayList" :key="day">
@@ -514,7 +417,7 @@
                                             :class="selectedDay === day ? 'bg-[#EC0226] bg-opacity-10 text-white' :
                                                 'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
                                             class="w-full px-4 py-2 text-left text-sm transition-colors"
-                                            x-text="day">
+                                            x-text="daysMap[day]">
                                         </button>
                                     </template>
                                 </div>

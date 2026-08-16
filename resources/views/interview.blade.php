@@ -34,8 +34,8 @@
 
     {{-- BEST INTERVIEW SECTION START --}}
     <section class="md:mb-7.5 mx-6 mb-7 xl:mx-30 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
-        <x-interview.interview-header header="Interview"
-            description="Explore the most insightful interviews with cricket players and experts." />
+        <x-interview.interview-header header="{{ __('interview.interview_header') }}"
+            description="{{ __('interview.interview_description') }}" />
         <x-interview.best-interview :interviews="$bestInterviews" />
     </section>
     {{-- BEST INTERVIEW SECTION END --}}
@@ -57,12 +57,6 @@
         <x-interview.all-interview :interviews="$interviews" :region-options="$regionOptions" :filters="$filters" />
     </section>
     {{-- ALL INTERVIEW SECTION END --}}
-
-    {{-- FEATURED VIDEO SECTION START --}}
-    {{-- <section class="mb-7 md:mb-6 lg:mb-10">
-        <x-featured-video.interview-featured-video />
-    </section> --}}
-    {{-- FEATURED VIDEO SECTION END --}}
 
     {{-- ADS SECTION START --}}
     <section class="md:mx-7.5 mx-6 mb-7 xl:mx-30 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">

@@ -1,11 +1,10 @@
 @props(['tournaments' => [], 'pastTournaments' => []])
 
 {{-- HEADER --}}
-<h1 class="text-[22px] font-semibold text-[#121212] dark:text-white">On going tournament</h1>
+<h1 class="text-[22px] font-semibold text-[#121212] dark:text-white">{{__('tournament.tournament_live_tournaments_header')}}</h1>
 
 {{-- SHORT DESCRIPTION --}}
-<p class="text-[13px] font-semibold text-[#666] dark:text-white">Discover the most exciting tournaments happening
-    around the world.</p>
+<p class="text-[13px] font-semibold text-[#666] dark:text-white">{{__('tournament.tournament_live_tournaments_subheader')}}</p>
 <div class="my-5 flex">
     <div class="w-48.5 h-px bg-[#EC0226]"></div>
     <div class="h-px w-full bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>
@@ -55,11 +54,10 @@
 </div>
 
 {{-- PAST TOURNAMENT HEADER --}}
-<h1 class="mt-7.5 text-[22px] font-semibold text-[#121212] dark:text-white">Past tournament</h1>
+<h1 class="mt-7.5 text-[22px] font-semibold text-[#121212] dark:text-white">{{__('tournament.tournament_past_tournaments_header')}}</h1>
 
 {{-- PAST TOURNAMENT SHORT DESCRIPTION --}}
-<p class="text-[13px] font-semibold text-[#666] dark:text-white">Take a look back at tournaments that have already
-    concluded.</p>
+<p class="text-[13px] font-semibold text-[#666] dark:text-white">{{__('tournament.tournament_past_tournaments_subheader')}}</p>
 <div class="my-5 flex">
     <div class="w-48.5 h-px bg-[#EC0226]"></div>
     <div class="h-px w-full bg-[#C7C7C7] dark:bg-[#DEDEDE]"></div>

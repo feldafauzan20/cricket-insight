@@ -25,8 +25,8 @@
 }">
     <div class="md:flex md:items-center md:justify-between">
         <div>
-            <h1 class="text-[22px] font-semibold text-[#121212] dark:text-white">All Interviews</h1>
-            <p class="mb-3.75 text-sm text-[#666666]">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+            <h1 class="text-[22px] font-semibold text-[#121212] dark:text-white">{{__('interview.interview_latest_interviews_header')}}</h1>
+            <p class="mb-3.75 text-sm text-[#666666]">{{__('interview.interview_latest_interviews_subheader')}}</p>
         </div>
         <div class="relative" @click.away="open = false">
             <div @click="open = !open">
