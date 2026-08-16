@@ -1,8 +1,8 @@
 @props(['highlightVideo' => null, 'interviewVideos' => []])
 
 <div>
-    <x-interview.interview-header header="Interview Videos"
-        description="Watch the most insightful interviews with cricket players and experts." />
+    <x-interview.interview-header header="{{__('interview.interview_highlight_header')}}"
+        description="{{__('interview.interview_highlight_description')}}" />
 
     @if ($highlightVideo)
         @php
@@ -61,9 +61,8 @@
     @endif
     <div class="items-center justify-between md:flex">
         <div>
-            <h1 class="text-2xl font-semibold text-[#121212] md:text-[22px] 2xl:text-[35px] dark:text-white">Featured
-                Videos</h1>
-            <p class="text-[13px] font-semibold text-[#666] dark:text-[#B2B2B2]">Don't miss daily news</p>
+            <h1 class="text-2xl font-semibold text-[#121212] md:text-[22px] 2xl:text-[35px] dark:text-white">{{__('interview.interview_videos_header')}}</h1>
+            <p class="text-[13px] font-semibold text-[#666] dark:text-[#B2B2B2]">{{__('interview.interview_videos_subheader')}}</p>
         </div>
         <div class="hidden gap-x-1.5 md:flex">
             <x-buttons.previous-button class="interview-videos-button-prev" />

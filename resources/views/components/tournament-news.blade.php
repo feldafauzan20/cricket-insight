@@ -61,8 +61,8 @@
 <div class="md:px-7.5 md:pt-12.5 px-6 pb-4 pt-6 2xl:container md:pb-6 lg:px-10 lg:pb-11 xl:px-30 2xl:mx-auto 2xl:px-0 2xl:pb-6">
     <div class="items-center justify-between md:flex">
         <div>
-            <h1 class="text-2xl font-semibold text-[#121212] md:text-[22px] dark:text-white">Tournament News</h1>
-            <p class="text-[13px] font-semibold text-[#666] dark:text-[#B2B2B2]">Don't miss daily news</p>
+            <h1 class="text-2xl font-semibold text-[#121212] md:text-[22px] dark:text-white">{{__('tournament.tournament_coverage_header')}}</h1>
+            <p class="text-[13px] font-semibold text-[#666] dark:text-[#B2B2B2]">{{__('tournament.tournament_coverage_subheader')}}</p>
         </div>
         <div class="hidden gap-x-1.5 md:flex">
             <x-buttons.previous-button class="latest-news-button-prev" />
@@ -103,8 +103,7 @@
     class="md:px-7.5 md:pt-12.5 px-6 pb-4 pt-6 2xl:container lg:px-10 xl:px-30 2xl:mx-auto 2xl:flex 2xl:gap-x-5 2xl:px-0 2xl:pb-6">
     <div class="2xl:w-1/2 2xl:min-w-0">
         <div class="mb-3.75 md:flex md:items-center md:gap-x-5">
-            <h1 class="whitespace-nowrap text-[22px] font-semibold text-[#121212] dark:text-white">Indonesia Tournament
-                News
+            <h1 class="whitespace-nowrap text-[22px] font-semibold text-[#121212] dark:text-white">{{__('tournament.tournament_indonesia_tournament_header')}}
             </h1>
 
             <div class="hidden md:flex md:flex-1 md:items-center">
@@ -178,8 +177,7 @@
 
     <div class="2xl:w-1/2 2xl:min-w-0">
         <div class="mb-3.75 mt-7.5 md:flex md:items-center md:gap-x-5 2xl:mt-0">
-            <h1 class="text-[22px] font-semibold text-[#121212] md:whitespace-nowrap dark:text-white">International
-                Tournament News
+            <h1 class="text-[22px] font-semibold text-[#121212] md:whitespace-nowrap dark:text-white">{{__('tournament.tournament_international_tournament_header')}}
             </h1>
 
             <div class="hidden md:flex md:flex-1 md:items-center">

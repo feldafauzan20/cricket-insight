@@ -2,7 +2,7 @@
 
 <div>
     <h1 class="font-poppins mb-5 text-center text-xl font-semibold md:text-left md:text-2xl lg:text-4xl dark:text-white">
-        ONGOING TOURNAMENT</h1>
+        {{ __('match_centre.live_tournament_header') }}</h1>
     <div class="swiper ongoing-tournament-swiper overflow-hidden">
         <div class="swiper-wrapper">
             @if(count($tournaments) > 0)

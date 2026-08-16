@@ -156,14 +156,33 @@ window.Alpine = Alpine;
 // Alpine.js Component for Fixtures Filters
 Alpine.data(
     "fixturesFilters",
-    (initialSeriesList = [], initialYear = new Date().getFullYear()) => ({
+    (
+        initialSeriesList = [],
+        initialYear = new Date().getFullYear(),
+        initialAllSeriesLabel = "All Series",
+        initialAllTeamsLabel = "All Teams",
+        initialAllDaysLabel = "All Days",
+        initialDaysMap = {
+            Monday: "Monday",
+            Tuesday: "Tuesday",
+            Wednesday: "Wednesday",
+            Thursday: "Thursday",
+            Friday: "Friday",
+            Saturday: "Saturday",
+            Sunday: "Sunday",
+        },
+    ) => ({
         _matchesRequestId: 0,
         activeTab: "results",
         selectedYear: new Date().getFullYear(),
-        selectedFormat: "All Series",
+        allSeriesLabel: initialAllSeriesLabel,
+        selectedFormat: initialAllSeriesLabel,
         selectedSeriesId: null,
         seriesList: initialSeriesList,
         seriesLoading: false,
+        allTeamsLabel: initialAllTeamsLabel,
+        allDaysLabel: initialAllDaysLabel,
+        daysMap: initialDaysMap,
         selectedTeam: "",
         selectedTeamId: null,
         selectedTeamName: "",
@@ -191,15 +210,7 @@ Alpine.data(
         },
 
         get dayList() {
-            return [
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
-                "Sunday",
-            ];
+            return Object.keys(this.daysMap);
         },
 
         refreshFiltersSwiper() {
@@ -248,7 +259,7 @@ Alpine.data(
                 this.selectedYear = year;
             }
 
-            this.selectedFormat = "All Series";
+            this.selectedFormat = this.allSeriesLabel;
             this.selectedSeriesId = null;
             this.selectedTeam = "";
             this.selectedTeamId = null;
@@ -451,7 +462,7 @@ Alpine.data(
 
         selectSeries(series) {
             this.selectedSeriesId = series ? series.seriesID : null;
-            this.selectedFormat = series ? series.seriesName : "All Series";
+            this.selectedFormat = series ? series.seriesName : this.allSeriesLabel;
 
             this.selectedTeam = "";
             this.selectedTeamId = null;
@@ -581,7 +592,12 @@ Alpine.data("navSearch", (liveUrl, initialQuery = "") => ({
 // Alpine.js Component for Points Table
 Alpine.data(
     "pointsTable",
-    (initialSeriesList = [], initialYear = new Date().getFullYear()) => ({
+    (
+        initialSeriesList = [],
+        initialYear = new Date().getFullYear(),
+        initialAllSeriesLabel = "All Series",
+        initialAllGroupsLabel = "All Groups",
+    ) => ({
         _pointsTableRequestId: 0,
         _playerStatsRequestId: 0,
         _seriesDetailsRequestId: 0,
@@ -589,11 +605,13 @@ Alpine.data(
         seriesList: initialSeriesList,
         seriesLoading: false,
         selectedSeriesId: null,
-        selectedSeriesName: "All Series",
+        allSeriesLabel: initialAllSeriesLabel,
+        selectedSeriesName: initialAllSeriesLabel,
         openYear: false,
         yearDropdownStyle: {},
         groups: [],
         groupsLoading: false,
+        allGroupsLabel: initialAllGroupsLabel,
         selectedGroupName: null,
 
         playerStatsLoading: false,
@@ -700,7 +718,7 @@ Alpine.data(
 
         selectSeries(series) {
             this.selectedSeriesId = series ? series.seriesID : null;
-            this.selectedSeriesName = series ? series.seriesName : "All Series";
+            this.selectedSeriesName = series ? series.seriesName : this.allSeriesLabel;
             this.selectedGroupName = null;
             this.fetchPointsTable(series ? series.seriesID : null);
             this.fetchPlayerStats(series ? series.seriesID : null);

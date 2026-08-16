@@ -1,11 +1,15 @@
 @props(['seriesList' => [], 'currentYear' => now()->year])
 
-<div x-data="pointsTable(@js($seriesList), {{ $currentYear }})">
+<div
+    x-data="pointsTable(@js($seriesList), {{ $currentYear }}, @js(__('match_centre.all_series_filter')), @js(__('match_centre.all_groups_filter')))">
     {{-- HEADER --}}
     <div class="mb-6.25 flex items-center gap-x-3.5">
-        <h1 class="text-2xl font-semibold text-[#121212] lg:text-4xl dark:text-white">POINTS TABLE
+        <h1 class="text-2xl font-semibold text-[#121212] lg:text-4xl dark:text-white">
+            {{ __('match_centre.points_table_header') }}
         </h1>
-        <x-eva-info-outline class="h-6 w-6 text-[#EC0226]" />
+        <span title="{{ __('match_centre.points_table_info') }}" class="cursor-help">
+            <x-eva-info-outline class="h-6 w-6 text-[#EC0226]" />
+        </span>
     </div>
 
     {{-- FILTER --}}
@@ -89,7 +93,7 @@
                                     :class="!selectedSeriesId ? 'bg-[#EC0226] bg-opacity-10 text-[#121212] dark:text-white' :
                                         'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
                                     class="w-full px-4 py-2 text-left text-sm transition-colors">
-                                    All Series
+                                    {{ __('match_centre.all_series_filter') }}
                                 </button>
 
                                 <template x-if="seriesLoading">
@@ -137,7 +141,7 @@
                             <div class="gap-x-0.75 flex items-center">
                                 <x-ri-flag-line class="h-6 w-6" style="color: #007DFC" />
                                 <p class="text-[15px] text-[#121212] dark:text-white"
-                                    x-text="selectedGroupName || 'All Groups'"></p>
+                                    x-text="selectedGroupName || allGroupsLabel"></p>
                             </div>
                             <div>
                                 <x-ri-arrow-down-s-line class="h-3 w-3" style="color: #007DFC" />
@@ -159,7 +163,7 @@
                                     :class="!selectedGroupName ? 'bg-[#007DFC] bg-opacity-10 text-[#121212] dark:text-white' :
                                         'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
                                     class="w-full px-4 py-2 text-left text-sm transition-colors">
-                                    All Groups
+                                    {{ __('match_centre.all_groups_filter') }}
                                 </button>
                                 <template x-for="name in groupNameList" :key="name">
                                     <button @click="selectGroup(name); open = false"
@@ -268,13 +272,13 @@
             </div>
         </div>
         <div class="mt-5.5 md:mt-0 md:w-[60%] 2xl:w-[70%]">
-            <h1 class="text-2xl font-semibold text-[#121212] dark:text-white">PLAYER STATS</h1>
+            <h1 class="text-2xl font-semibold text-[#121212] dark:text-white">{{__('match_centre.player_stats_header')}}</h1>
 
-            <x-tables.stat-table title="BATTING" columnLabel="RUNS" value-color="#1A56DB"
-                dataExpr="battingStats" loadingExpr="playerStatsLoading" seeAllUrlExpr="battingSeeAllUrl" />
+            <x-tables.stat-table title="BATTING" columnLabel="RUNS" value-color="#1A56DB" dataExpr="battingStats"
+                loadingExpr="playerStatsLoading" seeAllUrlExpr="battingSeeAllUrl" />
 
-            <x-tables.stat-table title="BOWLING" columnLabel="WICKETS" value-color="#EC0226"
-                dataExpr="bowlingStats" loadingExpr="playerStatsLoading" seeAllUrlExpr="bowlingSeeAllUrl" />
+            <x-tables.stat-table title="BOWLING" columnLabel="WICKETS" value-color="#EC0226" dataExpr="bowlingStats"
+                loadingExpr="playerStatsLoading" seeAllUrlExpr="bowlingSeeAllUrl" />
 
             <x-tables.stat-table title="FIELDING" columnLabel="DISMISSALS" value-color="#121212"
                 dataExpr="fieldingStats" loadingExpr="playerStatsLoading" seeAllUrlExpr="fieldingSeeAllUrl" />
