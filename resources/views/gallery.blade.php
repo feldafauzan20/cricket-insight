@@ -1,8 +1,15 @@
 @extends('layout.main-layout')
 
-@section('title', 'Gallery - Cricket Insight')
+@section('title', __('seo.gallery_title'))
 
 @section('content')
+
+    @php
+        $seoDescription = __('seo.gallery_description');
+        $seoCanonicalRoute = 'gallery.index';
+        $seoHreflangRoute = 'gallery.index';
+        $seoJsonLd = \App\Support\Seo\JsonLd::imageGallery($galleries);
+    @endphp
 
     {{-- HERO GALLERY WITH BREADCRUMB SECTION START --}}
     <section class="mb-17.5 bg-[#F3F3F3]">

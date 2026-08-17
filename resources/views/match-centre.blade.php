@@ -1,8 +1,29 @@
 @extends('layout.main-layout')
 
-@section('title', 'Match Centre - Cricket Insight')
+@section('title', isset($article) ? $article->title . ' - Cricket Insight' : __('seo.matches_title'))
 
 @section('content')
+    @if (isset($article))
+        @php
+            $seoTitle = $article->title;
+            $seoDescription = $article->description;
+            $seoImage = $article->thumbnail ? asset('storage/' . $article->thumbnail) : null;
+            $seoType = 'article';
+            $seoPublishedTime = optional($article->published_at)->toIso8601String();
+            $seoModifiedTime = optional($article->updated_at)->toIso8601String();
+            $seoCanonicalRoute = 'matches.show';
+            $seoCanonicalParams = ['slug' => $article->slug];
+            $seoHreflangRoute = $seoCanonicalRoute;
+            $seoHreflangParams = $seoCanonicalParams;
+            $seoJsonLd = \App\Support\Seo\JsonLd::newsArticle($article, route($seoCanonicalRoute, array_merge($seoCanonicalParams, ['locale' => app()->getLocale()])));
+        @endphp
+    @else
+        @php
+            $seoDescription = __('seo.matches_description');
+            $seoCanonicalRoute = 'matches.index';
+            $seoHreflangRoute = 'matches.index';
+        @endphp
+    @endif
 
     {{-- ONGOING TOURNAMENT SECTION START --}}
     <section class="lg:pt-35 pb-7.5 md:pt-35 mx-6 mb-7 xl:mx-30 pt-44 2xl:container md:mx-8 md:mb-6 lg:mx-9 lg:mb-10 2xl:mx-auto">
@@ -12,7 +33,7 @@
 
     {{-- FIXTURES AND RESULTS SECTION START --}}
     <section class="lg:mb-17.5 mx-6 mb-7 2xl:container xl:mx-30 md:mx-8 md:mb-6 lg:mx-10 2xl:mx-auto">
-        <x-fixtures-results :seriesList="$seriesList" :currentYear="$currentYear"  />
+        <x-fixtures-results :seriesList="$seriesList ?? []" :currentYear="$currentYear ?? now()->year"  />
     </section>
     {{-- FIXTURES AND RESULTS SECTION END --}}
 
@@ -24,7 +45,7 @@
 
     {{-- POINTS TABLE SECTION START --}}
     <section class="md:mx-7.5 mx-6 mb-7 xl:mx-30 2xl:container md:mb-6 lg:mx-10 lg:mb-10 2xl:mx-auto">
-        <x-points-table :seriesList="$seriesList" :currentYear="$currentYear" />
+        <x-points-table :seriesList="$seriesList ?? []" :currentYear="$currentYear ?? now()->year" />
     </section>
     {{-- POINTS TABLE SECTION END --}}
 

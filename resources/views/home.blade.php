@@ -1,8 +1,14 @@
 @extends('layout.main-layout')
 
-@section('title', 'Home - Cricket Insight')
+@section('title', __('seo.home_title'))
 
 @section('content')
+
+    @php
+        $seoDescription = __('seo.home_description');
+        $seoCanonicalRoute = 'home';
+        $seoHreflangRoute = 'home';
+    @endphp
 
     {{-- LIVE SCORE CARD START --}}
     <div class="bg-[#F3F3F3] dark:bg-[#171717]">

@@ -3,6 +3,9 @@
 @section('title', 'Search - Cricket Insight')
 
 @section('content')
+    @php
+        $seoNoindex = true;
+    @endphp
     <section class="pt-29 lg:pt-35 pb-7.5 mx-6 xl:mx-30 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
         <div class="mb-2.5">
             <x-bread-crumb :items="[

@@ -7,6 +7,9 @@
 
     {{-- CONTENT --}}
     <div class="md:mx-7.5 mb-3.25 md:mb-3.75 relative z-30 mx-6 xl:mx-30 2xl:container lg:mx-10 2xl:mx-auto">
-        <x-bread-crumb :items="[['title' => 'Home', 'url' => '/'], ['title' => 'Gallery', 'url' => '/gallery']]" />
+        <x-bread-crumb :items="[
+            ['title' => 'Home', 'url' => route('home', ['locale' => app()->getLocale()])],
+            ['title' => 'Gallery'],
+        ]" />
     </div>
 </div>

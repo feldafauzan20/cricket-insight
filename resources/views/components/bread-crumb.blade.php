@@ -22,3 +22,9 @@
         @endforeach
     </ol>
 </nav>
+
+@if (!empty($items))
+<script type="application/ld+json">
+{!! json_encode(\App\Support\Seo\JsonLd::breadcrumbList($items, url()->current()), JSON_UNESCAPED_SLASHES) !!}
+</script>
+@endif

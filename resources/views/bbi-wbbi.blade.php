@@ -1,6 +1,12 @@
 @extends('layout.blank-layout')
 
-@section('title', 'BBI/WBBI - Cricket Insight')
+@section('title', __('seo.bbi_wbbi_title'))
+
+@php
+    $seoDescription = __('seo.bbi_wbbi_description');
+    $seoCanonicalRoute = 'bbi-wbbi';
+    $seoHreflangRoute = 'bbi-wbbi';
+@endphp
 
 @section('navbar')
     @include('components.navbar.bbi-wbbi-navbar')

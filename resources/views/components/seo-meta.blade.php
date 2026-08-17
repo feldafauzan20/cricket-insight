@@ -1,16 +1,22 @@
 @php
     $seo = \App\Models\SeoSetting::getSettings();
-    $pageTitle = $title ?? trim($__env->yieldContent('title'));
+    // Inline @section('title', $value) already HTML-escapes $value once when storing it,
+    // so decode here to get raw text back — every {{ }} usage below escapes exactly once.
+    $pageTitle = $title ?? html_entity_decode(trim($__env->yieldContent('title')), ENT_QUOTES);
     if (empty($pageTitle)) {
         $pageTitle = $seo->homepage_title ?? $seo->site_name;
     }
     $pageDescription = $description ?? $seo->meta_description;
     $pageKeywords = $keywords ?? $seo->meta_keywords;
-    $canonical = $canonicalUrl ?? ($seo->canonical_url ?: url()->current());
+    $canonical = $canonicalRoute
+        ? route($canonicalRoute, array_merge($canonicalParams ?? [], ['locale' => app()->getLocale()]))
+        : ($canonicalUrl ?? ($seo->canonical_url ?: url()->to(request()->path())));
     $ogImage = $image ?? ($seo->og_image ? (str_starts_with($seo->og_image, 'http') ? $seo->og_image : asset($seo->og_image)) : asset('images/logo/cricket-insight-logo-blue.webp'));
     $twitterSite = $seo->twitter_username ? (str_starts_with($seo->twitter_username, '@') ? $seo->twitter_username : '@' . $seo->twitter_username) : null;
     $twitterCreator = $seo->twitter_creator ? (str_starts_with($seo->twitter_creator, '@') ? $seo->twitter_creator : '@' . $seo->twitter_creator) : null;
-    $googleVerification = $seo->google_site_verification ? str_replace('google-site-verification=', '', $seo->google_site_verification) : null;
+    $googleVerification = str_replace('google-site-verification=', '', $seo->google_site_verification ?: (string) config('seo.google_site_verification')) ?: null;
+    $pageType = $type ?? 'website';
+    $robotsContent = ($noindex ?? false) ? 'noindex,follow' : $seo->robots_default;
 
     $schemaData = [
         '@context' => 'https://schema.org',
@@ -32,23 +38,37 @@
 @if(!empty($seo->author_default))
 <meta name="author" content="{{ $seo->author_default }}">
 @endif
-@if(!empty($seo->robots_default))
-<meta name="robots" content="{{ $seo->robots_default }}">
+@if(!empty($robotsContent))
+<meta name="robots" content="{{ $robotsContent }}">
 @endif
 @if($seo->enable_canonical_link)
 <link rel="canonical" href="{{ $canonical }}">
+@endif
+@if(!empty($hreflangRoute))
+@foreach (config('app.available_locales') as $altLocale)
+<link rel="alternate" hreflang="{{ $altLocale }}" href="{{ route($hreflangRoute, array_merge($hreflangParams ?? [], ['locale' => $altLocale])) }}">
+@endforeach
+<link rel="alternate" hreflang="x-default" href="{{ route($hreflangRoute, array_merge($hreflangParams ?? [], ['locale' => config('app.fallback_locale')])) }}">
 @endif
 
 <!-- Open Graph Meta Tags -->
 @if($seo->enable_open_graph)
 <meta property="og:site_name" content="{{ $seo->og_site_name ?: $seo->site_name }}">
-<meta property="og:type" content="{{ $seo->og_type ?: 'website' }}">
+<meta property="og:type" content="{{ $pageType }}">
 <meta property="og:title" content="{{ $pageTitle }}">
 <meta property="og:description" content="{{ $pageDescription }}">
 <meta property="og:url" content="{{ $canonical }}">
 @if(!empty($ogImage))
 <meta property="og:image" content="{{ $ogImage }}">
 <meta property="og:image:alt" content="{{ $pageTitle }}">
+@endif
+@if($pageType === 'article')
+@if(!empty($publishedTime))
+<meta property="article:published_time" content="{{ $publishedTime }}">
+@endif
+@if(!empty($modifiedTime))
+<meta property="article:modified_time" content="{{ $modifiedTime }}">
+@endif
 @endif
 @endif
 
@@ -86,5 +106,11 @@
 @if(!empty($seo->custom_json_ld))
 <script type="application/ld+json">
 {!! $seo->custom_json_ld !!}
+</script>
+@endif
+
+@if(!empty($jsonLd))
+<script type="application/ld+json">
+{!! json_encode($jsonLd, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
 </script>
 @endif

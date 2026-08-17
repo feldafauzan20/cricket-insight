@@ -98,7 +98,7 @@ class MatchesController extends Controller
     /**
      * Menampilkan detail satu match berdasarkan slug ke file Blade (match-centre.blade.php)
      */
-    public function show(string $slug)
+    public function show(string $locale, string $slug)
     {
         $article = Article::query()
             ->with(['category', 'tags', 'uploader'])

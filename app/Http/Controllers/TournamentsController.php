@@ -143,7 +143,7 @@ class TournamentsController extends Controller
     /**
      * Menampilkan detail satu artikel turnamen berdasarkan slug
      */
-    public function show(string $slug)
+    public function show(string $locale, string $slug)
     {
         $article = Article::query()
             ->with(['category', 'tags', 'uploader'])

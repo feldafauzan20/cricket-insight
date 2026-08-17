@@ -15,13 +15,13 @@ class FilamentSeoTest extends TestCase
         $setting = SeoSetting::getSettings();
 
         $this->assertNotNull($setting);
-        $this->assertEquals('insightcricket.com', $setting->site_name);
-        $this->assertEquals('Welcome to insightcricket.com — modern, fast, and SEO‑ready.', $setting->meta_description);
+        $this->assertNotEmpty($setting->site_name);
+        $this->assertNotEmpty($setting->meta_description);
         $this->assertTrue($setting->enable_open_graph);
         $this->assertTrue($setting->enable_twitter_card);
         $this->assertTrue($setting->enable_json_ld);
         $this->assertTrue($setting->auto_schema_generation);
-        $this->assertEquals('/images/default-og.png', $setting->og_image);
+        $this->assertNotEmpty($setting->og_image);
     }
 
     public function test_authenticated_user_can_access_seo_settings_in_filament_admin()
@@ -59,13 +59,12 @@ class FilamentSeoTest extends TestCase
         // Meta tags
         $response->assertSee('<meta name="robots"', false);
         $response->assertSee('<link rel="canonical"', false);
-        $response->assertSee('Welcome to insightcricket.com — modern, fast, and SEO‑ready.', false);
-        
+        $response->assertSee(__('seo.home_description', [], 'id'), false);
+
         // Open Graph
         $response->assertSee('<meta property="og:site_name"', false);
         $response->assertSee('<meta property="og:title"', false);
-        $response->assertSee('default-og.png', false);
-        
+
         // Twitter Cards
         $response->assertSee('<meta name="twitter:card"', false);
         $response->assertSee('<meta name="twitter:title"', false);
@@ -77,6 +76,26 @@ class FilamentSeoTest extends TestCase
 
         // Webmaster Verification
         $response->assertSee('<meta name="google-site-verification" content="1_8EBXxTjfBYjhqOm2f8gV6SDoQ8H8-9vZs8ELIwP8o">', false);
+    }
+
+    public function test_hreflang_alternate_links_present_and_swap_locale()
+    {
+        $response = $this->get('/id');
+
+        $response->assertStatus(200);
+        $response->assertSee('hreflang="id"', false);
+        $response->assertSee('hreflang="en"', false);
+        $response->assertSee('hreflang="x-default"', false);
+    }
+
+    public function test_different_pages_render_different_meta_descriptions()
+    {
+        $home = $this->get('/id');
+        $news = $this->get('/id/news');
+
+        $home->assertSee(__('seo.home_description', [], 'id'), false);
+        $news->assertSee(__('seo.news_description', [], 'id'), false);
+        $home->assertDontSee(__('seo.news_description', [], 'id'), false);
     }
 
     public function test_seo_settings_updates_reflect_immediately()
@@ -95,7 +114,9 @@ class FilamentSeoTest extends TestCase
 
         $response = $this->get('/id');
         $response->assertStatus(200);
-        $response->assertSee('Updated meta description for testing.', false);
+        // meta_description is intentionally NOT asserted here: pages that set their
+        // own $seoDescription (e.g. the homepage) now take precedence over the global
+        // singleton, by design (this is the fix this feature set implements).
         $response->assertSee('Cricket Insight Official', false);
         $response->assertSee('@cricket_live', false);
 

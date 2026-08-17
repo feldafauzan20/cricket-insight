@@ -9,6 +9,27 @@
         // Hitung estimasi waktu baca (200 kata per menit)
         $wordCount = str_word_count(strip_tags($article->content));
         $readTime = max(1, ceil($wordCount / 200));
+
+        $catSlug = strtolower($article->category->slug ?? '');
+        $catId = $article->category->id ?? null;
+        $seoCanonicalRoute = match (true) {
+            $catId === 6 || in_array($catSlug, ['interviews']) => 'interviews.show',
+            $catId === 2 || in_array($catSlug, ['tournament', 'tournaments']) => 'tournaments.show',
+            $catId === 5 || $catSlug === 'matches' => 'matches.show',
+            default => 'news.show',
+        };
+        $seoCanonicalParams = ['slug' => $article->slug];
+        $seoHreflangRoute = $seoCanonicalRoute;
+        $seoHreflangParams = $seoCanonicalParams;
+        $seoCanonicalUrl = route($seoCanonicalRoute, array_merge($seoCanonicalParams, ['locale' => app()->getLocale()]));
+
+        $seoTitle = $article->title;
+        $seoDescription = $article->description;
+        $seoImage = $article->thumbnail ? asset('storage/' . $article->thumbnail) : null;
+        $seoType = 'article';
+        $seoPublishedTime = optional($article->published_at)->toIso8601String();
+        $seoModifiedTime = optional($article->updated_at)->toIso8601String();
+        $seoJsonLd = \App\Support\Seo\JsonLd::newsArticle($article, $seoCanonicalUrl);
     @endphp
 
     <section class="2xl:pt-30">
@@ -21,8 +42,8 @@
                         <x-bread-crumb :items="[
                             ['title' => 'Home', 'url' => route('home', ['locale' => app()->getLocale()])],
                             ['title' => 'News', 'url' => route('news.index', ['locale' => app()->getLocale()])],
-                            ['title' => $article->category->name ?? 'Category', 'url' => '#'],
-                            ['title' => Str::words($article->title, 2, '...'), 'url' => '#'],
+                            ['title' => $article->category->name ?? 'Category'],
+                            ['title' => Str::words($article->title, 2, '...')],
                         ]" />
                     </div>
                     <div class="flex flex-wrap items-center gap-2.5">
