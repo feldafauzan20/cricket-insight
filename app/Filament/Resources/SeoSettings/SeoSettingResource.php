@@ -20,6 +20,7 @@ use Filament\Tables\Columns\IconColumn;
 class SeoSettingResource extends Resource
 {
     protected static ?string $model = SeoSetting::class;
+    protected static bool $shouldRegisterNavigation = false;
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-globe-alt';
     protected static ?string $navigationLabel = 'SEO Settings';
     protected static ?string $modelLabel = 'SEO Setting';
