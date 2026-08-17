@@ -1,2 +1,6 @@
 User-agent: *
-Disallow:
+Disallow: /pci
+Disallow: /admin
+Disallow: /api/
+
+Sitemap: https://insightcricket.com/sitemap.xml

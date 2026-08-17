@@ -15,6 +15,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', config('app.name', 'Cricket Insight'))</title>
+    <x-seo-meta
+        :title="$seoTitle ?? null"
+        :description="$seoDescription ?? null"
+        :image="$seoImage ?? null"
+        :type="$seoType ?? null"
+        :published-time="$seoPublishedTime ?? null"
+        :modified-time="$seoModifiedTime ?? null"
+        :canonical-route="$seoCanonicalRoute ?? null"
+        :canonical-params="$seoCanonicalParams ?? []"
+        :hreflang-route="$seoHreflangRoute ?? null"
+        :hreflang-params="$seoHreflangParams ?? []"
+        :noindex="$seoNoindex ?? false"
+        :json-ld="$seoJsonLd ?? null"
+    />
 
     <script>
         (function() {

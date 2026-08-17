@@ -1,8 +1,29 @@
 @extends('layout.main-layout')
 
-@section('title', 'Tournaments - Cricket Insight')
+@section('title', isset($article) ? $article->title . ' - Cricket Insight' : __('seo.tournaments_title'))
 
 @section('content')
+    @if (isset($article))
+        @php
+            $seoTitle = $article->title;
+            $seoDescription = $article->description;
+            $seoImage = $article->thumbnail ? asset('storage/' . $article->thumbnail) : null;
+            $seoType = 'article';
+            $seoPublishedTime = optional($article->published_at)->toIso8601String();
+            $seoModifiedTime = optional($article->updated_at)->toIso8601String();
+            $seoCanonicalRoute = 'tournaments.show';
+            $seoCanonicalParams = ['slug' => $article->slug];
+            $seoHreflangRoute = $seoCanonicalRoute;
+            $seoHreflangParams = $seoCanonicalParams;
+            $seoJsonLd = \App\Support\Seo\JsonLd::newsArticle($article, route($seoCanonicalRoute, array_merge($seoCanonicalParams, ['locale' => app()->getLocale()])));
+        @endphp
+    @else
+        @php
+            $seoDescription = __('seo.tournaments_description');
+            $seoCanonicalRoute = 'tournaments.index';
+            $seoHreflangRoute = 'tournaments.index';
+        @endphp
+    @endif
 
     {{-- LIVE SCORE CARD START --}}
     <div class="bg-[#F3F3F3] dark:bg-[#171717]">

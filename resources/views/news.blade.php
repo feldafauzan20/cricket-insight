@@ -1,8 +1,13 @@
 @extends('layout.main-layout')
 
-@section('title', 'News - Cricket Insight')
+@section('title', __('seo.news_title'))
 
 @section('content')
+    @php
+        $seoDescription = __('seo.news_description');
+        $seoCanonicalRoute = 'news.index';
+        $seoHreflangRoute = 'news.index';
+    @endphp
     {{-- LIVE SCORE CARD START --}}
     <div class="bg-[#F3F3F3] dark:bg-[#171717]">
         <div class="pt-29 lg:pt-35 pb-7.5 mx-6 xl:mx-30 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">

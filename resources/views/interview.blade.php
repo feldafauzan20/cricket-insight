@@ -1,8 +1,29 @@
 @extends('layout.main-layout')
 
-@section('title', 'Interview - Cricket Insight')
+@section('title', isset($article) ? $article->title . ' - Cricket Insight' : __('seo.interview_title'))
 
 @section('content')
+    @if (isset($article))
+        @php
+            $seoTitle = $article->title;
+            $seoDescription = $article->description;
+            $seoImage = $article->thumbnail ? asset('storage/' . $article->thumbnail) : null;
+            $seoType = 'article';
+            $seoPublishedTime = optional($article->published_at)->toIso8601String();
+            $seoModifiedTime = optional($article->updated_at)->toIso8601String();
+            $seoCanonicalRoute = 'interviews.show';
+            $seoCanonicalParams = ['slug' => $article->slug];
+            $seoHreflangRoute = $seoCanonicalRoute;
+            $seoHreflangParams = $seoCanonicalParams;
+            $seoJsonLd = \App\Support\Seo\JsonLd::newsArticle($article, route($seoCanonicalRoute, array_merge($seoCanonicalParams, ['locale' => app()->getLocale()])));
+        @endphp
+    @else
+        @php
+            $seoDescription = __('seo.interview_description');
+            $seoCanonicalRoute = 'interviews.index';
+            $seoHreflangRoute = 'interviews.index';
+        @endphp
+    @endif
    {{-- LIVE SCORE CARD START --}}
     <div class="bg-[#F3F3F3] dark:bg-[#171717]">
         <div class="pt-29 lg:pt-35 pb-7.5 mx-6 xl:mx-30 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
@@ -36,7 +57,7 @@
     <section class="md:mb-7.5 mx-6 mb-7 xl:mx-30 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
         <x-interview.interview-header header="{{ __('interview.interview_header') }}"
             description="{{ __('interview.interview_description') }}" />
-        <x-interview.best-interview :interviews="$bestInterviews" />
+        <x-interview.best-interview :interviews="$bestInterviews ?? collect()" />
     </section>
     {{-- BEST INTERVIEW SECTION END --}}
 
@@ -48,13 +69,13 @@
 
     {{-- INTERVIEW VIDEOS SECTION START --}}
     <section class="md:mb-7.5 2xl:mb-12.5 xl:mx-30 mx-6 mb-7 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
-        <x-interview.interview-videos :highlight-video="$highlightVideo" :interview-videos="$interviewVideos" />
+        <x-interview.interview-videos :highlight-video="$highlightVideo ?? null" :interview-videos="$interviewVideos ?? collect()" />
     </section>
     {{-- INTERVIEW VIDEOS SECTION END --}}
 
     {{-- ALL INTERVIEW SECTION START --}}
     <section class="md:mb-7.5 2xl:mb-12.5 xl:mx-30 mx-6 mb-7 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
-        <x-interview.all-interview :interviews="$interviews" :region-options="$regionOptions" :filters="$filters" />
+        <x-interview.all-interview :interviews="$interviews ?? new \Illuminate\Pagination\LengthAwarePaginator([], 0, 10)" :region-options="$regionOptions ?? []" :filters="$filters ?? []" />
     </section>
     {{-- ALL INTERVIEW SECTION END --}}
 

@@ -125,7 +125,7 @@ class InterviewsController extends Controller
         return view('interview', $data);
     }
 
-    public function show(string $slug)
+    public function show(string $locale, string $slug)
     {
         $article = Article::query()
             ->with(['category', 'tags', 'uploader'])
