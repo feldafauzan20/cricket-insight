@@ -14,8 +14,8 @@
             class="w-15 bg-linear-to-r pointer-events-none absolute bottom-0 left-0 top-0 z-10 from-white to-transparent dark:from-[#121212] dark:to-[#1F1F1F]/0">
         </div>
 
-        <!-- Scrolling text -->
-        <div class="animate-marquee inline-block whitespace-nowrap px-4 py-2">
+        <!-- Scrolling text (enters from the right edge, exits left, repeats) -->
+        <div class="animate-[marquee_20s_linear_infinite] hover:[animation-play-state:paused] inline-block min-w-full whitespace-nowrap px-4 py-2">
             <span class="text-sm text-gray-700 dark:text-[#EEEEEE]">
                 {{ $slot ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }}
             </span>
@@ -31,19 +31,11 @@
 <style>
     @keyframes marquee {
         0% {
-            transform: translateX(0);
+            transform: translateX(100%);
         }
 
         100% {
-            transform: translateX(-50%);
+            transform: translateX(-100%);
         }
-    }
-
-    .animate-marquee {
-        animation: marquee 20s linear infinite;
-    }
-
-    .animate-marquee:hover {
-        animation-play-state: paused;
     }
 </style>
