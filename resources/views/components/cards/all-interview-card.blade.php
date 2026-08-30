@@ -2,7 +2,7 @@
 
 <a href="{{ route('news.show', ['locale' => app()->getLocale(), 'slug' => $article->slug]) }}"
     class="flex overflow-hidden rounded-md shadow-md">
-    <div class="md:w-45 w-40">
+    <div class="md:w-50 w-40 md:h-32">
         <img src="{{ $article->thumbnail ? asset('storage/' . $article->thumbnail) : asset('images/dummy/gallery/dummy-gallery.webp') }}"
             alt="{{ $article->title }}" class="h-full w-full object-cover">
     </div>

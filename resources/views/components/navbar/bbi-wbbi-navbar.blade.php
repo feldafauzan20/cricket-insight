@@ -14,7 +14,7 @@
             <div
                 class="2xl:px-7.5 hidden bg-[#1F2022] 2xl:flex 2xl:flex-none 2xl:items-center 2xl:justify-between 2xl:py-2.5">
                 <div class="flex items-center gap-x-6">
-                    <a href="#" class="gap-x-2.25 flex items-center text-sm text-white">
+                    <a href="tel:+6281295156339" class="gap-x-2.25 flex items-center text-sm text-white">
                         <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -25,10 +25,10 @@
                                 stroke="#97775B" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
 
-                        +62 (081) 283588801
+                        +62 812 9515 6339
                     </a>
                     <div class="h-6 w-0.5 bg-white/20"></div>
-                    <a href="#" class="gap-x-2.25 flex items-center text-sm text-white">
+                    <a href="mailto:secretariat@cricketina.com" class="gap-x-2.25 flex items-center text-sm text-white">
                         <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -36,7 +36,7 @@
                                 fill="#97775B" />
                         </svg>
 
-                        BBI@email.com
+                        secretariat@cricketina.com
                     </a>
                 </div>
 

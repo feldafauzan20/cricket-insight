@@ -6,7 +6,7 @@
         <img src="{{ $interview->thumbnail ? asset('storage/' . $interview->thumbnail) : asset('images/dummy/commentaries/dummy-commentaries-small-card.webp') }}"
             alt="{{ $interview->title }}" class="h-full w-full object-cover">
     </div>
-    <div>
+    <div class="lg:flex-1">
         <div class="py-1.25 mb-1.25 w-fit rounded-[3px] bg-[#D6111A] px-3">
             <p class="text-[10px] font-medium text-white">{{ $interview->category?->name ?? 'Interview' }}</p>
         </div>
@@ -19,7 +19,7 @@
             <span
                 class="text-[10px] font-semibold text-[#666] dark:text-white">{{ optional($interview->published_at)->format('d M Y') ?? 'N/A' }}</span>
         </div>
-        <p class="mb-2.5 text-xs font-medium text-[#666666] dark:text-white">
+        <p class="mb-2.5 text-xs font-medium text-[#666666] md:block md:bg-red-400 md:w-98 dark:text-white">
             {{ Str::words($interview->description ?? strip_tags($interview->content ?? ''), 20, '...') }}
         </p>
         <div class="flex items-center justify-between">
