@@ -54,7 +54,7 @@
     {{-- LIVE SCORE CARD END --}}
 
     {{-- BEST INTERVIEW SECTION START --}}
-    <section class="md:mb-7.5 mx-6 mb-7 xl:mx-30 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
+    <section class="mt-5 md:mt-7.5 md:mb-7.5 mx-6 mb-7 xl:mx-30 2xl:container md:mx-8 lg:mx-10 2xl:mx-auto">
         <x-interview.interview-header header="{{ __('interview.interview_header') }}"
             description="{{ __('interview.interview_description') }}" />
         <x-interview.best-interview :interviews="$bestInterviews ?? collect()" />

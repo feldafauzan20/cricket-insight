@@ -2,7 +2,7 @@
 
 <a href="{{ route('news.show', ['locale' => app()->getLocale(), 'slug' => $interview->slug]) }}"
     class="block overflow-hidden rounded-[3px]">
-    <div class="h-93.75">
+    <div class="h-93.75 2xl:h-96.75">
         <img src="{{ $interview->thumbnail ? asset('storage/' . $interview->thumbnail) : asset('images/dummy/commentaries/dummy-commentaries-1.webp') }}"
             alt="{{ $interview->title }}" class="h-full w-full object-cover">
     </div>

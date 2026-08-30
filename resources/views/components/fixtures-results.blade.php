@@ -15,20 +15,6 @@
     <div class="border-b border-[#E0E0E0] bg-white md:pl-3.5 dark:border-[#353434] dark:bg-[#353434]">
         <div class="swiper fixtures-tabs-swiper overflow-hidden">
             <div class="swiper-wrapper">
-                {{-- <div class="swiper-slide w-auto!">
-                    <button @click="activeTab = 'men'"
-                        :class="activeTab === 'men' ? 'border-b-2 border-[#007DFC]' : ''"
-                        class="px-6 py-4 text-base font-medium text-[#121212] transition-colors hover:bg-gray-50 dark:text-white dark:hover:bg-[#353434]">
-                        MEN
-                    </button>
-                </div>
-                <div class="swiper-slide w-auto!">
-                    <button @click="activeTab = 'women'"
-                        :class="activeTab === 'women' ? 'border-b-2 border-[#007DFC]' : ''"
-                        class="px-6 py-4 text-base font-medium text-[#121212] transition-colors hover:bg-gray-50 dark:text-white dark:hover:bg-[#353434]">
-                        WOMEN
-                    </button>
-                </div> --}}
                 <div class="swiper-slide w-auto!">
                     <button @click="activeTab = 'results'"
                         :class="activeTab === 'results' ? 'border-b-2 border-[#007DFC]' : ''"
@@ -175,105 +161,6 @@
                         </template>
                     </div>
                 </div>
-
-                {{--  FILTER --}}
-                {{-- <div class="swiper-slide w-auto!">
-                    <div class="relative" x-data="{
-                        open: false,
-                        pos: {},
-                        toggle() {
-                            this.open = !this.open;
-                            if (this.open) {
-                                const r = this.$refs.btn.getBoundingClientRect();
-                                this.pos = {
-                                    top: r.bottom + window.scrollY + 8 + 'px',
-                                    left: r.left + window.scrollX + 'px',
-                                    width: r.width + 'px',
-                                };
-                            }
-                        }
-                    }">
-                        <div @click="toggle()" x-ref="btn" class="cursor-pointer">
-                            <div
-                                class="flex w-fit items-center gap-x-2 rounded-[3px] border border-[#E0E0E0] bg-white p-2 shadow-md dark:border-[#353434] dark:bg-[#353434]">
-                                <div class="gap-x-0.75 flex items-center">
-                                    <x-ri-flag-line class="h-6 w-6" style="color: #EC0226" />
-                                    <p class="text-[15px] text-[#121212] dark:text-white">All Grounds</p>
-                                </div>
-                                <div x-show="selectedTeam" class="px-3.25 rounded-full"
-                                    style="background-color: #EC022630">
-                                    <p class="text-[15px] font-normal" style="color: #EC0226" x-text="selectedTeam">
-                                    </p>
-                                </div>
-                                <div>
-                                    <x-ri-arrow-down-s-line class="h-3 w-3" style="color: #EC0226" />
-                                </div>
-                            </div>
-                        </div>
-                        <template x-teleport="body">
-                            <div x-show="open" @click.away="open = false" x-cloak
-                                x-transition:enter="transition ease-out duration-200"
-                                x-transition:enter-start="opacity-0 translate-y-1"
-                                x-transition:enter-end="opacity-100 translate-y-0"
-                                x-transition:leave="transition ease-in duration-150"
-                                x-transition:leave-start="opacity-100 translate-y-0"
-                                x-transition:leave-end="opacity-0 translate-y-1"
-                                :style="`top: ${pos.top}; left: ${pos.left}; width: ${pos.width};`"
-                                class="absolute z-50 max-h-64 overflow-y-auto rounded-[3px] border border-[#E0E0E0] bg-white shadow-lg dark:border-[#171717] dark:bg-[#353434]">
-                                <div class="py-1">
-                                    <button @click="selectTeam('India'); open = false"
-                                        :class="selectedTeam === 'India' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">India</button>
-                                    <button @click="selectTeam('Australia'); open = false"
-                                        :class="selectedTeam === 'Australia' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">Australia</button>
-                                    <button @click="selectTeam('England'); open = false"
-                                        :class="selectedTeam === 'England' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">England</button>
-                                    <button @click="selectTeam('Pakistan'); open = false"
-                                        :class="selectedTeam === 'Pakistan' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">Pakistan</button>
-                                    <button @click="selectTeam('South Africa'); open = false"
-                                        :class="selectedTeam === 'South Africa' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">South
-                                        Africa</button>
-                                    <button @click="selectTeam('New Zealand'); open = false"
-                                        :class="selectedTeam === 'New Zealand' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">New
-                                        Zealand</button>
-                                    <button @click="selectTeam('Sri Lanka'); open = false"
-                                        :class="selectedTeam === 'Sri Lanka' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">Sri Lanka</button>
-                                    <button @click="selectTeam('Bangladesh'); open = false"
-                                        :class="selectedTeam === 'Bangladesh' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">Bangladesh</button>
-                                    <button @click="selectTeam('West Indies'); open = false"
-                                        :class="selectedTeam === 'West Indies' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">West
-                                        Indies</button>
-                                    <button @click="selectTeam('Afghanistan'); open = false"
-                                        :class="selectedTeam === 'Afghanistan' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full px-4 py-2 text-left text-sm transition-colors">Afghanistan</button>
-                                    <button @click="selectTeam(''); open = false"
-                                        :class="selectedTeam === '' ? 'bg-[#EC0226] bg-opacity-10 text-[#EC0226]' :
-                                            'text-[#121212] dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]'"
-                                        class="w-full border-t border-[#E0E0E0] px-4 py-2 text-left text-sm transition-colors dark:border-[#171717]">All
-                                        Teams</button>
-                                </div>
-                            </div>
-                        </template>
-                    </div>
-                </div> --}}
 
                 {{-- TEAMS FILTER --}}
                 <div class="swiper-slide w-auto!">
@@ -476,7 +363,7 @@
                         <div
                             class="md:px-9.5 border-b border-[#EDF1F6] px-2.5 py-5 md:flex dark:border-none dark:bg-[#515050]">
                             <div class="flex gap-x-4 md:gap-x-0 2xl:w-full">
-                                <div class="flex flex-col gap-y-2">
+                                <div class="flex flex-col gap-y-2 md:w-43 2xl:w-81.5">
                                     <div>
                                         <span
                                             class="text-xs font-medium text-[#718096] lg:text-[14px] dark:text-[#D8D8D8]"
@@ -495,7 +382,7 @@
                                 <div class="my-3.75 mx-5.75 lg:mx-8.25 hidden w-px bg-[#EDF1F6] md:block lg:my-0">
                                 </div>
 
-                                <div class="gap-2.25 flex flex-col py-2.5 md:flex-1">
+                                <div class="gap-2.25 flex flex-col py-2.5 md:flex-1 md:w-62.25 lg:w-md">
                                     <div class="flex justify-between">
                                         <div class="flex items-center gap-x-2">
                                             <img :src="match.teamOne.logo" :alt="match.teamOne.name"
