@@ -19,7 +19,7 @@
             <span
                 class="text-[10px] font-semibold text-[#666] dark:text-white">{{ optional($interview->published_at)->format('d M Y') ?? 'N/A' }}</span>
         </div>
-        <p class="mb-2.5 text-xs font-medium text-[#666666] md:block md:bg-red-400 md:w-98 dark:text-white">
+        <p class="mb-2.5 text-xs font-medium text-[#666666] md:block md:w-98 dark:text-white">
             {{ Str::words($interview->description ?? strip_tags($interview->content ?? ''), 20, '...') }}
         </p>
         <div class="flex items-center justify-between">
