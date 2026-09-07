@@ -50,6 +50,18 @@ class StreamingPartnerResource extends Resource
                     ->helperText('Please upload a square photo/logo with 1:1 aspect ratio.')
                     ->required(),
 
+                FileUpload::make('image_dark')
+                    ->label('Partner Photo for Dark Mode — 1:1 Ratio (Optional)')
+                    ->image()
+                    ->imageEditor()
+                    ->imageEditorAspectRatios([
+                        '1:1',
+                    ])
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'])
+                    ->disk('public')
+                    ->directory('streaming-partners')
+                    ->helperText('Optional. Shown when the site is in dark mode. Leave empty if the main logo is already visible on dark backgrounds.'),
+
                 TextInput::make('sort_order')
                     ->label('Sort Order')
                     ->numeric()
@@ -71,6 +83,11 @@ class StreamingPartnerResource extends Resource
                 ImageColumn::make('image')
                     ->label('Photo')
                     ->square(),
+
+                ImageColumn::make('image_dark')
+                    ->label('Dark Mode Photo')
+                    ->square()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('title')
                     ->label('Partner Name')

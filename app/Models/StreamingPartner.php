@@ -13,6 +13,7 @@ class StreamingPartner extends Model
     protected $fillable = [
         'title',
         'image',
+        'image_dark',
         'sort_order',
         'is_active',
     ];
@@ -36,5 +37,21 @@ class StreamingPartner extends Model
         }
 
         return asset('storage/' . $this->image);
+    }
+
+    /**
+     * Accessor for full dark-mode image URL. Empty string if not set.
+     */
+    public function getImageDarkUrlAttribute(): string
+    {
+        if (empty($this->image_dark)) {
+            return '';
+        }
+
+        if (Str::startsWith($this->image_dark, ['images/', 'http://', 'https://'])) {
+            return asset($this->image_dark);
+        }
+
+        return asset('storage/' . $this->image_dark);
     }
 }
