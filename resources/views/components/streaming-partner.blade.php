@@ -12,12 +12,28 @@
         <div class="swiper streaming-partner-swiper overflow-hidden">
             <div class="swiper-wrapper items-center">
                 @foreach ($streamingPartners as $partner)
+                    @php
+                        $lightSrc = is_object($partner)
+                            ? $partner->image_url
+                            : (is_array($partner)
+                                ? asset($partner['src'] ?? ($partner['image'] ?? ''))
+                                : asset($partner));
+                        $darkSrc = is_object($partner) ? $partner->image_dark_url : '';
+                        $altText = is_object($partner)
+                            ? $partner->title
+                            : $partner['alt'] ?? ($partner['title'] ?? 'dummy streaming partner');
+                    @endphp
                     <div class="swiper-slide flex! items-center justify-center">
-                        <img src="{{ is_object($partner) ? $partner->image_url : (is_array($partner) ? asset($partner['src'] ?? $partner['image'] ?? '') : asset($partner)) }}"
-                            alt="{{ is_object($partner) ? $partner->title : ($partner['alt'] ?? $partner['title'] ?? 'dummy streaming partner') }}"
-                            class="w-25 md:w-35 h-auto object-contain" loading="lazy">
+                        <img src="{{ $lightSrc }}" alt="{{ $altText }}"
+                            class="w-25 md:w-35 {{ $darkSrc ? 'dark:hidden' : '' }} h-auto object-contain"
+                            loading="lazy">
+                        @if ($darkSrc)
+                            <img src="{{ $darkSrc }}" alt="{{ $altText }}"
+                                class="w-25 md:w-35 hidden h-auto object-contain dark:block" loading="lazy">
+                        @endif
                     </div>
                 @endforeach
+
             </div>
         </div>
 

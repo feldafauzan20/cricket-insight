@@ -18,13 +18,26 @@
 
     <div class="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-6">
         @foreach ($streamingPartners as $partner)
+            @php
+                $lightSrc = is_object($partner)
+                    ? $partner->image_url
+                    : (is_array($partner)
+                        ? asset($partner['src'] ?? ($partner['image'] ?? ''))
+                        : asset($partner));
+                $darkSrc = is_object($partner) ? $partner->image_dark_url : '';
+                $altText = is_object($partner) ? $partner->title : $partner['alt'] ?? ($partner['title'] ?? '');
+            @endphp
             <div
                 class="py-12.5 px-12.5 md:py-12.5 md:px-16.5 2xl:py-23.25 2xl:px-13.25 h-35 flex items-center justify-center border border-[#B6B6B6] 2xl:h-60">
-                <img src="{{ is_object($partner) ? $partner->image_url : (is_array($partner) ? asset($partner['src'] ?? $partner['image'] ?? '') : asset($partner)) }}"
-                    alt="{{ is_object($partner) ? $partner->title : ($partner['alt'] ?? $partner['title'] ?? '') }}"
-                    class="h-20 w-32 md:h-28 md:w-44 object-contain" loading="lazy">
+                <img src="{{ $lightSrc }}" alt="{{ $altText }}"
+                    class="{{ $darkSrc ? 'dark:hidden' : '' }} h-20 w-32 object-contain md:h-28 md:w-44" loading="lazy">
+                @if ($darkSrc)
+                    <img src="{{ $darkSrc }}" alt="{{ $altText }}"
+                        class="hidden h-20 w-32 object-contain md:h-28 md:w-44 dark:block" loading="lazy">
+                @endif
             </div>
         @endforeach
+
     </div>
 </div>
 {{-- STREAMING PARTNERS END --}}
