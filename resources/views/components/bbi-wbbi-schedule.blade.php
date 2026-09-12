@@ -2,7 +2,7 @@
 
 @php
     $title = $setting?->latest_bbi_title ?? 'BALI BASH INTERNATIONAL';
-    $date = $setting?->latest_bbi_date ?? 'May 20, 2026';
+    $date = $setting?->formatted_latest_bbi_date ?? 'May 20, 2026';
     $description = $setting?->latest_bbi_description ?? '';
     $thumbnail1 = $setting?->latest_bbi_thumbnail_1
         ? \Storage::url($setting->latest_bbi_thumbnail_1)

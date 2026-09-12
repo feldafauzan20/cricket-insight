@@ -48,6 +48,6 @@ class BbiWbbiSetting extends Model
 
     public function getFormattedLatestBbiDateAttribute(): ?string
     {
-        return $this->latest_bbi_date?->format('M, d Y');
+        return $this->latest_bbi_date?->format('M j, Y');
     }
 }
