@@ -74,7 +74,7 @@ class BbiWbbiSettingResource extends Resource
                     ->allowHtml()
                     ->getOptionLabelFromRecordUsing(fn ($record) => "
                         <div style='display: flex; gap: 12px; align-items: center;'>
-                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "' 
+                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "'
                                 style='width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;' />
                             <span style='font-weight: 500;'>" . e(\Illuminate\Support\Str::limit($record->title, 100)) . "</span>
                         </div>
@@ -87,7 +87,7 @@ class BbiWbbiSettingResource extends Resource
                     ->allowHtml()
                     ->getOptionLabelFromRecordUsing(fn ($record) => "
                         <div style='display: flex; gap: 12px; align-items: center;'>
-                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "' 
+                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "'
                                 style='width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;' />
                             <span style='font-weight: 500;'>" . e(\Illuminate\Support\Str::limit($record->title, 100)) . "</span>
                         </div>
@@ -100,7 +100,7 @@ class BbiWbbiSettingResource extends Resource
                     ->allowHtml()
                     ->getOptionLabelFromRecordUsing(fn ($record) => "
                         <div style='display: flex; gap: 12px; align-items: center;'>
-                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "' 
+                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "'
                                 style='width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;' />
                             <span style='font-weight: 500;'>" . e(\Illuminate\Support\Str::limit($record->title, 100)) . "</span>
                         </div>
@@ -117,7 +117,7 @@ class BbiWbbiSettingResource extends Resource
                     ->allowHtml()
                     ->getOptionLabelFromRecordUsing(fn ($record) => "
                         <div style='display: flex; gap: 12px; align-items: center;'>
-                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "' 
+                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "'
                                 style='width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;' />
                             <span style='font-weight: 500;'>" . e(\Illuminate\Support\Str::limit($record->title, 100)) . "</span>
                         </div>
@@ -130,7 +130,7 @@ class BbiWbbiSettingResource extends Resource
                     ->allowHtml()
                     ->getOptionLabelFromRecordUsing(fn ($record) => "
                         <div style='display: flex; gap: 12px; align-items: center;'>
-                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "' 
+                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "'
                                 style='width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;' />
                             <span style='font-weight: 500;'>" . e(\Illuminate\Support\Str::limit($record->title, 100)) . "</span>
                         </div>
@@ -143,7 +143,7 @@ class BbiWbbiSettingResource extends Resource
                     ->allowHtml()
                     ->getOptionLabelFromRecordUsing(fn ($record) => "
                         <div style='display: flex; gap: 12px; align-items: center;'>
-                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "' 
+                            <img src='" . ($record->thumbnail ? asset('storage/' . $record->thumbnail) : asset('images/dummy/news-card/dummy-news-card.webp')) . "'
                                 style='width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;' />
                             <span style='font-weight: 500;'>" . e(\Illuminate\Support\Str::limit($record->title, 100)) . "</span>
                         </div>
@@ -182,7 +182,7 @@ class BbiWbbiSettingResource extends Resource
     {
         return $table->columns([
             TextColumn::make('latest_bbi_title')->label('Title')->searchable(),
-            TextColumn::make('latest_bbi_date')->label('Date')->date('M, d Y')->sortable(),
+            TextColumn::make('latest_bbi_date')->label('Date')->date('M j, Y')->sortable(),
             TextColumn::make('updated_at')->label('Last Updated')->dateTime('d M Y H:i'),
         ]);
     }
